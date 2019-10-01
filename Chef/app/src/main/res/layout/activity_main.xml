@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="activity"
+            type="com.example.sungho.chef.MainActivity"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.sungho.chef.MainActivity">
+        <TextView
+            android:textSize="50dp"
+            android:textColor="#ff9100"
+            android:paddingTop="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chefling"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp">
+                <ImageButton
+                    android:id="@+id/owner_btn"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/chefbtn" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="점주"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/chef_btn"
+                    android:src="@drawable/chefbtn"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="요리사"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30dp">
+            <ImageButton
+                android:id="@+id/menu_btn"
+                android:src="@drawable/menubtn"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:padding="0dp"
+                android:scaleType="fitXY"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="메뉴판"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>>
+
+    </LinearLayout>
+</layout>

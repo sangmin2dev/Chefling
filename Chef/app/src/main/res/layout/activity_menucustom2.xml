@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="activity"
+            type="com.example.sungho.chef.MenuCustom2"/>
+    </data>
+    <LinearLayout
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.sungho.chef.MenuCustom2">
+
+        <TextView
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:textColor="#ff9100"
+            android:text="메뉴판 만들기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:paddingLeft="20dp"
+            android:textColor="#b3b3b3"
+            android:textSize ="18dp"
+            android:textStyle="bold"
+            android:text="2. 메뉴 종류 입력"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/stage1"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/stage2"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/stage"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/stage"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/stage"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+        </LinearLayout>
+
+        <!-- 추가된 메뉴타입 표시하는 레이아웃 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/container1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/dd"
+                    android:src="@drawable/menutype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_alignRight="@+id/dd"
+                    android:layout_alignTop="@+id/dd"
+                    android:layout_alignBottom="@+id/dd"
+                    android:layout_alignLeft="@+id/dd"
+
+                    android:gravity="center"
+                    android:text="메뉴"
+                    android:textColor="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/container2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/container3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="30px"
+                android:textStyle="bold"
+                android:text="이름"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/editmenu"
+                android:hint=" EX) Pasta House"
+                android:layout_marginLeft="30dp"
+                android:layout_width="500px"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/addbtn"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:src="@drawable/addbtn"
+            android:scaleType="fitXY"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+        <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/prebtn"
+                android:layout_marginRight="20dp"
+                android:background="#ffffff"
+                android:src="@drawable/prebtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:id="@+id/nextbtn"
+                android:background="#ffffff"
+                android:src="@drawable/nextbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
