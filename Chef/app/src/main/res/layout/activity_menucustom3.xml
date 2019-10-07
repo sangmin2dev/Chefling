@@ -6,20 +6,19 @@
     <data>
         <variable
             name="activity"
-            type="com.example.sungho.chef.MenuCustom2"/>
+            type="com.example.sungho.chef.MenuCustom3"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.sungho.chef.MainActivity">
-
+        tools:context="com.example.sungho.chef.MenuCustom3">
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="2. 메뉴 종류 입력"
+            android:text="3. 메뉴 정보 입력"
             android:textColor="#b3b3b3"
             android:textSize="18dp"
             android:textStyle="bold"
@@ -67,7 +66,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/stage" />
+                android:src="@drawable/stage3" />
 
             <ImageView
                 android:layout_width="50dp"
@@ -102,7 +101,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/container3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,25 +112,25 @@
             android:id="@+id/container3"
             android:layout_width="330dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+            app:layout_constraintBottom_toTopOf="@+id/Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container2"></LinearLayout>
-
         <!-- 추가된 메뉴타입 표시하는 레이아웃 -->
 
         <LinearLayout
-            android:id="@+id/linearLayout6"
+            android:id="@+id/Name"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/Type"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container3">
 
@@ -144,11 +142,123 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/menuEdit"
+                android:id="@+id/nameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:hint=" EX) Pasta" />
+                android:hint=" EX) Meetball Pasta" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Type"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/Cost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Name">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="종류"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/typeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Cost"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/Info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Type">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가격"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/costEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:hint=" EX) 16900"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Info"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/Image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Cost">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="설명"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/infoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:hint=" EX) 미트볼이 들어간 파스타" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Image"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/addbtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Info">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이미지"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:background="#acacac" />
         </LinearLayout>
 
         <ImageButton
@@ -156,23 +266,28 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="162dp"
+            android:layout_marginStart="162dp"
+            android:layout_marginTop="24dp"
             android:background="#ffffff"
             android:scaleType="fitXY"
             android:src="@drawable/addbtn"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+            app:layout_constraintTop_toBottomOf="@+id/Image" />
 
         <LinearLayout
+            android:id="@+id/linearLayout7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addbtn">
@@ -192,5 +307,6 @@
                 android:background="#ffffff"
                 android:src="@drawable/nextbtn" />
         </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

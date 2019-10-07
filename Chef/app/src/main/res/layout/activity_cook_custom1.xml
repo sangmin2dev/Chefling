@@ -6,25 +6,13 @@
     <data>
         <variable
             name="activity"
-            type="com.example.sungho.chef.MenuCustom2"/>
+            type="com.example.sungho.chef.CookCustom1"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.sungho.chef.MainActivity">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:text="2. 메뉴 종류 입력"
-            android:textColor="#b3b3b3"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        tools:context="com.example.sungho.chef.CookCustom1">
 
         <TextView
             android:id="@+id/textView5"
@@ -32,12 +20,24 @@
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingTop="20dp"
-            android:text="메뉴판 만들기"
+            android:text="직원 관리하기"
             android:textColor="#ff9100"
             android:textSize="30dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="4. 포지션 입력"
+            android:textColor="#b3b3b3"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -67,19 +67,19 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/stage" />
+                android:src="@drawable/stage3" />
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/stage" />
+                android:src="@drawable/stage4" />
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/stage" />
+                android:src="@drawable/stage5" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +102,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/container3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,27 +113,26 @@
             android:id="@+id/container3"
             android:layout_width="330dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container2"></LinearLayout>
 
-        <!-- 추가된 메뉴타입 표시하는 레이아웃 -->
-
         <LinearLayout
-            android:id="@+id/linearLayout6"
+            android:id="@+id/Name"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginBottom="26dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="49dp"
+            app:layout_constraintBottom_toTopOf="@+id/whatmake"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container3">
+            app:layout_constraintTop_toBottomOf="@+id/container1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -148,31 +146,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:hint=" EX) Pasta" />
+                android:hint=" EX) 샐러드, 디저트" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/whatmake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginEnd="270dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="만드는 메뉴"
+            android:textSize="30px"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/table"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Name" />
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="310dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whatmake">
+
+        </TableLayout>
 
         <ImageButton
             android:id="@+id/addbtn"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginEnd="162dp"
+            android:layout_marginStart="162dp"
+            android:layout_marginTop="67dp"
             android:background="#ffffff"
             android:scaleType="fitXY"
             android:src="@drawable/addbtn"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+            app:layout_constraintTop_toBottomOf="@+id/table" />
 
         <LinearLayout
+            android:id="@+id/linearLayout7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addbtn">
@@ -192,5 +225,8 @@
                 android:background="#ffffff"
                 android:src="@drawable/nextbtn" />
         </LinearLayout>
+
+
     </android.support.constraint.ConstraintLayout>
+
 </layout>

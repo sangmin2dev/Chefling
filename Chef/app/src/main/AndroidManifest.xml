@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".MenuCustom1" />
-        <activity android:name=".MenuCustom2"></activity>
+        <activity android:name=".MenuCustom2" />
+        <activity android:name=".MenuCustom3" />
+        <activity android:name=".CookCustom1" />
+        <activity android:name=".CookCustom2"></activity>
     </application>
 
 </manifest>

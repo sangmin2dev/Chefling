@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,28 +29,29 @@ public class MenuCustom2 extends AppCompatActivity {
     LinearLayout container2;
     LinearLayout container3;
 
-
     ImageButton preButton;
     ImageButton nextButton;
     ImageButton addButton;
+
     EditText editText;
+
+    Restaurant rest;
 
     int count = 0;
 
-
+    // 입력정보
     ArrayList<String> menuType = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바 삭제
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menucustom2);
         binding.setActivity(this);
+
+        Intent intent = getIntent();
+        rest = (Restaurant)intent.getSerializableExtra("레스토랑");
 
         container1 = binding.container1;
         container2 = binding.container2;
@@ -60,18 +60,24 @@ public class MenuCustom2 extends AppCompatActivity {
         preButton = binding.prebtn;
         nextButton = binding.nextbtn;
         addButton = binding.addbtn;
-        editText = binding.editmenu;
+        editText = binding.menuEdit;
 
         // 추가 버튼
         addButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
-                // editText 입력시 메뉴종류 추가, 아닐시 토스트 메시지 출력
-                if(editText.getText().toString().length() != 0) {
-                    menuType.add(editText.getText().toString());
-                    displayMenu(menuType.get(menuType.size() - 1));
-                }
-                else {
+                // 입력여부 체크
+                if(editText.getText().length() == 0){
                     Toast.makeText(getApplicationContext(), "메뉴종류를 입력하세요", Toast.LENGTH_LONG).show();
+                }
+                // 중복체크
+                else if(!checkDuplicate(editText.getText().toString())) {
+                    Toast.makeText(getApplicationContext(),"이미 입력한 메뉴종류 입니다",Toast.LENGTH_LONG).show();
+                }
+                // 메뉴입력
+                else if(editText.getText().length() > 0) {
+                    menuType.add(editText.getText().toString());
+                    rest.addMenuType(editText.getText().toString());
+                    displayMenu(menuType.get(menuType.size() - 1));
                 }
             }
         });
@@ -80,6 +86,7 @@ public class MenuCustom2 extends AppCompatActivity {
         preButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MenuCustom1.class);
+                intent.putExtra("레스토랑",rest);
                 startActivity(intent);
             }
         });
@@ -87,14 +94,14 @@ public class MenuCustom2 extends AppCompatActivity {
         // 다음 버튼
         nextButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
-                //Intent intent = new Intent(getApplicationContext(),MenuCustom3.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(),MenuCustom3.class);
+                intent.putExtra("레스토랑",rest);
+                startActivity(intent);
             }
         });
-
-
     }
 
+    // 추가한 메뉴종류를 상단에 표시
     public void displayMenu(String s){
         RelativeLayout.LayoutParams layoutParams =
                 new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -112,18 +119,30 @@ public class MenuCustom2 extends AppCompatActivity {
         textView.setTextSize(15);
         textView.setTextColor(Color.WHITE);
         textView.setLayoutParams(layoutParams);
-        textView.setTextAlignment(img.getId());
         textView.setGravity(Gravity.CENTER);
 
         rl.addView(img);
         rl.addView(textView);
-        if(count < 6)
+
+        // 줄바꿈
+        if(count < 5)
             container1.addView(rl);
-        else if(count < 12)
+        else if(count < 10)
             container2.addView(rl);
-        else
+        else if(count < 15)
             container3.addView(rl);
+        else
+            Toast.makeText(getApplicationContext(), "메뉴종류가 너무 많습니다.", Toast.LENGTH_LONG).show();
 
         count++;
+    }
+
+    // 중복 확인
+    public boolean checkDuplicate(String s){
+        for(int i = 0; i < menuType.size(); i++){
+            if(menuType.get(i).equals(s))
+                return false;
+        }
+        return true;
     }
 }
