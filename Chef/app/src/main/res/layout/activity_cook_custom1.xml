@@ -79,7 +79,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/stage5" />
+                android:src="@drawable/stage" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,7 +142,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/menuEdit"
+                android:id="@+id/nameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"

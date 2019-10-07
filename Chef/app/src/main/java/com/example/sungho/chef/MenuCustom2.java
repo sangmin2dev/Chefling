@@ -36,6 +36,7 @@ public class MenuCustom2 extends AppCompatActivity {
     EditText editText;
 
     Restaurant rest;
+    Intent intent;
 
     int count = 0;
 
@@ -50,7 +51,7 @@ public class MenuCustom2 extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menucustom2);
         binding.setActivity(this);
 
-        Intent intent = getIntent();
+        intent = getIntent();
         rest = (Restaurant)intent.getSerializableExtra("레스토랑");
 
         container1 = binding.container1;
@@ -77,6 +78,7 @@ public class MenuCustom2 extends AppCompatActivity {
                 else if(editText.getText().length() > 0) {
                     menuType.add(editText.getText().toString());
                     rest.addMenuType(editText.getText().toString());
+                    Toast.makeText(getApplicationContext(),editText.getText().toString(),Toast.LENGTH_LONG).show();
                     displayMenu(menuType.get(menuType.size() - 1));
                 }
             }
@@ -85,8 +87,7 @@ public class MenuCustom2 extends AppCompatActivity {
         // 이전 버튼
         preButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MenuCustom1.class);
-                intent.putExtra("레스토랑",rest);
+                intent = new Intent(getApplicationContext(),MenuCustom1.class);
                 startActivity(intent);
             }
         });
@@ -94,8 +95,7 @@ public class MenuCustom2 extends AppCompatActivity {
         // 다음 버튼
         nextButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MenuCustom3.class);
-                intent.putExtra("레스토랑",rest);
+                intent = new Intent(getApplicationContext(),MenuCustom3.class);
                 startActivity(intent);
             }
         });
