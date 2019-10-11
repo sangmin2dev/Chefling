@@ -1,15 +1,12 @@
-#!!!!!!!!논의사항!!!!!!!!!
-#1. 넘어오는 데이터 형
-#       음식
-#       셰프등 기본정보
-#       오더 아이디 정의해야함
-#       이벤트 처리
-
-
 '''
 Scheduling Specification
 opensource, for making sence of Scheduling Algorithm
 '''
+
+
+#TODO
+#Event Interrupt
+#Timer
 
 
 #Information Setting
@@ -44,7 +41,10 @@ opensource, for making sence of Scheduling Algorithm
 #   Served Queue
 #       Adding cook Information
 
-#TODO
+
+
+
+
 #Input Json
 # {
 #     menu :
