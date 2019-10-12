@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class MenuCustom2 extends AppCompatActivity {
         binding.setActivity(this);
 
         Intent intent = getIntent();
-        rest = (Restaurant)intent.getSerializableExtra("레스토랑");
+        rest = (Restaurant)intent.getSerializableExtra("data");
 
         container1 = binding.container1;
         container2 = binding.container2;
@@ -76,7 +77,7 @@ public class MenuCustom2 extends AppCompatActivity {
                 // 메뉴입력
                 else if(editText.getText().length() > 0) {
                     menuType.add(editText.getText().toString());
-                    rest.addMenuType(editText.getText().toString());
+                    rest.addMenuType(editText.getText().toString());    // 메뉴타입 추가
                     displayMenu(menuType.get(menuType.size() - 1));
                 }
             }
@@ -86,7 +87,7 @@ public class MenuCustom2 extends AppCompatActivity {
         preButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MenuCustom1.class);
-                intent.putExtra("레스토랑",rest);
+                intent.putExtra("data",rest);
                 startActivity(intent);
             }
         });
@@ -95,7 +96,7 @@ public class MenuCustom2 extends AppCompatActivity {
         nextButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MenuCustom3.class);
-                intent.putExtra("레스토랑",rest);
+                intent.putExtra("data",rest);
                 startActivity(intent);
             }
         });
@@ -131,8 +132,6 @@ public class MenuCustom2 extends AppCompatActivity {
             container2.addView(rl);
         else if(count < 15)
             container3.addView(rl);
-        else
-            Toast.makeText(getApplicationContext(), "메뉴종류가 너무 많습니다.", Toast.LENGTH_LONG).show();
 
         count++;
     }

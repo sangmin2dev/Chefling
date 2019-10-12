@@ -18,9 +18,6 @@ public class MenuCustom1 extends AppCompatActivity {
     EditText nameEdit;
     EditText infoEdit;
 
-    //입력정보
-    String restaurantName = "";
-    String restaurantInfo = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +41,7 @@ public class MenuCustom1 extends AppCompatActivity {
                 else {  //정보 입력 확인시 정보 저장후 다음페이지
                     Restaurant rest = new Restaurant(nameEdit.getText().toString(), infoEdit.getText().toString());
                     Intent intent = new Intent(getApplicationContext(), MenuCustom2.class);
-                    intent.putExtra("레스토랑",rest);
+                    intent.putExtra("data",rest);
                     startActivity(intent);
                 }
             }

@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         // 메뉴판 페이지로 이동
         menuButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
+                startActivity(intent);
             }
         });
 

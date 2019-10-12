@@ -1,14 +1,23 @@
 package com.example.sungho.chef;
 
+import java.io.Serializable;
+
 /**
  * Created by sungho on 2019-10-04.
  */
 
-public class Menu {
+public class Menu implements Serializable{
     String name;
     String menuType;
     int price;
     String info;
+
+    public Menu(String name, String menuType, int price, String info){
+        this.name = name;
+        this.menuType = menuType;
+        this.price = price;
+        this.info = info;
+    }
 
     public String getName() {
         return name;
