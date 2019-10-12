@@ -39,9 +39,14 @@ public class MenuCustom3 extends AppCompatActivity {
     ImageButton addButton;
 
     Restaurant rest;
+<<<<<<< HEAD
     ArrayList<String> menuTypeList;
     ArrayList<String> menu;
     int count = 0;
+=======
+    int count = 0;
+    ArrayList<String> menu = new ArrayList<String>();;
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +69,7 @@ public class MenuCustom3 extends AppCompatActivity {
         preButton = binding.prebtn;
         nextButton = binding.nextbtn;
 
+<<<<<<< HEAD
         // 중복체크용
         menu = new ArrayList<String>();
 
@@ -78,12 +84,27 @@ public class MenuCustom3 extends AppCompatActivity {
                 menuTypeList);
         typeSpiner.setAdapter(adapter);
         typeSpiner.setSelection(0);
+=======
+//        for(int i = 0; i < rest.menuTypes.size(); i++){
+//            menuTypeList.add(rest.menuTypes.get(i).typeName);
+//        }
+
+        // 스피터 값 할당
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//                this,
+//                android.R.layout.simple_spinner_dropdown_item,
+//                menuTypeList);
+//        typeSpiner.setAdapter(adapter);
+//        typeSpiner.setSelection(0);
+
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
 
         // 추가 버튼
         addButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
                 // 입력여부 체크
                 if(nameEdit.getText().length() == 0){
+<<<<<<< HEAD
                     Toast.makeText(getApplicationContext(), "메뉴종류를 입력하세요", Toast.LENGTH_LONG).show();
                 }
                 // 중복체크
@@ -103,6 +124,19 @@ public class MenuCustom3 extends AppCompatActivity {
                     }
                     menu.add(nameEdit.getText().toString());
                     displayMenu(nameEdit.getText().toString());
+=======
+                    Toast.makeText(getApplicationContext(), "메뉴를 입력하세요", Toast.LENGTH_LONG).show();
+                }
+                // 중복체크
+                else if(!checkDuplicate(nameEdit.getText().toString())) {
+                    Toast.makeText(getApplicationContext(),"이미 입력한 메뉴 입니다",Toast.LENGTH_LONG).show();
+                }
+                // 메뉴입력
+                else if(nameEdit.getText().length() > 0) {
+                    menu.add(nameEdit.getText().toString());
+                    Toast.makeText(getApplicationContext(),nameEdit.getText().toString(),Toast.LENGTH_LONG).show();
+                    displayMenu(menu.get(menu.size() - 1));
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
                 }
             }
         });
@@ -111,7 +145,10 @@ public class MenuCustom3 extends AppCompatActivity {
         preButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),MenuCustom2.class);
+<<<<<<< HEAD
                 intent.putExtra("data",rest);
+=======
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
                 startActivity(intent);
             }
         });
@@ -120,12 +157,19 @@ public class MenuCustom3 extends AppCompatActivity {
         nextButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),CookCustom1.class);
+<<<<<<< HEAD
                 intent.putExtra("data",rest);
+=======
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
                 startActivity(intent);
             }
         });
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
     // 추가한 메뉴종류를 상단에 표시
     public void displayMenu(String s){
         RelativeLayout.LayoutParams layoutParams =
@@ -156,6 +200,11 @@ public class MenuCustom3 extends AppCompatActivity {
             container2.addView(rl);
         else if(count < 15)
             container3.addView(rl);
+<<<<<<< HEAD
+=======
+        else
+            Toast.makeText(getApplicationContext(), "메뉴종류가 너무 많습니다.", Toast.LENGTH_LONG).show();
+>>>>>>> 539a3fedcee6cd901a117b5cd751883b04af1702
 
         count++;
     }
