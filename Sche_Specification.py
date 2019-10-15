@@ -50,7 +50,7 @@ opensource, for making sence of Scheduling Algorithm
 #     menu :
 #         {
 #             cooks :{ (cook은 position과 같은 의미로 봐도 무방할듯!)
-#                 cook1 :{
+#                 cook1(고유 key) :{
 #                     cook_id :
 #                     position :
 #                     ability : 한번에 처리할 수 있는 요리의 갯수
@@ -63,7 +63,7 @@ opensource, for making sence of Scheduling Algorithm
 #
 #             }
 #             foods :{
-#                 food1 :{
+#                 food1(고유키) :{
 #                     name :
 #                     image :
 #                     category : 카테고리는 포지션에 해당하는 카테고리를 의미함 (같은 포지션에서 처리할 수 있는 요리!!)
