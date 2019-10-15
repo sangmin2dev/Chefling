@@ -84,11 +84,11 @@ public class MenuCustom3 extends AppCompatActivity {
             public void onClick(View view) {
                 // 입력여부 체크
                 if(nameEdit.getText().length() == 0){
-                    Toast.makeText(getApplicationContext(), "메뉴종류를 입력하세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "메뉴를 입력하세요", Toast.LENGTH_LONG).show();
                 }
                 // 중복체크
                 else if(!checkDuplicate(nameEdit.getText().toString())) {
-                    Toast.makeText(getApplicationContext(),"이미 입력한 메뉴종류 입니다",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"이미 입력한 메뉴 입니다",Toast.LENGTH_LONG).show();
                 }
                 // 메뉴입력
                 else if(nameEdit.getText().length() > 0) {

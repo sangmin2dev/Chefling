@@ -15,7 +15,7 @@
         tools:context="com.example.sungho.chef.MenuActivity">
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/restName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -35,7 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7">
+            app:layout_constraintTop_toBottomOf="@+id/restName">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,118 +52,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <LinearLayout
-                        android:id="@+id/tab1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <ScrollView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:adjustViewBounds="true"
-                                    android:scaleType="fitCenter"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/example1" />
-                                <TextView
-                                    android:textColor="#000000"
-                                    android:textStyle="bold"
-                                    android:text="Caesar Salad"
-                                    android:textSize="20dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:textStyle="italic"
-                                    android:textSize="15dp"
-                                    android:text="18900 원"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:text="신선한 레터스에 베이컨, 크루통, 갈릭 칩과 그라나 파다노 치즈를 듬뿍 얹은 샐러드"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-
-                                <ImageView
-                                    android:adjustViewBounds="true"
-                                    android:scaleType="fitCenter"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/example2" />
-                                <TextView
-                                    android:textColor="#000000"
-                                    android:textStyle="bold"
-                                    android:text="Lemon Calamari Cream Risotto"
-                                    android:textSize="20dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:textStyle="italic"
-                                    android:textSize="15dp"
-                                    android:text="18900 원"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:text="신선한 레터스에 베이컨, 크루통, 갈릭 칩과 그라나 파다노 치즈를 듬뿍 얹은 샐러드"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <ImageView
-                                    android:adjustViewBounds="true"
-                                    android:scaleType="fitCenter"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/example2" />
-                                <TextView
-                                    android:textColor="#000000"
-                                    android:textStyle="bold"
-                                    android:text="Caesar Salad"
-                                    android:textSize="20dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:textStyle="italic"
-                                    android:textSize="15dp"
-                                    android:text="18900 원"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                                <TextView
-                                    android:text="신선한 레터스에 베이컨, 크루통, 갈릭 칩과 그라나 파다노 치즈를 듬뿍 얹은 샐러드"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
-                        </ScrollView>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/tab2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="탭2" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/tab3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="탭3" />
-                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </TabHost>

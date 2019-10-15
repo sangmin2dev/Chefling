@@ -15,12 +15,18 @@ public class Restaurant implements Serializable{
     //2. 메뉴 타입
     ArrayList<MenuType> menuTypes;  // 메뉴 타입들
 
+    //3. 포지션 (요리사들의 업무분담)
+    ArrayList<Position> positions;
+
     public Restaurant(String name, String info){
         this.name = name;
         this.info = info;
 
         menuTypes = new ArrayList<MenuType>();
+        positions = new ArrayList<Position>();
     }
+
+    public ArrayList<MenuType> getMenuTypes() {return menuTypes;}
 
     public String getName() {
         return name;
@@ -38,20 +44,13 @@ public class Restaurant implements Serializable{
         this.info = info;
     }
 
+    // 메뉴타입 추가
     public void addMenuType(String name){
         menuTypes.add(new MenuType(name));
     }
 
-    // 총 메뉴 갯수
-    public int getMenuCount(){
-        int count = 0;
-
-        for(int i = 0; i < menuTypes.size(); i++){
-            for(int j = 0; j < menuTypes.get(i).menus.size(); i++){
-                count ++;
-            }
-        }
-
-        return count;
+    // 포지션 추가
+    public void addPosition(String name){
+        positions.add(new Position(name));
     }
 }

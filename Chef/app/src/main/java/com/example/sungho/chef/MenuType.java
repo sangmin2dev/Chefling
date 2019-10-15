@@ -12,6 +12,18 @@ public class MenuType implements Serializable{
     String typeName;
     ArrayList<Menu> menus;
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public ArrayList<Menu> getMenus() {
+        return menus;
+    }
+
     public MenuType(String typeName){
         this.typeName = typeName;
         menus = new ArrayList<Menu>();
@@ -20,5 +32,4 @@ public class MenuType implements Serializable{
     public void AddMenu(String name, String menuType, int price, String info){
         menus.add(new Menu(name, menuType, price, info));
     }
-
 }

@@ -141,11 +141,11 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/menuEdit"
+                android:id="@+id/nameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:hint=" EX) 샐러드, 디저트" />
+                android:hint=" EX) 홍길동" />
         </LinearLayout>
 
         <LinearLayout
@@ -164,12 +164,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="종류"
+                android:text="포지션"
                 android:textSize="30px"
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/positionSpiner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -185,7 +185,7 @@
             android:layout_marginEnd="162dp"
             android:layout_marginStart="162dp"
             android:layout_marginTop="32dp"
-            android:background="#ffffff"
+            android:background="#00000000"
             android:scaleType="fitXY"
             android:src="@drawable/addbtn"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
@@ -213,14 +213,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:background="#ffffff"
+                android:background="#00000000"
                 android:src="@drawable/prebtn" />
 
             <ImageButton
                 android:id="@+id/nextbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:background="#00000000"
                 android:src="@drawable/nextbtn" />
         </LinearLayout>
 
