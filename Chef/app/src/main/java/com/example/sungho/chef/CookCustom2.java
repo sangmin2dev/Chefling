@@ -1,6 +1,6 @@
 package com.example.sungho.chef;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class CookCustom2 extends AppCompatActivity {
@@ -11,3 +11,5 @@ public class CookCustom2 extends AppCompatActivity {
         setContentView(R.layout.activity_cook_custom2);
     }
 }
+
+// fire base

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "691873766990",
+    "firebase_url": "https://chefling-f122c.firebaseio.com",
+    "project_id": "chefling-f122c",
+    "storage_bucket": "chefling-f122c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691873766990:android:f5886b1e1015f23638ad1f",
+        "android_client_info": {
+          "package_name": "com.example.sungho.chef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691873766990-j5nc658rq90objrbrja15gkfe805ir4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZb0xriIAjA0UvftmTzRij7sdFbthhzls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691873766990-j5nc658rq90objrbrja15gkfe805ir4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

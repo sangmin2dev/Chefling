@@ -1,10 +1,9 @@
 package com.example.sungho.chef;
 
-import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.TabHost;
 
 import com.example.sungho.chef.databinding.ActivityMenuBinding;
