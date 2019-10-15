@@ -1,9 +1,9 @@
 package com.example.sungho.chef;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -19,8 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.sungho.chef.databinding.ActivityCookCustom1Binding;
 import com.example.sungho.chef.databinding.ActivityCookCustom2Binding;
 
 import java.util.ArrayList;
@@ -146,3 +144,5 @@ public class CookCustom2 extends AppCompatActivity {
         count++;
     }
 }
+
+// fire base

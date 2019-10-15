@@ -9,7 +9,7 @@
             name="activity"
             type="com.example.sungho.chef.MenuActivity"/>
     </data>
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.sungho.chef.MenuActivity">
@@ -48,13 +48,13 @@
                     android:layout_height="wrap_content" />
 
                 <FrameLayout
-                    android:id="@android:id/tabcontent"
+                    android:id="@+id/tabcontent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                 </FrameLayout>
             </LinearLayout>
         </TabHost>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

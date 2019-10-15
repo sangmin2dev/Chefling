@@ -1,27 +1,23 @@
 package com.example.sungho.chef;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AnalogClock;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.sungho.chef.databinding.ActivityMenuBinding;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
@@ -34,7 +30,6 @@ public class MenuActivity extends AppCompatActivity {
     Restaurant rest;
 
     int count;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

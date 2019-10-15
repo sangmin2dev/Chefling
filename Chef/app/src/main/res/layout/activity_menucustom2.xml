@@ -9,10 +9,10 @@
             type="com.example.sungho.chef.MenuCustom2"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.sungho.chef.MainActivity">
+        tools:context="com.example.sungho.chef.MenuCustom2">
 
         <TextView
             android:id="@+id/textView6"
@@ -194,5 +194,5 @@
                 android:background="#00000000"
                 android:src="@drawable/nextbtn" />
         </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
