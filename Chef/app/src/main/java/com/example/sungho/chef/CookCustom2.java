@@ -19,8 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.sungho.chef.Data.Cooks;
+import com.example.sungho.chef.Data.Foods;
 import com.example.sungho.chef.databinding.ActivityCookCustom2Binding;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CookCustom2 extends AppCompatActivity {
@@ -142,6 +146,38 @@ public class CookCustom2 extends AppCompatActivity {
             container3.addView(rl);
 
         count++;
+    }
+
+    // 안드로이드 -> 파이어페이스
+    public void dataPacking(){
+        // 1. 입력된 요리사들(Cooks)의 Array List
+        ArrayList<Cooks> cooks = new ArrayList<Cooks>();
+        for(int i = 0; i < rest.positions.size(); i++) {                    // i : position
+            Position position = rest.positions.get(i);
+            for(int j = 0; j < position.getCooks().size(); j++) {           // j : position 에 있는 Cook
+                Cooks c = new Cooks();
+                c.setName(position.getCooks().get(j).getName());
+                c.setPosition(position.getName());
+                c.setAbility(position.getSize());
+                c.setBreaktime(false);
+                cooks.add(c);
+            }
+        }
+
+        // 2. 입력된 메뉴들(Foods)의 Array List
+        ArrayList<Foods> foods = new ArrayList<Foods>();
+        for(int i = 0; i < rest.menuTypes.size(); i++) {                    // i : menuType
+            MenuType type = rest.menuTypes.get(i);
+            for(int j = 0; j < type.getMenus().size(); j++) {               // j : menuType 에 있는 menu
+                Foods f = new Foods();
+                f.setName(type.getMenus().get(j).getName());
+                f.setCategory(type.getTypeName());
+                f.setCooking_time(type.getMenus().get(j).getTime());
+                f.setPrice(type.getMenus().get(j).getPrice());
+                f.setDescription(type.getMenus().get(j).getInfo());
+                f.setSold_out(false);
+            }
+        }
     }
 }
 

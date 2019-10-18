@@ -4,7 +4,7 @@ public class Cooks {
     private String name;
     private String position;
     private int ability;
-    private String breaktime;
+    private boolean breaktime;
 
     public String getName() {
         return name;
@@ -18,7 +18,7 @@ public class Cooks {
         return ability;
     }
 
-    public String getBreaktime() {
+    public boolean getBreaktime() {
         return breaktime;
     }
 
@@ -34,7 +34,7 @@ public class Cooks {
         this.ability = ability;
     }
 
-    public void setBreaktime(String breaktime) {
+    public void setBreaktime(boolean breaktime) {
         this.breaktime = breaktime;
     }
 }

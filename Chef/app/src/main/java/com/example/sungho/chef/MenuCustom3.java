@@ -33,6 +33,7 @@ public class MenuCustom3 extends AppCompatActivity {
     Spinner typeSpiner;
     EditText nameEdit;
     EditText priceEdit;
+    EditText timeEdit;
     EditText infoEdit;
     ImageButton preButton;
     ImageButton nextButton;
@@ -59,6 +60,7 @@ public class MenuCustom3 extends AppCompatActivity {
         nameEdit = binding.nameEdit;
         typeSpiner = binding.typeSpinner;
         priceEdit = binding.priceEdit;
+        timeEdit = binding.timeEdit;
         infoEdit = binding.infoEdit;
         addButton = binding.addbtn;
         preButton = binding.prebtn;
@@ -99,6 +101,7 @@ public class MenuCustom3 extends AppCompatActivity {
                                     nameEdit.getText().toString(),                      // 이름
                                     typeSpiner.getSelectedItem().toString(),            // 타입
                                     Integer.parseInt(priceEdit.getText().toString()),   // 가격
+                                    Integer.parseInt(timeEdit.getText().toString()),    // 소요 시간
                                     infoEdit.getText().toString());                     // 정보
                     }
                     menu.add(nameEdit.getText().toString());

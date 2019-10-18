@@ -1,12 +1,12 @@
 package com.example.sungho.chef.Data;
 
 public class Foods {
-    private String name;
-    private String category;
-    private String description;
-    private int price;
-    private int cooking_time;
-    private boolean sold_out;
+    private String name;                //menu , scheduling
+    private String category;            //menu , scheduling
+    private String description;         //menu
+    private int price;                  //menu
+    private int cooking_time;           //scheduling
+    private boolean sold_out;           //menu , scheduling
 
     public String getName() {
         return name;

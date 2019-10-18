@@ -29,7 +29,7 @@ public class MenuType implements Serializable{
         menus = new ArrayList<Menu>();
     }
 
-    public void AddMenu(String name, String menuType, int price, String info){
-        menus.add(new Menu(name, menuType, price, info));
+    public void AddMenu(String name, String menuType, int price,int time, String info){
+        menus.add(new Menu(name, menuType, price, time, info));
     }
 }

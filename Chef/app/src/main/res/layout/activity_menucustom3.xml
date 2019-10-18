@@ -126,9 +126,9 @@
             android:id="@+id/Name"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
             app:layout_constraintBottom_toTopOf="@+id/Type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -153,9 +153,9 @@
             android:id="@+id/Type"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
             app:layout_constraintBottom_toTopOf="@+id/Cost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -180,11 +180,11 @@
             android:id="@+id/Cost"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/Info"
+            app:layout_constraintBottom_toTopOf="@+id/Time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Type">
@@ -206,12 +206,41 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Time"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/Info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Cost">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="소요 시간 (분)"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/timeEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:hint=" EX) 15"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/Info"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/Image"
             app:layout_constraintEnd_toEndOf="parent"
@@ -237,9 +266,9 @@
             android:id="@+id/Image"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="37dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/addbtn"
             app:layout_constraintEnd_toEndOf="parent"
@@ -256,7 +285,7 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="80dp"
                 android:layout_marginLeft="30dp"
                 android:background="#acacac" />
         </LinearLayout>
@@ -283,10 +312,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
