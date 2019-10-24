@@ -2,9 +2,13 @@ package com.example.sungho.chef;
 
 import android.content.Intent;
 import android.graphics.Color;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +26,17 @@ import android.widget.Toast;
 
 import com.example.sungho.chef.Data.Cooks;
 import com.example.sungho.chef.Data.Foods;
+import com.example.sungho.chef.Data.MenuData;
+import com.example.sungho.chef.Data.RestaurantInfo;
 import com.example.sungho.chef.databinding.ActivityCookCustom2Binding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.sql.Ref;
 import java.util.ArrayList;
 
 public class CookCustom2 extends AppCompatActivity {
@@ -40,6 +52,9 @@ public class CookCustom2 extends AppCompatActivity {
     ImageButton addButton;
 
     Restaurant rest;
+    ArrayList<Cooks> cooks = new ArrayList<Cooks>();
+    ArrayList<Foods> foods = new ArrayList<Foods>();
+
     ArrayList<String> positionList;
     int count = 0;
     @Override
@@ -103,12 +118,45 @@ public class CookCustom2 extends AppCompatActivity {
             }
         });
 
-        // 다음 버튼
+        /**
+         * 데이터 종합해서 파이어베이스 전송!
+         * 테스트 완료 by JSW 2019-10-24
+         * */
+
+        // 파이어베이스 전송 버튼 (이미지 변화 필요)
         nextButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
-                intent.putExtra("data",rest);
-                startActivity(intent);
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference menuRef = database.getReference("menu");
+
+                dataPacking();
+                MenuData menuData = new MenuData();
+                menuData.setCooks(cooks);
+                menuData.setFoods(foods);
+                RestaurantInfo rest_info = new RestaurantInfo();
+                rest_info.setName(rest.getName());
+                rest_info.setDescription(rest.getInfo());
+                menuData.setRest_info(rest_info);
+                menuRef.push().setValue(menuData);
+                menuRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d("firebaseTAG","success :)");
+                        //전송후 메뉴액티비티로 이동
+                        Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
+                        intent.putExtra("data",rest);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d("firebaseTAG","Failed :(");
+                    }
+                });
+
+
+
             }
         });
     }
@@ -148,10 +196,9 @@ public class CookCustom2 extends AppCompatActivity {
         count++;
     }
 
-    // 안드로이드 -> 파이어페이스
+
     public void dataPacking(){
         // 1. 입력된 요리사들(Cooks)의 Array List
-        ArrayList<Cooks> cooks = new ArrayList<Cooks>();
         for(int i = 0; i < rest.positions.size(); i++) {                    // i : position
             Position position = rest.positions.get(i);
             for(int j = 0; j < position.getCooks().size(); j++) {           // j : position 에 있는 Cook
@@ -165,7 +212,6 @@ public class CookCustom2 extends AppCompatActivity {
         }
 
         // 2. 입력된 메뉴들(Foods)의 Array List
-        ArrayList<Foods> foods = new ArrayList<Foods>();
         for(int i = 0; i < rest.menuTypes.size(); i++) {                    // i : menuType
             MenuType type = rest.menuTypes.get(i);
             for(int j = 0; j < type.getMenus().size(); j++) {               // j : menuType 에 있는 menu
@@ -176,9 +222,8 @@ public class CookCustom2 extends AppCompatActivity {
                 f.setPrice(type.getMenus().get(j).getPrice());
                 f.setDescription(type.getMenus().get(j).getInfo());
                 f.setSold_out(false);
+                foods.add(f);
             }
         }
     }
 }
-
-// fire base

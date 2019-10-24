@@ -18,7 +18,7 @@ public class Cooks {
         return ability;
     }
 
-    public boolean getBreaktime() {
+    public boolean isBreaktime() {
         return breaktime;
     }
 
