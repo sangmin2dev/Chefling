@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         //**********
 
-
+        // ******파이어베이스 송수신 함수 (테스트용)
         fireBaseTestBtn2.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference menuRef = database.getReference("menu");
 
                 Foods food = new Foods();
-                food.setCategory("Steak");
+                food.setCategory("Pasta");
                 food.setCooking_time(30);
-                food.setDescription("Deiliciout Steak");
-                food.setName("Beef Steak");
-                food.setPrice(20000);
+                food.setDescription("Deiliciout Pasta");
+                food.setName("AlioOlio");
+                food.setPrice(15000);
                 food.setSold_out(false);
+                food.setUrl("./pic/steak/Alio Olio");
                 menuRef.child("foods").push().setValue(food);
                 menuRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -89,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 //childUpdates.put("menu/cooks/","cook1");
                 Cooks cook1 = new Cooks();
                 cook1.setAbility(3);
-                cook1.setName("LSM");
-                cook1.setPosition("Steak");
+                cook1.setName("JSW");
+                cook1.setPosition("Pasta");
                 cook1.setBreaktime("1130~1230");
                 menuRef.child("cooks").push().setValue(cook1);
                 menuRef.addValueEventListener(new ValueEventListener() {
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        // ******파이어베이스 송수신 함수 (테스트용)
 
         // 점주 페이지로 이동
         ownerButton.setOnClickListener(new Button.OnClickListener(){
