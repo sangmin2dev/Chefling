@@ -1,17 +1,22 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-
+const favicon = require('serve-favicon') 
 const indexRouter = require('./routes/index');
 
 const app = express();
 
 app.set('views', path.join(__dirname,'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.set('port', process.env.port || 8001);
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
+app.use(favicon(path.join(__dirname,'public/images','favicon.ico')));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 

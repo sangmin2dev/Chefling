@@ -4,7 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 router.get('/', function(req, res, next){
-    res.render('index', {title: 'Implement Local server by JSW :)', project: 'Chefling'});
+    res.sendFile('main.html',{root:'views'},(err,data) =>{
+        if(err){
+            throw err;
+        }
+        res.end(data);
+    });
 });
 
 router.get('/firebase', function(req, res, next){
