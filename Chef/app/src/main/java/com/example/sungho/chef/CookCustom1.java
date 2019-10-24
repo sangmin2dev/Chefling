@@ -32,6 +32,7 @@ public class CookCustom1 extends AppCompatActivity {
     LinearLayout container2;
     LinearLayout container3;
     EditText nameEdit;
+    EditText sizeEdit;
     TableLayout tableLayout;
     ImageButton preButton;
     ImageButton nextButton;
@@ -58,6 +59,7 @@ public class CookCustom1 extends AppCompatActivity {
         container2 = binding.container2;
         container3 = binding.container3;
         nameEdit = binding.nameEdit;
+        sizeEdit = binding.sizeEdit;
         tableLayout = binding.table;
         addButton = binding.addbtn;
         preButton = binding.prebtn;
@@ -105,7 +107,7 @@ public class CookCustom1 extends AppCompatActivity {
                     position.add(nameEdit.getText().toString());
                     displayMenu(nameEdit.getText().toString());
 
-                    rest.addPosition(nameEdit.getText().toString());
+                    rest.addPosition(nameEdit.getText().toString(),Integer.parseInt(sizeEdit.getText().toString()));
                     for(int i = 0; i < checkBox.length; i++){
                         // 체크박스에 체크되어 있다면 해당 메뉴타입을 포지션객체에 추가
                         if(checkBox[i].isChecked()) {

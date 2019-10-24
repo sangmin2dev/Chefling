@@ -50,7 +50,7 @@ public class Restaurant implements Serializable{
     }
 
     // 포지션 추가
-    public void addPosition(String name){
-        positions.add(new Position(name));
+    public void addPosition(String name,int size){
+        positions.add(new Position(name,size));
     }
 }
