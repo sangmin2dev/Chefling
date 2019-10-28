@@ -3,6 +3,9 @@ package com.example.sungho.chef;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,46 +20,76 @@ import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.example.sungho.chef.Data.Foods;
+import com.example.sungho.chef.Data.MenuData;
+import com.example.sungho.chef.Data.RestaurantInfo;
 import com.example.sungho.chef.databinding.ActivityMenuBinding;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity {
     ActivityMenuBinding binding;
-
+    MenuData menuData;
     TextView restName;
 
     TabHost tabHost;
     FrameLayout tabContent;
     Restaurant rest;
-
     int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바 삭제
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu);
         binding.setActivity(this);
-
-        Intent intent = getIntent();
-        rest = (Restaurant)intent.getSerializableExtra("data");
-
         restName = binding.restName;
         tabHost = binding.tabhost;
         tabContent = binding.tabcontent;
 
-        //1. 입력한 레스토랑 이름 상단에 표시
-        restName.setText(rest.getName());
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference menuRef = database.getReference();
+        menuRef.child("menu").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
 
-        tabHost.setup();
-        count = 0;
-        for(int i = 0; i < rest.menuTypes.size(); i++) {
-            //3. 입력한 메뉴 타입으로 Tab 생성
-            tabHost.addTab(tabHost.newTabSpec(""+i).
-                    setContent(new MyTabContentFactory()).
-                    setIndicator(rest.menuTypes.get(i).getTypeName()));
-        }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                menuData = dataSnapshot.getValue(MenuData.class);
+                Log.d("test","menuData : "+menuData.getFoods().get(0).getName());
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+
+        //1. 입력한 레스토랑 이름 상단에 표시
+//        restName.setText(rest.getName());
+
+//        tabHost.setup();
+//        count = 0;
+//        for(int i = 0; i < rest.menuTypes.size(); i++) {
+//            //3. 입력한 메뉴 타입으로 Tab 생성
+//            tabHost.addTab(tabHost.newTabSpec(""+i).
+//                    setContent(new MyTabContentFactory()).
+//                    setIndicator(rest.menuTypes.get(i).getTypeName()));
+//        }
     }
 
     class MyTabContentFactory implements TabHost.TabContentFactory{

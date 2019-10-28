@@ -284,6 +284,7 @@
 
             <ImageView
                 android:id="@+id/imageView"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginLeft="30dp"

@@ -1,5 +1,7 @@
 package com.example.sungho.chef;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 /**
@@ -12,13 +14,15 @@ public class Menu implements Serializable{
     int price;
     int time;
     String info;
+    String uri;
 
-    public Menu(String name, String menuType, int price, int time, String info){
+    public Menu(String name, String menuType, int price, int time, String info, String uri){
         this.name = name;
         this.menuType = menuType;
         this.price = price;
         this.time = time;
         this.info = info;
+        this.uri = uri;
     }
 
     public String getName() {
@@ -56,4 +60,8 @@ public class Menu implements Serializable{
     public void setInfo(String info) {
         this.info = info;
     }
+
+    public String getUri() { return uri; }
+
+    public void setUri(String uri) { this.uri = uri; }
 }
