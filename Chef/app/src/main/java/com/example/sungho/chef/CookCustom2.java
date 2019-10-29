@@ -249,7 +249,7 @@ public class CookCustom2 extends AppCompatActivity {
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
             //Unique한 파일명을 만들자.
-            String filename = f.getName() + ".png";
+            String filename = f.getName();
             //storage 주소와 폴더 파일명을 지정해 준다.
             StorageReference storageRef = storage.getReferenceFromUrl("gs://chefling-f122c.appspot.com").child("Menu_pic/" + filename);
             //올라가거라...
