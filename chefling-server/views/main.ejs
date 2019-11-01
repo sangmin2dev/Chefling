@@ -27,10 +27,10 @@
               </ul>
             </nav>
           </div>
-    
+          
           <!-- Jumbotron -->
           
-    
+          
           <!-- Example row of columns -->
           <div class="row">
             <div class="col-md-2">
@@ -39,26 +39,22 @@
 
             <div class="col-md-8">
                 <table class="table table-condensed table-hover">
-                    <tr class="active">
+                    <tr class="active">                        
                         <td>Name</td>
                         <td>Price</td>
                         <td>Time</td>
                     </tr>
-                    <tr>
-                        <td>Pasta</td>
-                        <td>15000</td>
-                        <td>30min</td>
-                    </tr>
-                    <tr>
-                        <td>Steak</td>
-                        <td>30000</td>
-                        <td>30min</td>
-                    </tr>
-                    <tr>
-                        <td>Salad</td>
-                        <td>10000</td>
-                        <td>30min</td>
-                    </tr>
+                    
+                    
+                    <%list.foods.forEach(function (val) {%>
+                        <tr>
+                          <td><%= val.name%></td>
+                          <td><%= val.price%></td>
+                          <td><%= val.cooking_time%></td>
+                        </tr>                      
+                    <%})%>
+                    
+                    
                 </table>
             </div>
             
@@ -76,24 +72,14 @@
                         <td>BreakTime</td>
                         <td>ability</td>
                     </tr>
-                    <tr>
-                        <td>정성운</td>
-                        <td>파스타</td>
-                        <td>O</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>박성호</td>
-                        <td>샐러드</td>
-                        <td>X</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>이상민</td>
-                        <td>스테이크</td>
-                        <td>O</td>
-                        <td>2</td>
-                    </tr>
+                    <%list.cooks.forEach(function (val) {%>
+                        <tr>
+                          <td><%= val.name%></td>
+                          <td><%= val.position%></td>
+                          <td><%= val.BreakTime%></td>
+                          <td><%= val.ability%></td>
+                        </tr>                      
+                    <%})%>
                 </table>
             </div>
             
