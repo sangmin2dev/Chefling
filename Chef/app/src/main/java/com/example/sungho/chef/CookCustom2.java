@@ -1,11 +1,14 @@
 package com.example.sungho.chef;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -29,15 +32,23 @@ import com.example.sungho.chef.Data.Foods;
 import com.example.sungho.chef.Data.MenuData;
 import com.example.sungho.chef.Data.RestaurantInfo;
 import com.example.sungho.chef.databinding.ActivityCookCustom2Binding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.lang.reflect.Array;
 import java.sql.Ref;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CookCustom2 extends AppCompatActivity {
     ActivityCookCustom2Binding binding;
@@ -104,7 +115,6 @@ public class CookCustom2 extends AppCompatActivity {
                             rest.positions.get(i).addCook(nameEdit.getText().toString());           //요리사 이름
                     }
                     displayMenu(nameEdit.getText().toString());
-
                 }
             }
         });
@@ -123,14 +133,14 @@ public class CookCustom2 extends AppCompatActivity {
          * 테스트 완료 by JSW 2019-10-24
          * */
 
-        // 파이어베이스 전송 버튼 (이미지 변화 필요)
+        // 파이어베이스 전송 버튼
         nextButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view) {
-
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference menuRef = database.getReference("menu");
 
-                dataPacking();
+                dataPacking();      //파베올릴 데이터
+
                 MenuData menuData = new MenuData();
                 menuData.setCooks(cooks);
                 menuData.setFoods(foods);
@@ -144,7 +154,7 @@ public class CookCustom2 extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d("firebaseTAG","success :)");
                         //전송후 메뉴액티비티로 이동
-                        Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         intent.putExtra("data",rest);
                         startActivity(intent);
                     }
@@ -154,14 +164,11 @@ public class CookCustom2 extends AppCompatActivity {
                         Log.d("firebaseTAG","Failed :(");
                     }
                 });
-
-
-
             }
         });
     }
 
-    // 추가한 메뉴종류를 상단에 표시
+    // 추가한 요리사를 상단에 표시
     public void displayMenu(String s){
         RelativeLayout.LayoutParams layoutParams =
                 new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -195,8 +202,6 @@ public class CookCustom2 extends AppCompatActivity {
 
         count++;
     }
-
-
     public void dataPacking(){
         // 1. 입력된 요리사들(Cooks)의 Array List
         for(int i = 0; i < rest.positions.size(); i++) {                    // i : position
@@ -223,7 +228,60 @@ public class CookCustom2 extends AppCompatActivity {
                 f.setDescription(type.getMenus().get(j).getInfo());
                 f.setSold_out(false);
                 foods.add(f);
+
+                // ImageUpload to FireBase Storage
+                uploadFile(type.getMenus().get(j).getUri(),f);
             }
+        }
+    }
+
+    // FireBase Storage에 메뉴이미지 업로드
+    private void uploadFile(String urlString,Foods f) {
+        Uri photoUri = Uri.parse(urlString);
+        //업로드할 파일이 있으면 수행
+        if (photoUri != null) {
+            //업로드 진행 Dialog 보이기
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("데이터 업로드중...");
+            progressDialog.show();
+
+            //storage
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            //Unique한 파일명을 만들자.
+            String filename = f.getName();
+            //storage 주소와 폴더 파일명을 지정해 준다.
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://chefling-f122c.appspot.com").child("Menu_pic/" + filename);
+            //올라가거라...
+            storageRef.putFile(photoUri)
+                    //성공시
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    //실패시
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    //진행중
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다.
+                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
+                            //dialog에 진행률을 퍼센트로 출력해 준다
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
+                        }
+                    });
+        } else {
+            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
     }
 }

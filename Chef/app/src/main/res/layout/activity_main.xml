@@ -55,10 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="점주"
+            android:text="정보 입력"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/menu_btn"
@@ -99,7 +98,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="요리사"
+            android:text="정보 수정"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/menu_btn"
@@ -122,9 +121,10 @@
             android:src="@drawable/menubtn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.966"
+            app:layout_constraintVertical_bias="0.813"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="메뉴판"
             android:textSize="18dp"
@@ -142,28 +142,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu_btn"
             tools:ignore="MissingConstraints" />
-
-        <Button
-            android:id="@+id/fb_test_btn1"
-            android:layout_width="89dp"
-            android:layout_height="81dp"
-            android:text="Add\nCooks"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/menu_btn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/owner_text" />
-
-        <Button
-            android:id="@+id/fb_test_btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add\nMenu"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/menu_btn"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

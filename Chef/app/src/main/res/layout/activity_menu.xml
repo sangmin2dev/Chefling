@@ -18,19 +18,20 @@
             android:id="@+id/restName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Menu"
             android:textColor="#000000"
             android:textSize="30dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TabHost
-            android:id="@+id/tabhost"
-            android:layout_width="0dp"
+            android:id="@+id/tabHost"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,13 +49,15 @@
                     android:layout_height="wrap_content" />
 
                 <FrameLayout
-                    android:id="@+id/tabcontent"
+                    android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                 </FrameLayout>
             </LinearLayout>
         </TabHost>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

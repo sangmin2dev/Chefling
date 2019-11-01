@@ -1,5 +1,7 @@
 package com.example.sungho.chef;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class MenuType implements Serializable{
         menus = new ArrayList<Menu>();
     }
 
-    public void AddMenu(String name, String menuType, int price,int time, String info){
-        menus.add(new Menu(name, menuType, price, time, info));
+    public void AddMenu(String name, String menuType, int price, int time, String info, String uri){
+        menus.add(new Menu(name, menuType, price, time, info, uri));
     }
 }

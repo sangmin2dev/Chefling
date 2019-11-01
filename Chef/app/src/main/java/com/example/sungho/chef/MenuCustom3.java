@@ -2,9 +2,16 @@ package com.example.sungho.chef;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
+
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +29,14 @@ import android.widget.Toast;
 
 import com.example.sungho.chef.databinding.ActivityMenucustom3Binding;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MenuCustom3 extends AppCompatActivity {
     ActivityMenucustom3Binding binding;
+    // ** Image
+    private File tempFile;
+    Uri photoUri;
 
     LinearLayout container1;
     LinearLayout container2;
@@ -35,6 +46,7 @@ public class MenuCustom3 extends AppCompatActivity {
     EditText priceEdit;
     EditText timeEdit;
     EditText infoEdit;
+    ImageView imageView;
     ImageButton preButton;
     ImageButton nextButton;
     ImageButton addButton;
@@ -65,6 +77,7 @@ public class MenuCustom3 extends AppCompatActivity {
         addButton = binding.addbtn;
         preButton = binding.prebtn;
         nextButton = binding.nextbtn;
+        imageView = binding.imageView;
 
         // 중복체크용
         menu = new ArrayList<String>();
@@ -80,6 +93,17 @@ public class MenuCustom3 extends AppCompatActivity {
                 menuTypeList);
         typeSpiner.setAdapter(adapter);
         typeSpiner.setSelection(0);
+
+        // 이미지뷰 클릭시 이미지 선택
+        imageView.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //이미지를 선택
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, 1);
+            }
+        });
 
         // 추가 버튼
         addButton.setOnClickListener(new Button.OnClickListener(){
@@ -102,7 +126,8 @@ public class MenuCustom3 extends AppCompatActivity {
                                     typeSpiner.getSelectedItem().toString(),            // 타입
                                     Integer.parseInt(priceEdit.getText().toString()),   // 가격
                                     Integer.parseInt(timeEdit.getText().toString()),    // 소요 시간
-                                    infoEdit.getText().toString());                     // 정보
+                                    infoEdit.getText().toString(),                      // 정보
+                                    photoUri.toString());                               // 이미지 경로
                     }
                     menu.add(nameEdit.getText().toString());
                     displayMenu(nameEdit.getText().toString());
@@ -170,5 +195,33 @@ public class MenuCustom3 extends AppCompatActivity {
                 return false;
         }
         return true;
+    }
+
+    // 이미지 선택시 표시 및 경로 저장
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            photoUri = data.getData();
+            Cursor cursor = null;
+            try {
+                String[] proj = { MediaStore.Images.Media.DATA };
+                assert photoUri != null;
+                cursor = getContentResolver().query(photoUri, proj, null, null, null);
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                tempFile = new File(cursor.getString(column_index));
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+            setImage();
+        }
+    }
+    private void setImage() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        imageView.setImageBitmap(originalBm);
     }
 }

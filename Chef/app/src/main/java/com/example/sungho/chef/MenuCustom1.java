@@ -14,6 +14,7 @@ import com.example.sungho.chef.databinding.ActivityMenucustom1Binding;
 
 public class MenuCustom1 extends AppCompatActivity {
     ActivityMenucustom1Binding binding;
+
     ImageButton nextButton;
     EditText nameEdit;
     EditText infoEdit;
