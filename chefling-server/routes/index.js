@@ -30,6 +30,16 @@ router.get('/', function(req, res, next){
     res.render("main",{list : totalInfo});
 });
 
+router.get('/orders', function(req, res, next){
+    res.render("orders",{});
+    
+});
+
+router.get('/processing', function(req, res, next){
+    res.render("processing",{});
+    
+});
+
 router.get('/firebase', function(req, res, next){
     fs.readFile('./views/firebase.html',(err,data) =>{
         if(err){
