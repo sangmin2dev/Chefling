@@ -20,18 +20,44 @@ app.use(favicon(path.join(__dirname,'public/images','favicon.ico')));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
-// var admin = require('firebase-admin');
-// var serviceAccount = require('./keys/firebase_key_jsw.json');
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//     databaseURL: "https://chefling-f122c.firebaseio.com"
-//   });
+var admin = require('firebase-admin');
 
-// var db = admin.database();
-// var ref = db.ref();
-// ref.on("value", function(snapshot) {
-//   console.log(snapshot.val());
-// });
+var db = admin.database();
+var ref = db.ref("order");
+let {PythonShell} =require("python-shell");
+var options //python shell 작동할 때의 옵션
+var orders = new Array(); //주문 정보를 담는 배열
+
+ref.on("value", function(snapshot) {
+  // console.log(snapshot.val());
+  var len = Object.keys(snapshot).length; // 파이어베이스 주문 배열 길이
+  
+  var temp = Object.values(snapshot.val()) // temp는 스트링 배열의 배열
+  for(var i =0 ; i<len-1; i++){    
+    orders.push(temp[i]) //order 배열에 주문 정보 담기
+  }
+ 
+  options = {
+    mode: 'text',
+    pythonOptions: ['-u'],
+    scriptPath:'',
+    args: [JSON.stringify(orders)],
+    pythonPath:''
+  }
+  // console.log(orders[0]);
+  
+
+  PythonShell.run('test.py',options, function(err, result){
+    if(err) throw err;
+    console.log("result: ",result);
+    
+  });
+}); //프로미스로 동기화 해줘야함
+
+//동기화 시켜야함 .. python 에 먼저 들어가버림
+
+
+
 
 app.use('/', indexRouter);
 app.use((req,res,next)=>{

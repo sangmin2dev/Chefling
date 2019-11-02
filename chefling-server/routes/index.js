@@ -20,7 +20,10 @@ ref.on("value", function(snapshot) {
     ref_data.on("value",function(snapshot2){
         // console.log(typeof(snapshot2.val()));
         totalInfo = snapshot2.val();
+
+        //테이블을 자동 업데이트 하는 기능 추가
     });
+    
 });
 
 
@@ -40,13 +43,13 @@ router.get('/processing', function(req, res, next){
     
 });
 
-router.get('/firebase', function(req, res, next){
-    fs.readFile('./views/firebase.html',(err,data) =>{
-        if(err){
-            throw err;
-        }
-        res.end(data);
-    });
-});
+// router.get('/firebase', function(req, res, next){
+//     fs.readFile('./views/firebase.html',(err,data) =>{
+//         if(err){
+//             throw err;
+//         }
+//         res.end(data);
+//     });
+// });
 
 module.exports = router;
