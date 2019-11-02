@@ -33,6 +33,8 @@ router.get('/', function(req, res, next){
     res.render("main",{list : totalInfo});
 });
 
+
+
 router.get('/orders', function(req, res, next){
     res.render("orders",{});
     
