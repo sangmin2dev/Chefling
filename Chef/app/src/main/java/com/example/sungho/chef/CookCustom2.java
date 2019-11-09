@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -44,11 +43,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.lang.reflect.Array;
-import java.sql.Ref;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class CookCustom2 extends AppCompatActivity {
     ActivityCookCustom2Binding binding;
@@ -247,12 +242,9 @@ public class CookCustom2 extends AppCompatActivity {
 
             //storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
-
-            //Unique한 파일명을 만들자.
             String filename = f.getName();
             //storage 주소와 폴더 파일명을 지정해 준다.
             StorageReference storageRef = storage.getReferenceFromUrl("gs://chefling-f122c.appspot.com").child("Menu_pic/" + filename);
-            //올라가거라...
             storageRef.putFile(photoUri)
                     //성공시
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

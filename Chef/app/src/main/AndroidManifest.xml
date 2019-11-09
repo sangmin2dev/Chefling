@@ -3,8 +3,9 @@
     package="com.example.sungho.chef">
     <!-- camera, gallery -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".RestModify"></activity>
+        <activity android:name=".ModifyActivity" />
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +28,7 @@
         <activity android:name=".MenuCustom3" />
         <activity android:name=".CookCustom1" />
         <activity android:name=".CookCustom2" />
-        <activity android:name=".MenuActivity"></activity>
-
+        <activity android:name=".MenuActivity" />
     </application>
+
 </manifest>

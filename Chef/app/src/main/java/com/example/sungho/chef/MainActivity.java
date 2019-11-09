@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     ImageButton ownerButton;
     ImageButton menuButton;
+    ImageButton chefButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +34,23 @@ public class MainActivity extends AppCompatActivity {
 
         ownerButton = binding.ownerBtn;
         menuButton = binding.menuBtn;
+        chefButton = binding.chefBtn;
 
         // 사진 접근 권한
         tedPermission();
 
-        // 점주 페이지로 이동
+        // 정보 입력 페이지로 이동
         ownerButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(),MenuCustom1.class);
+                startActivity(intent);
+            }
+        });
+
+        // 정보 수정 페이지로 이동
+        chefButton.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(),ModifyActivity.class);
                 startActivity(intent);
             }
         });
@@ -59,14 +69,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tedPermission() {
-
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
                 // 권한 요청 성공
-
             }
-
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
                 // 권한 요청 실패

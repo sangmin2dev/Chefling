@@ -1,10 +1,13 @@
 package com.example.sungho.chef;
 
-import android.content.Context;
+import android.app.LauncherActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -23,9 +27,9 @@ import android.widget.Toast;
 
 import com.example.sungho.chef.Data.Foods;
 import com.example.sungho.chef.databinding.ActivityMenuBinding;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,20 +37,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity{
     ActivityMenuBinding binding;
     TextView restName;
     ImageView menuImg;
+    FloatingActionButton orderButton;
 
     ArrayList<Foods> foodList = new ArrayList<Foods>();
     ArrayList<String> menuTypes = new ArrayList<String>();
+    ArrayList<Foods> cartList = new ArrayList<Foods>();
     String name;
 
     TabHost tabHost;
     String category = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class MenuActivity extends AppCompatActivity{
         binding.setActivity(this);
         restName = binding.restName;
         tabHost = binding.tabHost;
-        //tabContent = binding.tabcontent;
+        orderButton = binding.order;
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference menuRef = database.getReference("menu");
@@ -80,13 +87,20 @@ public class MenuActivity extends AppCompatActivity{
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(MenuActivity.this, "메뉴정보 불러오기를 실패하였습니다. 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCart();
             }
         });
     }
 
+    // FireBase >> Android
     public void parsing(DataSnapshot dataSnapshot){
-        // 중간데모를 위한 임시 파싱
         for( DataSnapshot key : dataSnapshot.getChildren() ) {
             for( DataSnapshot key2 : key.getChildren() ) {              //foods
                 if(key2.getKey().equals("foods")) {
@@ -141,7 +155,6 @@ public class MenuActivity extends AppCompatActivity{
     }
 
     class MyTabContentFactory implements TabHost.TabContentFactory{
-
         @Override
         public View createTabContent(String tag) {
             //2. 각 Tab에 입력한 메뉴들 정보 구성
@@ -165,7 +178,7 @@ public class MenuActivity extends AppCompatActivity{
                 // 카테고리별로 분류
                 if(foodList.get(j).getCategory().equals(category)) {
                     // 메뉴 이름
-                    TextView menuName = new TextView(MenuActivity.this);
+                    final TextView menuName = new TextView(MenuActivity.this);
                     menuName.setLayoutParams(layoutParams);
                     menuName.setText(foodList.get(j).getName());
                     menuName.setTextSize(20);
@@ -178,6 +191,12 @@ public class MenuActivity extends AppCompatActivity{
                     menuImg.setLayoutParams(layoutParams);
                     menuImg.setAdjustViewBounds(true);
                     menuImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    menuImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            addCart(menuName.getText().toString());
+                        }
+                    });
 
                     downloadImage(menuImg,foodList.get(j).getName());
 
@@ -207,7 +226,7 @@ public class MenuActivity extends AppCompatActivity{
             return tab;
         }
     }
-
+    // 이미지 불러오기
     public void downloadImage(final ImageView image, String fileName){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://chefling-f122c.appspot.com").child("Menu_pic/" + fileName);
@@ -219,11 +238,84 @@ public class MenuActivity extends AppCompatActivity{
                             .load(task.getResult())
                             .into(image);
                 }else{
-                    Toast.makeText(MenuActivity.this, "이미지 불러오기를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MenuActivity.this, "이미지 불러오기를 실패하였습니다. 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
+    // 클릭한 메뉴를 카트에 추가
+    public void addCart(final String name){
+        final NumberPicker numberPicker = new NumberPicker(this);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(10);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("주문하기");
+        builder.setMessage(name+"를 주문목록에 추가 할까요?");
+        builder.setView(numberPicker);
+        builder.setPositiveButton("예",
+                new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        for(int i = 0; i < foodList.size(); i++){
+                            if(foodList.get(i).getName().equals(name)){
+                                for(int j = 0; j < numberPicker.getValue(); j ++){
+                                    cartList.add(foodList.get(i));
+                                }
+                                Toast.makeText(MenuActivity.this, foodList.get(i).getName() + numberPicker.getValue()
+                                        +"개 가 주문 목록에 담겼습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+        builder.setNegativeButton("아니오",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+    }
+
+    // 카트에 담긴 메뉴목록 보여주기
+    public void showCart(){
+        List<String> ListItems = new ArrayList<>();
+        int sum = 0;
+        for(int i = 0; i < cartList.size(); i++){
+            ListItems.add("- "+cartList.get(i).getName() + "    "+cartList.get(i).getPrice() + "원");
+            sum += cartList.get(i).getPrice();
+        }
+        ListItems.add("총합 : " + sum+"원");
+        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("주문 하기");
+        builder.setItems(items,new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setPositiveButton("주문하기", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference menuRef = database.getReference("order");
+                menuRef.push().setValue(cartList);
+                menuRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d("firebaseTAG","success :)");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d("firebaseTAG","Failed :(");
+                    }
+                });
+            }
+        });
+        builder.show();
     }
 }
 

@@ -12,4 +12,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="numberPickerCustomSize">
+        <!--Display textSize-->
+        <item name="android:textSize">50sp</item>
+        <!--Display textColor-->
+        <item name="android:editTextColor">@color/orange</item>
+    </style>
+
 </resources>

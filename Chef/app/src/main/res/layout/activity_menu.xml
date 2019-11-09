@@ -57,7 +57,20 @@
             </LinearLayout>
         </TabHost>
 
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tabHost"
+            app:borderWidth="0dp"
+            android:backgroundTint="#ffffff"
+            android:layout_margin="30dp"
+            app:fabSize="normal"
+            android:scaleType="center"
+            android:clickable="true"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
