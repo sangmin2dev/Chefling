@@ -29,11 +29,51 @@
           </div>
     
           <!-- Jumbotron -->
-          
-    
+          <script src="/socket.io/socket.io.js"></script>       
+
+          <script>           
+            var socket = io();
+            
+            socket.on('update_orders',function (data) {
+             $("#orderLogs").empty();
+             var order_index = 1;
+             data.forEach(order => {
+               $("#orderLogs").append("<table> <th>order "+order_index+"</th>");
+               order.forEach(food =>{
+                $("#orderLogs").append("<tr><td>"+food.name+"</td></tr>")
+               });
+               $("#orderLogs").append("</table>")
+               order_index = order_index +1;
+             });
+            // data.forEach(order => {
+            //   $("#orderLogs").append("<div>test</div>")
+            //   console.log(order);
+            // });
+            
+            
+                      
+            })
+      
+          </script>
+
           <!-- Example row of columns -->
           <div class="row">
             <h1>실시간 주문 정보</h1>
+          </div>
+
+          <div id = "orderLogs">
+        
+            <%order_list.forEach(function (order) {%>
+            <table>
+              <th>order</th>  
+              <%order.forEach(function(food) {%>
+              <tr>
+                <td><%= food.name%></td>                
+              </tr>  
+                                
+          <%})%>
+            </table>
+            <%})%>
           </div>
     
           <!-- Site footer -->

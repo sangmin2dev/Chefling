@@ -16,16 +16,16 @@ var totalInfo = new Object();
 ref.on("value", function(snapshot) {
     const id = Object.keys(snapshot.val())[0];
     // console.log(id);
-    var ref_data = db.ref("menu").child(id);
+    var ref_data = db.ref("menu");
     ref_data.on("value",function(snapshot2){
         // console.log(typeof(snapshot2.val()));
         totalInfo = snapshot2.val();
+        // console.log(totalInfo);       
 
         //테이블을 자동 업데이트 하는 기능 추가
     });
     
 });
-
 
 
 router.get('/', function(req, res, next){
@@ -34,11 +34,6 @@ router.get('/', function(req, res, next){
 });
 
 
-
-router.get('/orders', function(req, res, next){
-    res.render("orders",{});
-    
-});
 
 router.get('/processing', function(req, res, next){
     res.render("processing",{});
