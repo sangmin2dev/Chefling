@@ -101,45 +101,43 @@ public class MenuActivity extends AppCompatActivity{
 
     // FireBase >> Android
     public void parsing(DataSnapshot dataSnapshot){
-        for( DataSnapshot key : dataSnapshot.getChildren() ) {
-            for( DataSnapshot key2 : key.getChildren() ) {              //foods
-                if(key2.getKey().equals("foods")) {
-                    for (DataSnapshot key3 : key2.getChildren()) {      //1..2..3
-                        Foods food= new Foods();
-                        for(DataSnapshot data : key3.getChildren()) {   // 속성
-                            // 카테고리 입력
-                            if(data.getKey().equals("category") && checkDuplicate(data.getValue().toString(),menuTypes)){
-                                menuTypes.add(data.getValue().toString());
-                            }
-                            // 음식정보값 입력
-                            switch (data.getKey()){
-                                case "category":
-                                    food.setCategory(data.getValue().toString());
-                                    break;
-                                case "cooking_time":
-                                    food.setCooking_time(Integer.parseInt(data.getValue().toString()));
-                                    break;
-                                case "description":
-                                    food.setDescription(data.getValue().toString());
-                                    break;
-                                case "name":
-                                    food.setName(data.getValue().toString());
-                                    break;
-                                case "price":
-                                    food.setPrice(Integer.parseInt(data.getValue().toString()));
-                                    break;
-                                case "sold_out":
-                                    food.setSold_out(false);
-                                    break;
-                            }
+        for( DataSnapshot key2 : dataSnapshot.getChildren() ) {              //foods
+            if(key2.getKey().equals("foods")) {
+                for (DataSnapshot key3 : key2.getChildren()) {      //1..2..3
+                    Foods food= new Foods();
+                    for(DataSnapshot data : key3.getChildren()) {   // 속성
+                        // 카테고리 입력
+                        if(data.getKey().equals("category") && checkDuplicate(data.getValue().toString(),menuTypes)){
+                            menuTypes.add(data.getValue().toString());
                         }
-                        foodList.add(food);
+                        // 음식정보값 입력
+                        switch (data.getKey()){
+                            case "category":
+                                food.setCategory(data.getValue().toString());
+                                break;
+                            case "cooking_time":
+                                food.setCooking_time(Integer.parseInt(data.getValue().toString()));
+                                break;
+                            case "description":
+                                food.setDescription(data.getValue().toString());
+                                break;
+                            case "name":
+                                food.setName(data.getValue().toString());
+                                break;
+                            case "price":
+                                food.setPrice(Integer.parseInt(data.getValue().toString()));
+                                break;
+                            case "sold_out":
+                                food.setSold_out(false);
+                                break;
+                        }
                     }
-                }else if(key2.getKey().equals("rest_info")){
-                    for(DataSnapshot data : key2.getChildren()) {   // 속성
-                        if(data.getKey().equals("name"))
-                            name = data.getValue().toString();
-                    }
+                    foodList.add(food);
+                }
+            }else if(key2.getKey().equals("rest_info")){
+                for(DataSnapshot data : key2.getChildren()) {   // 속성
+                    if(data.getKey().equals("name"))
+                        name = data.getValue().toString();
                 }
             }
         }

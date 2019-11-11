@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.sungho.chef.RestModify">
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="250dp"
@@ -36,6 +37,32 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="53dp"
+            android:layout_marginEnd="51dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="설명"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/infoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:hint=" EX) 이탈리아 레스토랑" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -65,31 +92,20 @@
                 android:hint=" EX) Pasta House" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="310dp"
+        <ImageButton
+            android:id="@+id/okBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="53dp"
-            android:layout_marginEnd="51dp"
+            android:layout_marginStart="134dp"
+            android:layout_marginTop="109dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="145dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="설명"
-                android:textSize="30px"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/infoEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:hint=" EX) 이탈리아 레스토랑" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            android:background="#ffffff"
+            app:srcCompat="@drawable/okbtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
