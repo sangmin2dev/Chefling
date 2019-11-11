@@ -15,14 +15,15 @@ var orders = new Array(); //주문 정보를 담는 배열
 
 ref.on("value", function(snapshot) {
     orders = [];
-  var len = Object.keys(snapshot).length; // 파이어베이스 주문 배열 길이  
+  var len = Object.keys(snapshot.val()).length; // 파이어베이스 주문 배열 길이  
+  
   var temp = Object.values(snapshot.val()) // temp는 스트링 배열의 배열
-  for(var i =0 ; i<len-1; i++){    
+  for(var i =0 ; i<len; i++){    
     orders.push(temp[i]) //order 배열에 주문 정보 담기   
   }
   io.emit('update_orders',orders);
-  console.log("파베 업데이트");
-  console.log(orders[0][0]);
+  console.log("파베(order) 업데이트");
+  
   
 
 });

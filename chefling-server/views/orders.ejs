@@ -17,7 +17,7 @@
         <div class="container">
     
           <div class="masthead">
-            <h3 class="text-muted">Chefling</h3>
+           <h3 class="text-muted">Chefling</h3>
             <nav>
               <ul class="nav nav-justified">
                 <li><a href="/">Restaurant Status</a></li>
@@ -26,7 +26,7 @@
                
               </ul>
             </nav>
-          </div>
+          </div> 
     
           <!-- Jumbotron -->
           <script src="/socket.io/socket.io.js"></script>       
@@ -35,37 +35,38 @@
             var socket = io();
             
             socket.on('update_orders',function (data) {
-             $("#orderLogs").empty();
+             $("#orderLogs").empty();              
+             
              var order_index = 1;
+             var textToInsert = [];
+             var i =0;
              data.forEach(order => {
-               $("#orderLogs").append("<table> <th>order "+order_index+"</th>");
+               textToInsert[i++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">order '+order_index+'</th>';
                order.forEach(food =>{
-                $("#orderLogs").append("<tr><td>"+food.name+"</td></tr>")
+                 textToInsert[i++] = '<tr><td>'+food.name+'</td><tr>';
                });
-               $("#orderLogs").append("</table>")
+                textToInsert[i++] = '</table></div>'
                order_index = order_index +1;
-             });
-            // data.forEach(order => {
-            //   $("#orderLogs").append("<div>test</div>")
-            //   console.log(order);
-            // });
-            
-            
-                      
+             });  
+             $("#orderLogs").append(textToInsert.join(''));
             })
       
           </script>
-
+          
           <!-- Example row of columns -->
           <div class="row">
             <h1>실시간 주문 정보</h1>
           </div>
-
-          <div id = "orderLogs">
-        
-            <%order_list.forEach(function (order) {%>
-            <table>
-              <th>order</th>  
+          <div class = "row">
+          <div id = "orderLogs" class="col-md-12">
+            
+            <%var orders_index =1;
+            order_list.forEach(function (order){
+              %>
+              <div class="col-md-3">
+            <table class="table table-condensed table-hover">
+              <th class="active">order <%=orders_index%></th>
+              <%orders_index++%> 
               <%order.forEach(function(food) {%>
               <tr>
                 <td><%= food.name%></td>                
@@ -73,9 +74,13 @@
                                 
           <%})%>
             </table>
-            <%})%>
           </div>
-    
+          
+            <%})%>
+          
+          </div>
+        </div>
+          
           <!-- Site footer -->
           <footer class="footer">
             <p>&copy; Chefling (Capstone team 12)</p>
