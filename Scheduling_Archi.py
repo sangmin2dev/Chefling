@@ -12,20 +12,19 @@ total_Food = 0
 #order별 요리음식 (Data)
 #개별 음식 객체
 class Food :
-    def __init__(self,orderID, name, priority, waiting):
+    def __init__(self,orderID, name ):
         self.orderID = orderID
         self.name = name
+        #[name,cookingtime]
 
-        self.priority = priority
-        self.waiting = waiting
+        self.priority = 0
+        self.waitable = 0
         self.realwait = 0
+
 
         self.emergency = 0
 
         self.cook = ""
-        self.gang = 0
-        self.other_info = ""
-
 
 #TODO oderID : Object -> 큐에 넣기
 #
@@ -45,29 +44,17 @@ class Food :
 #   셰프큐는 여러개!!
 #   기본 세팅에서 처리되어야 함
 class Cook :
-    def __init__(self, cook_id, position, cook_info, serverClock):
+    def __init__(self, cook_id, position, ability):
         self.cook_id = cook_id
         self.position = position
+        self.ability = ability
 
-        self.ability = cook_info[1]
-        self.charge = []
+        self.charge
 
         self.cookClock
-        self.serverClock
 
         self.sema = 1
 
     def Block(self, event):
         if event == True :
             self.sema = 0
-
-
-def making_Cooks() :
-    Cooks = []
-    cook_info = loadChef()
-
-    for uni_cook in cook_info :
-        Cooks.append(Cook(uni_cook[0], uni_cook[1], uni_cook[2]))
-
-
-    return Cooks
