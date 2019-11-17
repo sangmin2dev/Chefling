@@ -54,7 +54,6 @@ public class MenuActivity extends AppCompatActivity{
     TabHost tabHost;
     String category = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +66,6 @@ public class MenuActivity extends AppCompatActivity{
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference menuRef = database.getReference("menu");
-
         menuRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,7 +88,6 @@ public class MenuActivity extends AppCompatActivity{
                 Toast.makeText(MenuActivity.this, "메뉴정보 불러오기를 실패하였습니다. 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
-
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,5 +313,3 @@ public class MenuActivity extends AppCompatActivity{
         builder.show();
     }
 }
-
-

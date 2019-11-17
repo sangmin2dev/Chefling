@@ -1,24 +1,48 @@
 package com.example.sungho.chef;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.example.sungho.chef.Data.Foods;
+import com.example.sungho.chef.Data.MenuData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 
-class CustomAdapter extends BaseExpandableListAdapter {
-    ArrayList<GroupData> groupDatas;
-    ArrayList<ArrayList<ChildData>> childDatas;
-    private LayoutInflater inflater = null;
+import androidx.annotation.NonNull;
 
-    public CustomAdapter(Context c, ArrayList<GroupData> groupDatas, ArrayList<ArrayList<ChildData>> childDatas){
+class CustomAdapter extends BaseExpandableListAdapter {
+    ArrayList<String> groupDatas;
+    ArrayList<ArrayList<Foods>> childDatas;
+    private LayoutInflater inflater = null;
+    MenuData menuData;
+
+    //image
+    private File tempFile;
+    Uri photoUri;
+
+    public CustomAdapter(MenuData menuData, Context c, ArrayList<String> groupDatas, ArrayList<ArrayList<Foods>> childDatas){
         super();
+        this.menuData = menuData;
         this.groupDatas = groupDatas;
         this.childDatas = childDatas;
         inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,23 +59,23 @@ class CustomAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public GroupData getGroup(int groupPosition) {
+    public String getGroup(int groupPosition) {
         return groupDatas.get(groupPosition);
     }
 
     @Override
-    public ChildData getChild(int groupPosition, int childPosition) {
+    public Foods getChild(int groupPosition, int childPosition) {
         return childDatas.get(groupPosition).get(childPosition);
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
     @Override
@@ -66,7 +90,7 @@ class CustomAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.parent_list_view,null);
         }
         TextView parent_TextView = convertView.findViewById(R.id.parentText);
-        parent_TextView.setText(groupDatas.get(groupPosition).getGroupNumber()+"");
+        parent_TextView.setText(groupDatas.get(groupPosition));
 
         return convertView;
     }
@@ -75,21 +99,10 @@ class CustomAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.child_list_view,null);
+            convertView = inflater.inflate(R.layout.child_position,null);
+
+            setActivityPosition(groupPosition,childPosition,convertView);
         }
-        convertView = inflater.inflate(R.layout.child_list_view,null);
-
-        TextView name_TextView = (TextView)convertView.findViewById(R.id.name_text_view);
-        TextView tel_TextView = (TextView)convertView.findViewById(R.id.tel_text_view);
-        TextView email_TextView = (TextView)convertView.findViewById(R.id.email_text_view);
-
-        name_TextView.setText(childDatas.get(groupPosition).get(childPosition).getName());
-        tel_TextView.setText(childDatas.get(groupPosition).get(childPosition).getTel());
-        email_TextView.setText(childDatas.get(groupPosition).get(childPosition).getEmail());
-        Log.d("group",groupDatas.get(groupPosition).getGroupNumber()+"");
-
-        Log.d("group",childDatas.get(groupPosition).get(childPosition).getName());
-
         return convertView;
     }
 
@@ -99,38 +112,38 @@ class CustomAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    static class ChildData{
-        private String name;
-        private String tel;
-        private String email;
+    // 액티비티 설정
+    public void setActivityPosition(int groupPosition, int childPosition, View convertView){
+        ImageView menu_Image = (ImageView)convertView.findViewById(R.id.menuImage);
+        EditText name_EditText = (EditText)convertView.findViewById(R.id.nameEdit);
+        EditText price_EditText = (EditText)convertView.findViewById(R.id.priceEdit);
+        EditText time_EditText = (EditText)convertView.findViewById(R.id.timeEdit);
+        final EditText info_EditText = (EditText)convertView.findViewById(R.id.infoEdit);
 
-        public ChildData(String name, String tel, String email){
-            this.name = name;
-            this.tel = tel;
-            this.email = email;
-        }
+        downloadImage(menu_Image,childDatas.get(groupPosition).get(childPosition).getName(),convertView);
 
-        public String getName() {
-            return name;
-        }
+        name_EditText.setText(childDatas.get(groupPosition).get(childPosition).getName());
+        price_EditText.setText(childDatas.get(groupPosition).get(childPosition).getPrice()+"");
+        time_EditText.setText(childDatas.get(groupPosition).get(childPosition).getCooking_time()+"");
+        info_EditText.setText(childDatas.get(groupPosition).get(childPosition).getDescription());
 
-        public String getTel() {
-            return tel;
-        }
-
-        public String getEmail() {
-            return email;
-        }
+        Log.d("test2",groupPosition+" , "+childPosition);
     }
 
-    static class GroupData{
-        private int groupNumber;
-
-        public GroupData(int i){
-            this.groupNumber = i;
-        }
-        public int getGroupNumber(){
-            return groupNumber;
-        }
+    // 이미지 불러오기
+    public void downloadImage(final ImageView image, String fileName, final View convertView){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = storage.getReferenceFromUrl("gs://chefling-f122c.appspot.com").child("Menu_pic/" + fileName);
+        storageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful()){
+                    GlideApp.with(convertView)
+                            .load(task.getResult())
+                            .into(image);
+                }else{
+                }
+            }
+        });
     }
 }

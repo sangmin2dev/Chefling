@@ -13,7 +13,7 @@ public class Position implements Serializable{
     ArrayList<String> typeList;     //해당 포지션에서 담당하는 메뉴타입
     ArrayList<Cook> cooks;
 
-    public Position(String name,int size){
+    public Position(String name, int size){
         this.name = name;
         this.size = size;
         typeList = new ArrayList<String>();
@@ -22,6 +22,10 @@ public class Position implements Serializable{
 
     public ArrayList<Cook> getCooks() {
         return cooks;
+    }
+
+    public ArrayList<String> getTypeList() {
+        return typeList;
     }
 
     public String getName() {

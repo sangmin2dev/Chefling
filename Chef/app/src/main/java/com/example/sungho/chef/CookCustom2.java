@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.sungho.chef.Data.Cooks;
 import com.example.sungho.chef.Data.Foods;
 import com.example.sungho.chef.Data.MenuData;
+import com.example.sungho.chef.Data.Positions;
 import com.example.sungho.chef.Data.RestaurantInfo;
 import com.example.sungho.chef.databinding.ActivityCookCustom2Binding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,9 +58,12 @@ public class CookCustom2 extends AppCompatActivity {
     ImageButton nextButton;
     ImageButton addButton;
 
-    Restaurant rest;
-    ArrayList<Cooks> cooks = new ArrayList<Cooks>();
-    ArrayList<Foods> foods = new ArrayList<Foods>();
+    //Fire base로 보낼 정보들
+    Restaurant rest;                                                //1. 레스토랑 정보
+    ArrayList<Positions> positions = new ArrayList<Positions>();    //2. 포지션 정보
+    ArrayList<Cooks> cooks = new ArrayList<Cooks>();                //3. 요리사 정보
+    ArrayList<String> types = new ArrayList<String>();              //4. 메뉴타입 정보
+    ArrayList<Foods> foods = new ArrayList<Foods>();                //5. 요리 정보
 
     ArrayList<String> positionList;
     int count = 0;
@@ -137,13 +141,17 @@ public class CookCustom2 extends AppCompatActivity {
                 dataPacking();      //파베올릴 데이터
 
                 MenuData menuData = new MenuData();
+                menuData.setPositions(positions);
                 menuData.setCooks(cooks);
+                menuData.setFoods_type(types);
                 menuData.setFoods(foods);
+
                 RestaurantInfo rest_info = new RestaurantInfo();
                 rest_info.setName(rest.getName());
                 rest_info.setDescription(rest.getInfo());
                 menuData.setRest_info(rest_info);
                 menuRef.setValue(menuData);
+
                 menuRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -201,6 +209,14 @@ public class CookCustom2 extends AppCompatActivity {
         // 1. 입력된 요리사들(Cooks)의 Array List
         for(int i = 0; i < rest.positions.size(); i++) {                    // i : position
             Position position = rest.positions.get(i);
+
+            //3. 입력된 요리사들 포지션(Positions)
+            Positions pos = new Positions();
+            pos.setName(position.getName());
+            pos.setSize(position.getSize());
+            for(int j = 0; j < position.getTypeList().size(); j++)
+                pos.addType(position.getTypeList().get(j));
+
             for(int j = 0; j < position.getCooks().size(); j++) {           // j : position 에 있는 Cook
                 Cooks c = new Cooks();
                 c.setName(position.getCooks().get(j).getName());
@@ -209,11 +225,13 @@ public class CookCustom2 extends AppCompatActivity {
                 c.setBreaktime(false);
                 cooks.add(c);
             }
+            positions.add(pos);
         }
 
         // 2. 입력된 메뉴들(Foods)의 Array List
         for(int i = 0; i < rest.menuTypes.size(); i++) {                    // i : menuType
             MenuType type = rest.menuTypes.get(i);
+            types.add(type.getTypeName());
             for(int j = 0; j < type.getMenus().size(); j++) {               // j : menuType 에 있는 menu
                 Foods f = new Foods();
                 f.setName(type.getMenus().get(j).getName());
