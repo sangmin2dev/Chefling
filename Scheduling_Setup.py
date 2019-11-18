@@ -12,6 +12,7 @@ count = 0
 
 def loadJson() :
     information = loads(argv[1])
+
     return information
 
 
@@ -69,10 +70,9 @@ def loadServed(information) :
     return served
 #####################
 
-
 #ordering
 def orderPassing(information) :
-    order = information[2]
+    order = information[2][-1]
     orderID = order[0]
     foods = order[1]
 

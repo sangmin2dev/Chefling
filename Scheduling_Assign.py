@@ -10,24 +10,27 @@ from Scheduling_Archi import *
 #return [['stake', 10], ['pasta', 7], ['dessert', 5]]
 #return ['1000', ['pasta', 'stake', 'dessert']]
 
-def assign_ordered(s_ordered, menu):
-    orderID, bills = orderPassing()
+def assign_ordered(s_ordered, menu,information):
+    orderID, bills = orderPassing(information)
 
     sortedOrder = []
     priority = 1
+    standard = []
+
+    for menu_ele in menu :
+        standard.append(menu_ele[0])
 
     for element in bills :
-        sortedOrder.append(menu[menu.index(element)])
-
+        sortedOrder.append(menu[standard.index(element)])
 
     #event
-    if sortedOrder[0].orderID > 1000 :
+    if int(orderID) > 1000 :
         sortedOrder.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
         for uni_food in sortedOrder :
             temp = Food(orderID, uni_food)
             temp.priority = priority
             temp.waitable = sortedOrder[0][1] - uni_food[1]
-            s_ordered.insert(0,Food(temp))
+            s_ordered.insert(0,temp)
             priority += 1
     #normal
     else :
@@ -36,7 +39,7 @@ def assign_ordered(s_ordered, menu):
             temp = Food(orderID, uni_food)
             temp.priority = priority
             temp.waitable = sortedOrder[0][1] - uni_food[1]
-            s_ordered.append(Food(temp))
+            s_ordered.append(temp)
             priority += 1
 
     return s_ordered
@@ -59,6 +62,7 @@ def assigning(food, s_ordered, s_cook) :
 #TODO
 # cook queue에 할당
 def assign_cook(s_ordered,s_cook, serverClock) :
+
 
     # calc wait~ in ordered queue
     for element in s_ordered:

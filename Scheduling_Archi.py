@@ -49,9 +49,9 @@ class Cook :
         self.position = position
         self.ability = ability
 
-        self.charge
+        self.charge = []
 
-        self.cookClock
+        self.cookClock = 0
 
         self.sema = 1
 

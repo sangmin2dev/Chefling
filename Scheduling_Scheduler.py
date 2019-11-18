@@ -19,6 +19,24 @@ def main() :
     #Json load
     information = loadJson()
 
+  #   information = [ [ [ '파스타', 15 ], ['스파게티', 10], ['스테이크', 7] ],
+  #
+  # [ [ '박성호', '포지션1', 2 ], [ '정성운', '포지션2', 2 ] ],
+  #
+  # [ [ '1', ['파스타', '스파게티','스테이크'] ],
+  #   [ '2', ['파스타', '스파게티', '스파게티'] ] ],
+  # 0,
+  #
+  # [ [ '1', '메뉴1', 10, 10, 10, 0 ],
+  #   [ '1', '메뉴2', 10, 10, 10, 0 ],
+  #   [ '1', '메뉴3', 10, 10, 10, 0 ],],
+  #
+  # [ [ '0', '포지션1', 2, 'None', 'None', 'None' ],
+  #   [ '1', '포지션2', 2, 'None', 'None', 'None' ] ],
+  #
+  # [ 'None' ] ]
+
+
     menu = loadFoodinit(information)
     kitchen = loadChefinit(information)
 
@@ -26,7 +44,7 @@ def main() :
     #처음에 큐 이니셜라이징??
 
     #Queue setting
-    s_ordered = loadOrdered(information,menu)
+    s_ordered = loadOrdered(information)
     s_cook = loadCooks(information)
     s_served = loadServed(information)
 
@@ -35,11 +53,11 @@ def main() :
 
 
     #Scheduling
-    s_ordered = assign_ordered(s_ordered,menu)
+    s_ordered = assign_ordered(s_ordered,menu, information)
     s_ordered, s_cook = assign_cook(s_ordered, s_cook, serverClock)
 
     #output
-    pass
+    output(s_ordered, s_cook)
 
 
 
