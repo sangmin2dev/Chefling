@@ -93,5 +93,5 @@ def output(s_ordered, s_cook) :
                 element.charge,element.cookClock, element.sema]
         op_cook.append(temp)
 
-    print(op_ordered)
-    print(op_cook)
+    fin_out = [op_ordered, op_cook]
+    print(dumps(fin_out))
