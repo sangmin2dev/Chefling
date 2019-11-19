@@ -34,6 +34,10 @@ def loadFoodinit(information) :
 def loadOrdered(information) :
     prelist = information[4]
     ordered = []
+
+    if prelist[0] ==  "z" :
+        return ordered
+
     for uniInfo in prelist :
         # orderID, name, priority, waiting, realwait,emergency
         element = Food(uniInfo[0],uniInfo[2])
@@ -59,16 +63,6 @@ def loadCooks(information) :
         element.sema = uniInfo[5]
         cooklist.append(element)
     return cooklist
-
-def loadServed(information) :
-    prelist = information[5]
-    served = []
-    for uniInfo in prelist:
-        #orderID, name, cook
-        element = Food(uniInfo[0],uniInfo[1])
-        element.cook = uniInfo[2]
-        served.append(element)
-    return served
 #####################
 
 #ordering
@@ -96,6 +90,4 @@ def output(s_ordered, s_cook) :
 
     fin_out = [op_ordered, op_cook]
 
-    print(op_ordered)
-    print(op_cook)
-    print("here",type(fin_out) ,dumps(fin_out))
+    print(dumps(fin_out))

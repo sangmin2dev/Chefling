@@ -17,19 +17,19 @@ from abc import *
 def main() :
 
     #Json load
-    #information = loadJson()
+    information = loadJson()
 
-    information = [ [ [ '파스타', 15 ], ['리조또', 10], ['스테이크', 7] ],
-
-    [ [ '박성호', '파스타', 2, "None", "None", "None" ], [ '정성운', '리조또', 2, "None", "None", "None"], ['이상민', '스테이크', 2,"None", "None","None"] ],
-
-    [ [ '1', [['파스타',1], ['리조또',2],['스테이크',3]] ],],
-
-    0,
-
-    [],
-
-    [ 'None' ] ]
+    # information = [ [ [ '파스타', 15 ], ['리조또', 10], ['스테이크', 7] ],
+    #
+    # [ [ '박성호', '파스타', 2, 'None', "None", "None" ], [ '정성운', '리조또', 2, "None", "None", "None"], ['이상민', '스테이크', 2,"None", "None","None"] ],
+    #
+    # [ ['1', [['파스타',"hgsd___2222hlkfjasflk____2"], ['리조또', "ashgkjdsfh"],['스테이크',"kjsadhkgjas;k"]]]],
+    #
+    # 0,
+    #
+    # ["z"],
+    #
+    # [ 'z' ] ]
 
 
     menu = loadFoodinit(information)
@@ -39,7 +39,6 @@ def main() :
     s_ordered = loadOrdered(information)
     s_cook = loadCooks(information)
 
-    s_served = loadServed(information)
 
 
     serverClock = information[3]

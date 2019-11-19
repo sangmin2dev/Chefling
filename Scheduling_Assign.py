@@ -51,12 +51,14 @@ def assign_ordered(s_ordered, menu,information):
 
 
 def assigning(food, s_ordered, s_cook) :
-
+    temp = []
     for uni_archi in s_cook :
         if uni_archi.position == food.name[0] :
-            uni_archi.charge.append(food.orderID)
-            uni_archi.charge.append(food.foodID,)
-            uni_archi.charge.append(food.name)
+            temp.append(food.orderID)
+            temp.append(food.foodID,)
+            temp.append(food.name)
+
+            uni_archi.charge.append(temp)
             break
 
     for element in s_ordered:
