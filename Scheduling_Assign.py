@@ -6,6 +6,7 @@ Schedulig cooking order to improving process of kitchen & restaurant service
 from Scheduling_Setup import *
 from Scheduling_Event import *
 from Scheduling_Archi import *
+from abc import *
 
 #return [['stake', 10], ['pasta', 7], ['dessert', 5]]
 #return ['1000', ['pasta', 'stake', 'dessert']]
@@ -17,10 +18,14 @@ def assign_ordered(s_ordered, menu,information):
     priority = 1
     standard = []
 
+    refinedBills=[]
+    for uni_food in bills :
+        refinedBills.append(uni_food[0])
+
     for menu_ele in menu :
         standard.append(menu_ele[0])
 
-    for element in bills :
+    for element in refinedBills :
         sortedOrder.append(menu[standard.index(element)])
 
     #event
@@ -46,22 +51,24 @@ def assign_ordered(s_ordered, menu,information):
 
 
 def assigning(food, s_ordered, s_cook) :
-    for element in s_ordered :
-        if food.orderID == element.orderID :
-            element.priority -= 1
-    s_ordered.remove(food)
 
     for uni_archi in s_cook :
-        if uni_archi.position == element.name :
-            uni_archi.charge.append(food)
+        print(uni_archi.position)
+        if uni_archi.position == food.name[0] :
+            uni_archi.charge.append(food.orderID)
+            uni_archi.charge.append(food.foodID,)
+            uni_archi.charge.append(food.name)
             break
+
+    for element in s_ordered:
+        if food.orderID == element.orderID:
+            element.priority -= 1
+    s_ordered.remove(food)
 
     return s_ordered, s_cook
 
 
-#TODO
-# cook queue에 할당
-def assign_cook(s_ordered,s_cook, serverClock) :
+def assign_cook(s_ordered, s_cook, serverClock) :
 
 
     # calc wait~ in ordered queue
@@ -76,12 +83,14 @@ def assign_cook(s_ordered,s_cook, serverClock) :
             isFull +=1
         else :
             canAssign.append(cook.position)
+
     if isFull == len(s_cook) :
         return s_ordered, s_cook
 
+
     #assign cook queue
     for element in s_ordered :
-        if element.name in canAssign :
+        if element.name[0] in canAssign :
             if element.priority == 1 or \
                     element.waitable <= element.realwait:
                 s_ordered, s_cook = assigning(element,s_ordered,s_cook)

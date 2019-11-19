@@ -5,14 +5,15 @@ Struct Scheduler Architecture
 
 from Scheduling_Setup import *
 from Scheduling_Event import *
+from abc import *
 
 total_Food = 0
 
 #fod 별로 쪼개서 넘어온다
 #order별 요리음식 (Data)
 #개별 음식 객체
-class Food :
-    def __init__(self,orderID, name ):
+class Food(metaclass = ABCMeta) :
+    def __init__(self,orderID, name):
         self.orderID = orderID
         self.name = name
         #[name,cookingtime]
@@ -21,8 +22,9 @@ class Food :
         self.waitable = 0
         self.realwait = 0
 
-
         self.emergency = 0
+
+        self.foodID = 0
 
         self.cook = ""
 
@@ -43,7 +45,7 @@ class Food :
 #   Blocking
 #   셰프큐는 여러개!!
 #   기본 세팅에서 처리되어야 함
-class Cook :
+class Cook(metaclass = ABCMeta) :
     def __init__(self, cook_id, position, ability):
         self.cook_id = cook_id
         self.position = position

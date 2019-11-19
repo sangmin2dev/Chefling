@@ -5,7 +5,7 @@ from Scheduling_Event import *
 from Scheduling_Archi import *
 from Scheduling_Assign import *
 from threading import *
-
+from abc import *
 
 #TODO
 # Input Output 설정 (Pasing X Packet O)
@@ -17,32 +17,28 @@ from threading import *
 def main() :
 
     #Json load
-    information = loadJson()
+    #information = loadJson()
 
-   #  information = [ [ [ '파스타', 15 ], ['스파게티', 10], ['스테이크', 7] ],
-   #
-   # [ [ '박성호', '포지션1', 2 ], [ '정성운', '포지션2', 2 ] ],
-   #
-   # [ [ '1', ['파스타', '스파게티','스테이크'] ],],
-   #
-   # 0,
-   #
-   # [],
-   #
-   # [],
-   # 
-   # [ 'None' ] ]
+    information = [ [ [ '파스타', 15 ], ['리조또', 10], ['스테이크', 7] ],
+
+    [ [ '박성호', '파스타', 2, "None", "None", "None" ], [ '정성운', '리조또', 2, "None", "None", "None"], ['이상민', '스테이크', 2,"None", "None","None"] ],
+
+    [ [ '1', [['파스타',1], ['리조또',2],['스테이크',3]] ],],
+
+    0,
+
+    [],
+
+    [ 'None' ] ]
 
 
     menu = loadFoodinit(information)
-    kitchen = loadChefinit(information)
 
-#TODO
-    #처음에 큐 이니셜라이징??
 
     #Queue setting
     s_ordered = loadOrdered(information)
     s_cook = loadCooks(information)
+
     s_served = loadServed(information)
 
 
