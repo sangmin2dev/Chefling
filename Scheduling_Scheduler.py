@@ -8,8 +8,8 @@ from threading import *
 from abc import *
 
 #TODO
-# Input Output 설정 (Pasing X Packet O)
-# order -> cook
+#   order 2개 이상부터
+#   하나씩 들어가는 문제 해결
 
 
 #initialize

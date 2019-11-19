@@ -53,7 +53,6 @@ def assign_ordered(s_ordered, menu,information):
 def assigning(food, s_ordered, s_cook) :
 
     for uni_archi in s_cook :
-        print(uni_archi.position)
         if uni_archi.position == food.name[0] :
             uni_archi.charge.append(food.orderID)
             uni_archi.charge.append(food.foodID,)
@@ -63,6 +62,7 @@ def assigning(food, s_ordered, s_cook) :
     for element in s_ordered:
         if food.orderID == element.orderID:
             element.priority -= 1
+
     s_ordered.remove(food)
 
     return s_ordered, s_cook
@@ -89,12 +89,20 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 
 
     #assign cook queue
-    for element in s_ordered :
+    standard = s_ordered
+    for element in standard :
         if element.name[0] in canAssign :
             if element.priority == 1 or \
                     element.waitable <= element.realwait:
                 s_ordered, s_cook = assigning(element,s_ordered,s_cook)
         else :
             continue
+
+
+    # standard = s_ordered
+    # print("101",len(standard))
+    # for element in standard :
+    #     print(element)
+    #     s_ordered, s_cook = assigning(element, s_ordered, s_cook)
 
     return s_ordered, s_cook
