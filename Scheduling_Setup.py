@@ -35,7 +35,7 @@ def loadOrdered(information) :
     prelist = information[4]
     ordered = []
 
-    if prelist[0] ==  "z" :
+    if prelist[0] ==  0 :
         return ordered
 
     for uniInfo in prelist :

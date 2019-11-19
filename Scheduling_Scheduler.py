@@ -17,19 +17,19 @@ from abc import *
 def main() :
 
     #Json load
-    information = loadJson()
+    #information = loadJson()
 
-    # information = [ [ [ '파스타', 15 ], ['리조또', 10], ['스테이크', 7] ],
-    #
-    # [ [ '박성호', '파스타', 2, 'None', "None", "None" ], [ '정성운', '리조또', 2, "None", "None", "None"], ['이상민', '스테이크', 2,"None", "None","None"] ],
-    #
-    # [ ['1', [['파스타',"hgsd___2222hlkfjasflk____2"], ['리조또', "ashgkjdsfh"],['스테이크',"kjsadhkgjas;k"]]]],
-    #
-    # 0,
-    #
-    # ["z"],
-    #
-    # [ 'z' ] ]
+    information = [ [ [ '파스타', 15 ], ['리조또', 10], ['스테이크', 7] ],
+
+     [ [ '박성호', '파스타', 2, 'None', "None", "None" ], [ '정성운', '리조또', 2, "None", "None", "None"], ['이상민', '스테이크', 2,"None", "None","None"] ],
+
+     [ ['1', [['파스타',"hgsd___2222hlkfjasflk____2"], ['리조또', "ashgkjdsfh"],['스테이크',"kjsadhkgjas;k"]]]],
+
+     0,
+
+     [0],
+
+     [ 'z' ] ]
 
 
     menu = loadFoodinit(information)
