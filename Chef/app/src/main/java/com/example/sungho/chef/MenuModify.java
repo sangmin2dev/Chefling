@@ -1,60 +1,102 @@
 package com.example.sungho.chef;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.ImageButton;
-import android.widget.TableLayout;
-import android.widget.Toast;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.sungho.chef.Data.Cooks;
 import com.example.sungho.chef.Data.Foods;
 import com.example.sungho.chef.Data.MenuData;
 import com.example.sungho.chef.Data.Positions;
-import com.example.sungho.chef.databinding.ActivityCookModify1Binding;
+import com.example.sungho.chef.databinding.ActivityCookModify2Binding;
+import com.example.sungho.chef.databinding.ActivityMenuModifyBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class CookModify1 extends AppCompatActivity {
-    //Activity
-    ActivityCookModify1Binding binding;
-    ExpandableListView test_ExpandableListView;
-
-    // Adapter Data
+public class MenuModify extends AppCompatActivity {
+    ActivityMenuModifyBinding binding;
     MenuData menuData;
-    CustomAdapter adapter;
-    ArrayList<String> groupListDatas;
-    ArrayList<ArrayList<Foods>> childListDatas;
-    String activityName;
-    int lastClicked = 0;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_cook_modify1);
-        test_ExpandableListView = binding.expandablelist;
-
-        activityName = this.getClass().getSimpleName().trim();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_menu_modify);
+        linearLayout = binding.container;
         menuData = new MenuData();
-
-        // 불러오기
         setData();
     }
+
+    // 각 요리사들에 맞는 뷰를 생성
+    private void setActivity(){
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams layoutParams2 =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams2.setMargins(40,40,0,40);
+
+        for(int i = 0; i < menuData.getFoods().size(); i++){
+            LinearLayout lin = new LinearLayout(MenuModify.this);
+            lin.setLayoutParams(layoutParams2);
+            lin.setOrientation(LinearLayout.HORIZONTAL);
+
+            // 이름 텍스트뷰
+            final TextView foodName = new TextView(MenuModify.this);
+            foodName.setLayoutParams(layoutParams);
+            foodName.setText(menuData.getFoods().get(i).getName());
+            foodName.setTextSize(20);
+            foodName.setTextColor(Color.BLACK);
+            foodName.setTypeface(null, Typeface.BOLD);
+
+            // 포지션 텍스트뷰
+            final TextView categoryName = new TextView(MenuModify.this);
+            categoryName.setLayoutParams(layoutParams);
+            categoryName.setText("   [ "+menuData.getFoods().get(i).getCategory()+" ]    Sold Out ");
+            categoryName.setTextSize(20);
+            categoryName.setTextColor(Color.BLACK);
+
+            final Switch switchBtn = new Switch(MenuModify.this);
+
+            if(menuData.getFoods().get(i).isSold_out()){
+                switchBtn.setChecked(true);
+            }else{
+                switchBtn.setChecked(false);
+            }
+
+            final int childNum = i;
+            switchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference menuRef = database.getReference("menu");
+
+                    menuRef.child("/foods/"+childNum+"/sold_out").setValue(isChecked);
+                }
+            });
+
+            lin.addView(foodName);
+            lin.addView(categoryName);
+            lin.addView(switchBtn);
+            linearLayout.addView(lin);
+        }
+    }
+
     private void setData(){
         // 불러오기 진행 Dialog 보이기
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -62,39 +104,19 @@ public class CookModify1 extends AppCompatActivity {
         progressDialog.show();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                          DatabaseReference menuRef = database.getReference("menu");
-                                          // FireBase Event Listner
-        menuRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference menuRef = database.getReference("menu");
+        // FireBase Event Listner
+        menuRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // 데이터 받아오기
-                groupListDatas = new ArrayList<String>();
-                childListDatas = new ArrayList<ArrayList<Foods>>();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 parsing(dataSnapshot);
                 progressDialog.dismiss();
-                // 어댑터설정, 확장리스트뷰
-                adapter = new CustomAdapter(menuData,getApplicationContext(),groupListDatas,childListDatas);
-                test_ExpandableListView.setAdapter(adapter);
-
-                test_ExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-                    @Override
-                    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                        // 선택 한 groupPosition의 펼침/닫힘 상태 체크
-                        Boolean isExpand = (!test_ExpandableListView.isGroupExpanded(groupPosition));
-
-                        // 이 전에 열려있던 group 닫기
-                        test_ExpandableListView.collapseGroup(lastClicked);
-                        if (isExpand) {
-                            test_ExpandableListView.expandGroup(groupPosition);
-                        }
-                        lastClicked = groupPosition;
-                        return true;
-                    }
-                });
+                setActivity();
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(CookModify1.this, "정보 불러오기를 실패하였습니다. 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -170,26 +192,6 @@ public class CookModify1 extends AppCompatActivity {
                     }
                     menuData.getPositions().add(pos);
                 }
-            }
-        }
-
-        for(int i = 0; i < menuData.getFoods_type().size(); i ++){
-            groupListDatas.add(menuData.getFoods_type().get(i));
-        }
-        for(int i = 0; i < menuData.getFoods_type().size(); i ++) {
-            ArrayList<Foods> foods = new ArrayList<Foods>();
-            for (int j = 0; j < menuData.getFoods().size(); j++) {
-                // 카테고리별로 분류
-                if(menuData.getFoods().get(j).getCategory().equals(menuData.getFoods_type().get(i))){
-                    foods.add(menuData.getFoods().get(j));
-                }
-            }
-            childListDatas.add(foods);
-        }
-
-        for(int i = 0; i < groupListDatas.size(); i ++) {
-            for (int j = 0; j < childListDatas.get(i).size(); j++) {
-                Log.d("test : ",i+" , "+j+" ["+groupListDatas.get(i)+"에 있는"+childListDatas.get(i).get(j).getName()+"]");
             }
         }
     }

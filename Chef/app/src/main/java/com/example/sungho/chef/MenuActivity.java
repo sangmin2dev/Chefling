@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sungho.chef.Data.Foods;
+import com.example.sungho.chef.Data.Order;
 import com.example.sungho.chef.databinding.ActivityMenuBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,10 +77,11 @@ public class MenuActivity extends AppCompatActivity{
                 //1. 입력한 레스토랑 이름 상단에 표시
                 restName.setText(name);
                 tabHost.setup();
+
                 for(int i = 0; i < menuTypes.size(); i++) {
                     //3. 입력한 메뉴 타입으로 Tab 생성
                     category = menuTypes.get(i);
-                    tabHost.addTab(tabHost.newTabSpec(""+i).
+                    tabHost.addTab(tabHost.newTabSpec(menuTypes.get(i)).
                             setContent(new MyTabContentFactory()).
                             setIndicator(menuTypes.get(i)));
                 }
@@ -171,7 +174,9 @@ public class MenuActivity extends AppCompatActivity{
             // -> 2.2 메뉴타입에 존재하는 메뉴들의 정보를 각자 알맞은 뷰로 생성
             for(int j = 0; j < foodList.size(); j++) {
                 // 카테고리별로 분류
-                if(foodList.get(j).getCategory().equals(category)) {
+                Log.d("dddd",tag+"에 있는 "+foodList.get(j).getName());
+                if(foodList.get(j).getCategory().equals(tag)) {
+                    Log.d("dddd",category+"에 있는 "+foodList.get(j).getName());
                     // 메뉴 이름
                     final TextView menuName = new TextView(MenuActivity.this);
                     menuName.setLayoutParams(layoutParams);
@@ -268,7 +273,6 @@ public class MenuActivity extends AppCompatActivity{
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
         builder.show();
@@ -277,6 +281,8 @@ public class MenuActivity extends AppCompatActivity{
     // 카트에 담긴 메뉴목록 보여주기
     public void showCart(){
         List<String> ListItems = new ArrayList<>();
+        final EditText editText = new EditText(this);
+        editText.setText("A10");
         int sum = 0;
         for(int i = 0; i < cartList.size(); i++){
             ListItems.add("- "+cartList.get(i).getName() + "    "+cartList.get(i).getPrice() + "원");
@@ -286,6 +292,7 @@ public class MenuActivity extends AppCompatActivity{
         final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("주문 하기");
+        builder.setView(editText);
         builder.setItems(items,new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -296,18 +303,19 @@ public class MenuActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference menuRef = database.getReference("order");
-                menuRef.push().setValue(cartList);
-                menuRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d("firebaseTAG","success :)");
-                    }
+                DatabaseReference key = menuRef.push();
+                String temp = key.toString().substring(key.toString().length()-20);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.d("firebaseTAG","Failed :(");
-                    }
-                });
+                // Food ID생성
+                for(int i = 0; i < cartList.size(); i++){
+                    cartList.get(i).setFoodId(temp+"_"+i);
+                }
+
+                Order order = new Order();
+                order.setFoods(cartList);
+                order.setTable(editText.getText().toString());
+
+                key.setValue(order);
             }
         });
         builder.show();

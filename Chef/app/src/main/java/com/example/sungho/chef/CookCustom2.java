@@ -150,6 +150,7 @@ public class CookCustom2 extends AppCompatActivity {
                 rest_info.setName(rest.getName());
                 rest_info.setDescription(rest.getInfo());
                 menuData.setRest_info(rest_info);
+
                 menuRef.setValue(menuData);
 
                 menuRef.addValueEventListener(new ValueEventListener() {

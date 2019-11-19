@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MenuModify"></activity>
+        <activity android:name=".CookModify2" />
         <activity android:name=".CookModify1" />
         <activity android:name=".RestModify" />
         <activity android:name=".ModifyActivity" />

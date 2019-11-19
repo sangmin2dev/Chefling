@@ -10,9 +10,10 @@ public class Positions {
     ArrayList<String> typeList;     //해당 포지션에서 담당하는 메뉴타입
 
     public Positions(){
-        typeList = new ArrayList<>();
+        typeList = new ArrayList<String>();
     }
 
+    public ArrayList<String> getTypeList() { return typeList; }
     public String getName() {
         return name;
     }

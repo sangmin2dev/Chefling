@@ -100,7 +100,6 @@ class CustomAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = inflater.inflate(R.layout.child_position,null);
-
             setActivityPosition(groupPosition,childPosition,convertView);
         }
         return convertView;

@@ -30,7 +30,7 @@ public class ModifyActivity extends AppCompatActivity {
         restBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RestModify.class);
+                Intent intent = new Intent(getApplicationContext(),CookModify1.class);
                 startActivity(intent);
             }
         });
@@ -38,7 +38,7 @@ public class ModifyActivity extends AppCompatActivity {
         cookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CookModify1.class);
+                Intent intent = new Intent(getApplicationContext(),CookModify2.class);
                 startActivity(intent);
             }
         });
@@ -46,7 +46,7 @@ public class ModifyActivity extends AppCompatActivity {
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MenuCustom1.class);
+                Intent intent = new Intent(getApplicationContext(),MenuModify.class);
                 startActivity(intent);
             }
         });

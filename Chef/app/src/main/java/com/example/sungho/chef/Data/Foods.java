@@ -1,13 +1,17 @@
 package com.example.sungho.chef.Data;
 
 public class Foods {
+    private String foodId;             //menu , scheduling
     private String name;                //menu , scheduling
     private String category;            //menu , scheduling
     private String description;         //menu
     private int price;                  //menu
     private int cooking_time;           //scheduling
+    private boolean iscooked = false;   //scheduling
     private boolean sold_out;           //menu , scheduling
 
+    public String getFoodId() { return foodId; }
+    public void setFoodId(String foodId) { this.foodId = foodId; }
     public String getName() {
         return name;
     }
