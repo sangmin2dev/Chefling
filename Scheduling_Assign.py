@@ -20,33 +20,50 @@ def assign_ordered(s_ordered, menu,information):
     standard = []
 
     refinedBills=[]
+    appSorted = []
+    maiSorted = []
+    presorted = []
+
     for uni_food in bills :
         refinedBills.append(uni_food[0])
 
+#standard : 오래걸리는 순으로 음식 정렬
     for menu_ele in menu :
         standard.append(menu_ele[0])
 
     for element in refinedBills :
-        sortedOrder.append(menu[standard.index(element)])
+        if menu[standard.index(element)][2] == "app" :
+            appSorted.append(menu[standard.index(element)])
+        if menu[standard.index(element)][2] == "app":
+            maiSorted.append(menu[standard.index(element)])
 
-    #event
-    if int(orderID) > 1000 :
-        sortedOrder.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
-        for uni_food in sortedOrder :
-            temp = Food(orderID, uni_food)
-            temp.priority = priority
-            temp.waitable = sortedOrder[0][1] - uni_food[1]
-            s_ordered.insert(0,temp)
-            priority += 1
-    #normal
-    else :
-        sortedOrder.sort(key=lambda sortedOrder: sortedOrder[1], reverse=True)
-        for uni_food in sortedOrder :
-            temp = Food(orderID, uni_food)
-            temp.priority = priority
-            temp.waitable = sortedOrder[0][1] - uni_food[1]
-            s_ordered.append(temp)
-            priority += 1
+
+    appSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
+    maiSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
+
+    presorted.append(appSorted)
+    presorted.append(maiSorted)
+
+    for i in range(0,2):
+        sortedOrder = presorted[i]
+        #event
+        if int(orderID) > 1000 :
+            for uni_food in sortedOrder :
+                temp = Food(orderID, uni_food)
+                temp.priority = priority
+                temp.waitable = sortedOrder[0][1] - uni_food[1]
+                s_ordered.insert(0,temp)
+                priority += 1
+        #normal
+        else :
+            for uni_food in sortedOrder :
+                temp = Food(orderID, uni_food)
+                temp.priority = priority
+                temp.waitable = sortedOrder[0][1] - uni_food[1]
+                s_ordered.append(temp)
+                priority += 1
+
+    print(sortedOrder)
 
     return s_ordered
 
@@ -65,7 +82,6 @@ def assigning(food, s_ordered, s_cook) :
     for element in s_ordered:
         if food.orderID == element.orderID:
             element.priority -= 1
-
 
     s_ordered.remove(food)
 
@@ -102,11 +118,5 @@ def assign_cook(s_ordered, s_cook, serverClock) :
         else :
             continue
 
-
-    # standard = s_ordered
-    # print("101",len(standard))
-    # for element in standard :
-    #     print(element)
-    #     s_ordered, s_cook = assigning(element, s_ordered, s_cook)
 
     return s_ordered, s_cook
