@@ -28,7 +28,7 @@ def main() :
     # 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
 
     # Json load
-    # information = loadJson()
+#    information = loadJson()
 
     information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
 
@@ -43,15 +43,11 @@ def main() :
 
     menu = loadFoodinit(information)
 
-
     #Queue setting
     s_ordered = loadOrdered(information)
     s_cook = loadCooks(information)
 
-
-
     serverClock = information[3]
-
 
     #Scheduling
     s_ordered = assign_ordered(s_ordered,menu, information)

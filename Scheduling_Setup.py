@@ -84,11 +84,12 @@ def output(s_ordered, s_cook) :
     if s_ordered == []:
         op_ordered = ["None"]
     else :
-        for element in s_ordered :
-            temp = [element.orderID,element.foodID, element.cate, element.name,
-                    element.course, element.priority, element.waitable, element.realwait,
-                    element.emergency]
-            op_ordered.append(temp)
+        for oneOrder in s_ordered :
+            for uni_food in oneOrder :
+                temp = [uni_food.orderID,uni_food.foodID, uni_food.cate, uni_food.name,
+                        uni_food.course, uni_food.priority, uni_food.waitable, uni_food.realwait,
+                        uni_food.emergency]
+                op_ordered.append(temp)
 
     for element in s_cook :
         if element.charge == []:
@@ -97,12 +98,6 @@ def output(s_ordered, s_cook) :
                 element.charge,element.cookClock, element.sema]
         op_cook.append(temp)
 
-    for i in op_ordered :
-        print("ordered", i[1], i[3])
-
-    for i in op_cook :
-        print("cook", i[3])
-
     fin_out = [op_ordered, op_cook]
 
-#    print(dumps(fin_out))
+    print(dumps(fin_out))
