@@ -31,37 +31,40 @@ def assign_ordered(s_ordered, menu,information):
     for menu_ele in menu :
         standard.append(menu_ele[0])
 
+    # for element in refinedBills :
+    #     if menu[standard.index(element)][2] == "app" :
+    #         appSorted.append(menu[standard.index(element)])
+    #     if menu[standard.index(element)][2] == "app":
+    #         maiSorted.append(menu[standard.index(element)])
+
     for element in refinedBills :
-        if menu[standard.index(element)][2] == "app" :
             appSorted.append(menu[standard.index(element)])
-        if menu[standard.index(element)][2] == "app":
-            maiSorted.append(menu[standard.index(element)])
 
+    # appSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
+    # maiSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
+    #
+    # presorted.append(appSorted)
+    # presorted.append(maiSorted)
 
-    appSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
-    maiSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
-
-    presorted.append(appSorted)
-    presorted.append(maiSorted)
-
-    for i in range(0,2):
-        sortedOrder = presorted[i]
+#    for i in range(0,2):
+#        sortedOrder = presorted[i]
+    sortedOrder.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
         #event
-        if int(orderID) > 1000 :
-            for uni_food in sortedOrder :
-                temp = Food(orderID, uni_food)
-                temp.priority = priority
-                temp.waitable = sortedOrder[0][1] - uni_food[1]
-                s_ordered.insert(0,temp)
-                priority += 1
+    if int(orderID) > 1000 :
+        for uni_food in sortedOrder :
+            temp = Food(orderID, uni_food)
+            temp.priority = priority
+            temp.waitable = sortedOrder[0][1] - uni_food[1]
+            s_ordered.insert(0,temp)
+            priority += 1
         #normal
-        else :
-            for uni_food in sortedOrder :
-                temp = Food(orderID, uni_food)
-                temp.priority = priority
-                temp.waitable = sortedOrder[0][1] - uni_food[1]
-                s_ordered.append(temp)
-                priority += 1
+    else :
+        for uni_food in sortedOrder :
+            temp = Food(orderID, uni_food)
+            temp.priority = priority
+            temp.waitable = sortedOrder[0][1] - uni_food[1]
+            s_ordered.append(temp)
+            priority += 1
 
     print(sortedOrder)
 
