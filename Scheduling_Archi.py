@@ -4,7 +4,6 @@ Struct Scheduler Architecture
 '''
 
 from Scheduling_Setup import *
-from Scheduling_Event import *
 from abc import *
 
 total_Food = 0
@@ -13,10 +12,11 @@ total_Food = 0
 #order별 요리음식 (Data)
 #개별 음식 객체
 class Food(metaclass = ABCMeta) :
-    def __init__(self,orderID, name):
+    def __init__(self,orderID, cate, name, course):
         self.orderID = orderID
+        self.cate = cate
         self.name = name
-        #[name,cookingtime]
+        self.course = course
 
         self.priority = 0
         self.waitable = 0

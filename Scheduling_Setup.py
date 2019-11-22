@@ -17,7 +17,6 @@ def loadJson() :
     return information
 
 
-
 #initialize
 def loadFoodinit(information) :
     #시간이 오래 걸리는 순으로 정렬
@@ -40,14 +39,15 @@ def loadOrdered(information) :
 
     for uniInfo in prelist :
         # orderID, name, priority, waiting, realwait,emergency
-        element = Food(uniInfo[0],uniInfo[2])
+        element = Food(uniInfo[0], uniInfo[2][0], uniInfo[2][1], uniInfo[2][3])
         element.foodID = uniInfo[1]
         element.priority = uniInfo[3]
         element.waitable = uniInfo[4]
         element.realwait = uniInfo[5]
         element.emergency = uniInfo[6]
         ordered.append(element)
-    return ordered
+    return
+
 
 def loadCooks(information) :
     prelist = information[1]
@@ -77,11 +77,15 @@ def orderPassing(information) :
 def output(s_ordered, s_cook) :
     op_ordered = []
     op_cook =[]
-    for element in s_ordered :
-        temp = [element.orderID,element.foodID, element.name,
-                element.priority, element.waitable, element.realwait,
-                element.emergency]
-        op_ordered.append(temp)
+
+    if s_ordered == []:
+        s_ordered = [0]
+    else :
+        for element in s_ordered :
+            temp = [element.orderID,element.foodID, element.cate, element.name,
+                    element.course, element.priority, element.waitable, element.realwait,
+                    element.emergency]
+            op_ordered.append(temp)
 
     for element in s_cook :
         temp = [element.cook_id,element.position,element.ability,

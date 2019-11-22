@@ -4,7 +4,6 @@ Schedulig cooking order to improving process of kitchen & restaurant service
 '''
 
 from Scheduling_Setup import *
-from Scheduling_Event import *
 from Scheduling_Archi import *
 from copy import *
 from abc import *
@@ -17,56 +16,63 @@ def assign_ordered(s_ordered, menu,information):
 
     sortedOrder = []
     priority = 1
-    standard = []
 
     refinedBills=[]
     appSorted = []
     maiSorted = []
+    desSorted = []
     presorted = []
 
-    for uni_food in bills :
-        refinedBills.append(uni_food[0])
+    temp = []
 
-#standard : 오래걸리는 순으로 음식 정렬
-    for menu_ele in menu :
-        standard.append(menu_ele[0])
+    for uni_bill in bills :
+        for uni_menu in menu :
+            if uni_menu[1] == uni_bill[0]:
+                temp = [uni_menu[0],uni_menu[1],uni_menu[2],uni_menu[3],uni_bill[1]]
+                refinedBills.append(temp)
 
-    # for element in refinedBills :
-    #     if menu[standard.index(element)][2] == "app" :
-    #         appSorted.append(menu[standard.index(element)])
-    #     if menu[standard.index(element)][2] == "app":
-    #         maiSorted.append(menu[standard.index(element)])
 
+    #메뉴 Menu
     for element in refinedBills :
-            appSorted.append(menu[standard.index(element)])
+        if element[3] == "app" :
+            appSorted.append(element)
+        if element[3] == "mai":
+            maiSorted.append(element)
+        if element[3] == "des":
+            desSorted.append(element)
 
-    # appSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
-    # maiSorted.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
-    #
-    # presorted.append(appSorted)
-    # presorted.append(maiSorted)
+    appSorted.sort(key=lambda appSorted: appSorted[2], reverse=False)
+    maiSorted.sort(key=lambda maiSorted: maiSorted[2], reverse=False)
+    desSorted.sort(key=lambda desSorted: desSorted[2], reverse=False)
 
-#    for i in range(0,2):
-#        sortedOrder = presorted[i]
-    sortedOrder.sort(key=lambda sortedOrder: sortedOrder[1], reverse=False)
-        #event
-    if int(orderID) > 1000 :
-        for uni_food in sortedOrder :
-            temp = Food(orderID, uni_food)
-            temp.priority = priority
-            temp.waitable = sortedOrder[0][1] - uni_food[1]
-            s_ordered.insert(0,temp)
-            priority += 1
-        #normal
-    else :
-        for uni_food in sortedOrder :
-            temp = Food(orderID, uni_food)
-            temp.priority = priority
-            temp.waitable = sortedOrder[0][1] - uni_food[1]
-            s_ordered.append(temp)
-            priority += 1
+    presorted.append(appSorted)
+    presorted.append(maiSorted)
+    presorted.append(desSorted)
 
-    print(sortedOrder)
+    #event
+    #factor = cate name time course id
+    for i in range(0,3):
+        sortedOrder = presorted[i]
+        if sortedOrder == [] :
+            break
+        if int(orderID) > 1000 :
+            for uni_food in sortedOrder :
+                temp = Food(orderID, uni_food[0],[uni_food[1], uni_food[2]],uni_food[3])
+                temp.priority = priority
+                temp.foodID = uni_food[4]
+                temp.waitable = sortedOrder[0][2] - uni_food[2]
+                s_ordered.insert(0,temp)
+                priority += 1
+            #normal
+
+        else :
+            for uni_food in sortedOrder :
+                temp = Food(orderID, uni_food[0],[uni_food[1], uni_food[2]],uni_food[3])
+                temp.priority = priority
+                temp.foodID = uni_food[4]
+                temp.waitable = sortedOrder[0][2] - uni_food[2]
+                s_ordered.append(temp)
+                priority += 1
 
     return s_ordered
 
@@ -74,10 +80,12 @@ def assign_ordered(s_ordered, menu,information):
 def assigning(food, s_ordered, s_cook) :
     temp = []
     for uni_archi in s_cook :
-        if uni_archi.position == food.name[0] :
+        if uni_archi.position == food.cate :
             temp.append(food.orderID)
             temp.append(food.foodID,)
+            temp.append(food.cate)
             temp.append(food.name)
+            temp.append(food.course)
 
             uni_archi.charge.append(temp)
             break
@@ -92,8 +100,6 @@ def assigning(food, s_ordered, s_cook) :
 
 
 def assign_cook(s_ordered, s_cook, serverClock) :
-
-
     # calc wait~ in ordered queue
     for element in s_ordered:
         element.realwait += serverClock
@@ -114,7 +120,7 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     #assign cook queue
     standard = copy(s_ordered)
     for element in standard :
-        if element.name[0] in canAssign :
+        if element.cate in canAssign :
             if element.priority == 1 or \
                     element.waitable <= element.realwait:
                 s_ordered, s_cook = assigning(element,s_ordered,s_cook)
