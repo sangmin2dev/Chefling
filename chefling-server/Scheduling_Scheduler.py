@@ -1,0 +1,66 @@
+#sudo
+import queue
+from Scheduling_Setup import *
+from Scheduling_Archi import *
+from Scheduling_Assign import *
+from abc import *
+
+#TODO
+#   order 2개 이상부터
+#   하나씩 들어가는 문제 해결
+
+
+#initialize
+#
+
+#TODO
+# app~main
+
+# [카테고리, 이름, 소요시간, 타입]
+# 카테고리, [이름, 소요시간], 타입
+
+def main() :
+    # a[0] - food: cate, name, 요리시간, 음식장르(app,mai,des)(초기화)
+    # a[1] - cook별(요리사이름, 포지션, 역량, 현재 쿸리스트(None), 쿡시간(None), 블락유무(None)(쿡큐) 각 요리는[오더아이디, food_id, 카테고리,[ 음식이름, 소요시간], 타입]
+    # a[2] - order: [order_id, food배열(name, ID)](오더)
+    # a[3] - servertime
+    # a[4] - food 단위의 ordered list(오더 아이디 / food_id / cate / [음식이름, 소요시간] / type / 우선순위(null) / 대기가능시간(null) / 대기시간(null) / 이벤트유무(null)) (오더큐)
+    # 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
+
+    # Json load
+    information = loadJson()
+
+    # information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
+    #
+    #  [ [ '박성호', 'bread', 1, ['None'], "None", "None" ], [ '정성운', 'pasta', 1, ["None"], "None", "None"], ['이상민', 'pizza', 2,["None"], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
+    #
+    #  [ ['0', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]]],
+    #
+    #  0,
+    #
+    #  ["None"]]
+
+
+    menu = loadFoodinit(information)
+
+
+    #Queue setting
+    s_ordered = loadOrdered(information)
+    s_cook = loadCooks(information)
+
+
+
+    serverClock = information[3]
+
+
+    #Scheduling
+    s_ordered = assign_ordered(s_ordered,menu, information)
+    s_ordered, s_cook = assign_cook(s_ordered, s_cook, serverClock)
+
+    #output
+    output(s_ordered, s_cook)
+
+
+
+if __name__ == "__main__":
+    main()

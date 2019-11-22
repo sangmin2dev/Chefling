@@ -8,7 +8,7 @@ const app = express();
 const http = require('http').createServer(app);
 var io = require('socket.io')(http);
 const indexRouter = require('./routes/index');
-// const ordersRouter = require('./routes/orders')(io);
+const ordersRouter = require('./routes/orders')(io);
 const processingRouter = require('./routes/processing')(io);
 
 app.set('views', path.join(__dirname,'views'));
@@ -34,42 +34,13 @@ let {PythonShell} =require("python-shell");
 var options //python shell 작동할 때의 옵션
 var orders = new Array(); //주문 정보를 담는 배열
 
-// 여기서는 파이썬 쉘 코드 적용
-
-
-//   options = {
-//     mode: 'text',
-//     pythonOptions: ['-u'],
-//     scriptPath:'',
-//     args: [JSON.stringify(orders)],
-//     pythonPath:''
-//   }
-//   // console.log(orders[0]);
-  
-
-//   PythonShell.run('test.py',options, function(err, result){
-//     if(err) throw err;
-//     console.log("result: ",result);
-    
-//   });
-// }); //프로미스로 동기화 해줘야함
-
-//동기화 시켜야함 .. python 에 먼저 들어가버림
-
-
-
 http.listen(app.get('port'), ()=> {
   console.log(app.get('port'), '번 포트에서 대기 중');
   
 });
 
-// app.use(function(req,res,next){
-//   req.io = io;
-//   next();
-// });
-
 app.use('/', indexRouter);
-// app.use('/orders', ordersRouter);
+app.use('/orders', ordersRouter);
 app.use('/processing', processingRouter);
 
 app.use((req,res,next)=>{

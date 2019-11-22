@@ -43,6 +43,11 @@
           <div class="row">
             <h1>레스토랑 현황</h1>
           </div>
+
+          <div class = "row">
+            <br>
+          </div>
+          
           <div class="row">
             <div class="col-md-2">
               <h2>Foods</h2>
@@ -51,17 +56,25 @@
             <div class="col-md-8">
                 <table class="table table-condensed table-hover">
                     <tr class="active">                        
-                        <td>Name</td>
-                        <td>Price</td>
-                        <td>Time</td>
+                        <td>요리이름</td>
+                        <td>타입</td>
+                        <td>가격</td>
+                        <td>소요시간</td>                        
                     </tr>
                     
                     
                     <%list.foods.forEach(function (val) {%>
                         <tr>
                           <td><%= val.name%></td>
-                          <td><%= val.price%></td>
-                          <td><%= val.cooking_time%></td>
+                          <%if(val.type == "app"){%>
+                            <td>에피타이저</td>
+                          <%} else if(val.type == "mai"){%>
+                            <td>메인</td>
+                          <%}else{%>
+                            <td>디저트</td>
+                          <%}%>                                                  
+                          <td><%= val.price%>원</td>
+                          <td><%= val.cooking_time%>분</td>
                         </tr>                      
                     <%})%>
                 </table>
@@ -76,16 +89,20 @@
             <div class="col-md-8">
                 <table class="table table-condensed table-hover">
                     <tr class="active">
-                        <td>Name</td>
-                        <td>Position</td>
-                        <td>BreakTime</td>
-                        <td>ability</td>
+                        <td>요리사이름</td>
+                        <td>포지션</td>
+                        <td>브레이크타임</td>
+                        <td>어빌리티</td>
                     </tr>
                     <%list.cooks.forEach(function (val) {%>
                         <tr>
                           <td><%= val.name%></td>
                           <td><%= val.position%></td>
-                          <td><%= val.BreakTime%></td>
+                          <%if(val.BreakTime){%>
+                          <td>있음</td>
+                          <%}else{%>
+                          <td>없음</td>
+                          <%}%>
                           <td><%= val.ability%></td>
                         </tr>                      
                     <%})%>

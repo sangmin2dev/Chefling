@@ -37,16 +37,14 @@
             socket.on('update_orders',function (data) {
              $("#orderLogs").empty();              
              
-             var order_index = 1;
              var textToInsert = [];
              var i =0;
              data.forEach(order => {
-               textToInsert[i++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">order '+order_index+'</th>';
-               order.forEach(food =>{
-                 textToInsert[i++] = '<tr><td>'+food.name+'</td><tr>';
+               textToInsert[i++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">주문ID: '+order.orderId+'<br>테이블: '+order.table+'</th>';
+               order.foods.forEach(food =>{
+                 textToInsert[i++] = '<tr><td bgcolor="#81F7BE">'+food.name+'</td><tr>';
                });
                 textToInsert[i++] = '</table></div>'
-               order_index = order_index +1;
              });  
              $("#orderLogs").append(textToInsert.join(''));
             })
@@ -57,19 +55,19 @@
           <div class="row">
             <h1>실시간 주문 정보</h1>
           </div>
+          <div class="row">
+              <br>
+            </div>
           <div class = "row">
           <div id = "orderLogs" class="col-md-12">
             
-            <%var orders_index =1;
-            order_list.forEach(function (order){
-              %>
+            <%order_list.forEach(function (order){%>
               <div class="col-md-3">
             <table class="table table-condensed table-hover">
-              <th class="active">order <%=orders_index%></th>
-              <%orders_index++%> 
-              <%order.forEach(function(food) {%>
+              <th class="active">주문ID: <%=order.orderId%><br>테이블: <%=order.table%></th>
+              <%order.foods.forEach(function(food) {%>
               <tr>
-                <td><%= food.name%></td>                
+                <td bgcolor="#81F7BE"><%= food.name%></td>             
               </tr>  
                                 
           <%})%>

@@ -29,11 +29,99 @@
           </div>
     
           <!-- Jumbotron -->
-          
+          <script src="/socket.io/socket.io.js"></script> 
+          <script>
+            var socket = io();
+            socket.on('update_processing', function(data) {
+              $("#food_queue").empty();
+              $("#cook_queue").empty();
+              $("#served_queue").empty();
+              var orderedInsert = [];
+              var cookInsert = [];
+              var servedInsert = [];
+              //ordered_list
+              var orderIndex =0;
+              var cookIndex =0;
+              var servedIndex = 0;
+              orderedInsert[orderIndex++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">ordered_list</th>';
+              data[4].forEach(food => {
+                orderedInsert[orderIndex++] = '<tr><td>'+food[2][0]+'</td><tr>';
+              });
+              orderedInsert[orderIndex++] = '</table></div>';
+              
+              //cook_list
+              // a[1] - cook 별 (요리사 이름, 포지션, 역량, 현재 쿸 리스트(None), 쿡시간(None), 블락유무(None) (쿡큐) 
+              //각 요리는 [오더아이디, food_id, (음식이름,소요시간)]
+              data[1].forEach(cook =>{
+                cookInsert[cookIndex++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">cook '+ cook[0] +'</th>';
+                if(cook[3].length>0)
+                cook[3].forEach(food =>{
+                  cookInsert[cookIndex++] = '<tr><td>'+food[2][0]+'</td><tr>';
+                });
+                cookInsert[cookIndex++] = '</table></div>';
+              });
+
+              //served_list
+
+              // 동적 html 적용
+              $("#food_queue").append(orderedInsert.join(''));
+              $("#cook_queue").append(cookInsert.join(''));
+
+
+            });
+          </script>
     
           <!-- Example row of columns -->
           <div class="row">
             <h1>실시간 음식 조리 현황</h1>
+          </div>
+          <div class = "row">
+            <br>
+          </div>
+
+          <div class = "row">
+            <h3>Ordered_Queue(food)</h3>
+            <div id = "food_queue">              
+                <div class = "col-md-3">
+                  <table class="table table-condensed table-hover">
+                    <th class="active">food for cooking</th>
+                    <%proc_list[4].forEach(function (food) {%>
+                    <tr>
+                      <td><%= food[2][0]%></td>                
+                    </tr> 
+                    <%})%>
+                  </table>
+                </div>
+              
+            </div>
+          </div>
+
+          <div class = "row">
+            <div id = "cook_queue">
+              <h3>Cook_Queue</h3>
+              <%proc_list[1].forEach(function(cook) {%>
+                <div class="col-md-3">
+                  <table class="table table-condensed table-hover">
+                    <th class="active"> <%=cook[0]%></th>                    
+                      <%  
+                      if(cook[3].length >0)
+                      cook[3].forEach(food => {%>                        
+                        <tr>
+                         <td><%=food[2][0]%></td>                
+                        </tr> 
+                      <%});%>
+                  </table>
+                </div>
+              <%})%>
+
+            </div>
+          </div>
+
+          <div class = "row">
+            <div id = "served_queue">
+              <h3>Served_Queue</h3>
+
+            </div>
           </div>
     
           <!-- Site footer -->
