@@ -21,27 +21,24 @@ from abc import *
 
 def main() :
     # a[0] - food: cate, name, 요리시간, 음식장르(app,mai,des)(초기화)
-    # da[1] - cook별(요리사이름, 포지션, 역량, 현재 쿸리스트(None), 쿡시간(None), 블락유무(None)(쿡큐) 각 요리는[오더아이디, food_id, 카테고리,[ 음식이름, 소요시간], 타입]
+    # a[1] - cook별(요리사이름, 포지션, 역량, 현재 쿸리스트(None), 쿡시간(None), 블락유무(None)(쿡큐) 각 요리는[오더아이디, food_id, 카테고리,[ 음식이름, 소요시간], 타입]
     # a[2] - order: [order_id, food배열(name, ID)](오더)
     # a[3] - servertime
-    # da[4] - food 단위의 ordered list(오더 아이디 / food_id / (cate, [음식이름, 소요시간], type....] / 우선순위(null) / 대기가능시간(null) / 대기시간(null) / 이벤트유무(null)) (오더큐)
+    # a[4] - food 단위의 ordered list(오더 아이디 / food_id / cate / [음식이름, 소요시간] / type / 우선순위(null) / 대기가능시간(null) / 대기시간(null) / 이벤트유무(null)) (오더큐)
     # 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
-    # da[5] - served(음식이름 / 담당한 요리사) (완료된요리; 로그)
 
     # Json load
     information = loadJson()
 
-    # information = [ [ [ 'pasta', '파스타', 6, "app" ], [ 'r','리조또', 10, "app"], ['s','스테이크', 7, "mai"] ],
+    # information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
     #
-    #  [ [ '박성호', 'pasta', 2, 'None', "None", "None" ], [ '정성운', 'r', 2, "None", "None", "None"], ['이상민', 's', 2,"None", "None","None"] ],
+    #  [ [ '박성호', 'bread', 1, ['None'], "None", "None" ], [ '정성운', 'pasta', 1, ["None"], "None", "None"], ['이상민', 'pizza', 2,["None"], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
     #
-    #  [ ['0', [['파스타',"0_0"], ['파스타', "0_1"],['스테이크',"0_2"]]]],
+    #  [ ['0', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]]],
     #
     #  0,
     #
-    #  [0],
-    #
-    #  [ 'z' ] ]
+    #  ["None"]]
 
 
     menu = loadFoodinit(information)

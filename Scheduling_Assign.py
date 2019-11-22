@@ -41,9 +41,9 @@ def assign_ordered(s_ordered, menu,information):
         if element[3] == "des":
             desSorted.append(element)
 
-    appSorted.sort(key=lambda appSorted: appSorted[2], reverse=False)
-    maiSorted.sort(key=lambda maiSorted: maiSorted[2], reverse=False)
-    desSorted.sort(key=lambda desSorted: desSorted[2], reverse=False)
+    appSorted.sort(key=lambda appSorted: appSorted[2], reverse=True)
+    maiSorted.sort(key=lambda maiSorted: maiSorted[2], reverse=True)
+    desSorted.sort(key=lambda desSorted: desSorted[2], reverse=True)
 
     presorted.append(appSorted)
     presorted.append(maiSorted)
@@ -77,7 +77,7 @@ def assign_ordered(s_ordered, menu,information):
     return s_ordered
 
 
-def assigning(food, s_ordered, s_cook) :
+def assigning(food, s_ordered, s_cook, standard) :
     temp = []
     for uni_archi in s_cook :
         if uni_archi.position == food.cate :
@@ -86,7 +86,8 @@ def assigning(food, s_ordered, s_cook) :
             temp.append(food.cate)
             temp.append(food.name)
             temp.append(food.course)
-
+            if uni_archi.charge == ["None"]:
+                uni_archi.charge = []
             uni_archi.charge.append(temp)
             break
 
@@ -96,13 +97,14 @@ def assigning(food, s_ordered, s_cook) :
 
     s_ordered.remove(food)
 
-    return s_ordered, s_cook
+    return s_ordered, s_cook, standard
 
 
 def assign_cook(s_ordered, s_cook, serverClock) :
     # calc wait~ in ordered queue
-    for element in s_ordered:
-        element.realwait += serverClock
+    if serverClock != "None":
+        for element in s_ordered:
+            element.realwait += serverClock
 
     #Check scheduler can assign s_cook
     isFull = 0
@@ -123,9 +125,9 @@ def assign_cook(s_ordered, s_cook, serverClock) :
         if element.cate in canAssign :
             if element.priority == 1 or \
                     element.waitable <= element.realwait:
-                s_ordered, s_cook = assigning(element,s_ordered,s_cook)
-        else :
-            continue
+                s_ordered, s_cook, standard = assigning(element,s_ordered,s_cook, standard)
+            else :
+                continue
 
 
     return s_ordered, s_cook

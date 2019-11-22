@@ -34,17 +34,17 @@ def loadOrdered(information) :
     prelist = information[4]
     ordered = []
 
-    if prelist[0] ==  0 :
+    if prelist ==  ["None"] :
         return ordered
 
     for uniInfo in prelist :
-        # orderID, name, priority, waiting, realwait,emergency
-        element = Food(uniInfo[0], uniInfo[2][0], uniInfo[2][1], uniInfo[2][3])
+        #def __init__(self, orderID, cate, name, course):
+        element = Food(uniInfo[0], uniInfo[2], uniInfo[3], uniInfo[4])
         element.foodID = uniInfo[1]
-        element.priority = uniInfo[3]
-        element.waitable = uniInfo[4]
-        element.realwait = uniInfo[5]
-        element.emergency = uniInfo[6]
+        element.priority = uniInfo[5]
+        element.waitable = uniInfo[6]
+        element.realwait = uniInfo[7]
+        element.emergency = uniInfo[8]
         ordered.append(element)
     return
 
@@ -52,10 +52,11 @@ def loadOrdered(information) :
 def loadCooks(information) :
     prelist = information[1]
     cooklist = []
+
     for uniInfo in prelist :
         #cook_id, position,
         element = Cook(uniInfo[0],uniInfo[1], uniInfo[2])
-        if uniInfo[3] == "None" :
+        if uniInfo[3] == ["None"] :
             element.charge = []
         else :
             element.charge = uniInfo[3]
@@ -79,7 +80,7 @@ def output(s_ordered, s_cook) :
     op_cook =[]
 
     if s_ordered == []:
-        s_ordered = [0]
+        op_ordered = ["None"]
     else :
         for element in s_ordered :
             temp = [element.orderID,element.foodID, element.cate, element.name,
@@ -88,6 +89,8 @@ def output(s_ordered, s_cook) :
             op_ordered.append(temp)
 
     for element in s_cook :
+        if element.charge == []:
+            element.chage = ["None"]
         temp = [element.cook_id,element.position,element.ability,
                 element.charge,element.cookClock, element.sema]
         op_cook.append(temp)
