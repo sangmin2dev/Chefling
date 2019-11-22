@@ -45,8 +45,10 @@ def loadOrdered(information) :
         element.waitable = uniInfo[6]
         element.realwait = uniInfo[7]
         element.emergency = uniInfo[8]
+
         ordered.append(element)
-    return
+
+    return ordered
 
 
 def loadCooks(information) :
@@ -90,11 +92,17 @@ def output(s_ordered, s_cook) :
 
     for element in s_cook :
         if element.charge == []:
-            element.chage = ["None"]
+            element.charge = ["None"]
         temp = [element.cook_id,element.position,element.ability,
                 element.charge,element.cookClock, element.sema]
         op_cook.append(temp)
 
+    for i in op_ordered :
+        print("ordered", i[1], i[3])
+
+    for i in op_cook :
+        print("cook", i[3])
+
     fin_out = [op_ordered, op_cook]
 
-    print(dumps(fin_out))
+#    print(dumps(fin_out))

@@ -71,13 +71,14 @@ def assign_ordered(s_ordered, menu,information):
                 temp.priority = priority
                 temp.foodID = uni_food[4]
                 temp.waitable = sortedOrder[0][2] - uni_food[2]
+
                 s_ordered.append(temp)
                 priority += 1
 
     return s_ordered
 
 
-def assigning(food, s_ordered, s_cook, standard) :
+def assigning(food, s_ordered, s_cook) :
     temp = []
     for uni_archi in s_cook :
         if uni_archi.position == food.cate :
@@ -97,15 +98,16 @@ def assigning(food, s_ordered, s_cook, standard) :
 
     s_ordered.remove(food)
 
-    return s_ordered, s_cook, standard
+    return s_ordered, s_cook
 
 
 def assign_cook(s_ordered, s_cook, serverClock) :
     # calc wait~ in ordered queue
-    if serverClock != "None":
+    if serverClock != 0:
         for element in s_ordered:
             element.realwait += serverClock
 
+#first step
     #Check scheduler can assign s_cook
     isFull = 0
     canAssign = []
@@ -125,9 +127,10 @@ def assign_cook(s_ordered, s_cook, serverClock) :
         if element.cate in canAssign :
             if element.priority == 1 or \
                     element.waitable <= element.realwait:
-                s_ordered, s_cook, standard = assigning(element,s_ordered,s_cook, standard)
+                s_ordered, s_cook = assigning(element,s_ordered,s_cook)
             else :
                 continue
 
+#second step
 
     return s_ordered, s_cook
