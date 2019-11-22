@@ -6,6 +6,7 @@ Schedulig cooking order to improving process of kitchen & restaurant service
 from Scheduling_Setup import *
 from Scheduling_Event import *
 from Scheduling_Archi import *
+from copy import *
 from abc import *
 
 #return [['stake', 10], ['pasta', 7], ['dessert', 5]]
@@ -65,6 +66,7 @@ def assigning(food, s_ordered, s_cook) :
         if food.orderID == element.orderID:
             element.priority -= 1
 
+
     s_ordered.remove(food)
 
     return s_ordered, s_cook
@@ -91,7 +93,7 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 
 
     #assign cook queue
-    standard = s_ordered
+    standard = copy(s_ordered)
     for element in standard :
         if element.name[0] in canAssign :
             if element.priority == 1 or \
