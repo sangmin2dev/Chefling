@@ -21,6 +21,7 @@ class Food(metaclass = ABCMeta) :
         self.priority = 0
         self.waitable = 0
         self.realwait = 0
+        self.andthen = 0
 
         self.emergency = 0
 

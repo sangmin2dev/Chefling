@@ -20,9 +20,10 @@ module.exports = function(io){
 
     let {PythonShell} =require("python-shell");
     var options //python shell 작동할 때의 옵션
-    var time;
+    var time = Date.now();
     var wholeData;
     var viewData;
+    var view_proc = [];
     var proc = new Array();
     var proc_python = new Array();
     var proc_fb = new Array();
@@ -93,7 +94,7 @@ module.exports = function(io){
             }
             else if(orders.length == 1){ // 첫 오더일 경우
                 console.log("첫 주문 들어와따");             
-                time = new Date();             
+                time = Date.now();             
                 ordered_list.push("None");
                 proc = [];
                 proc.push(foods);
@@ -111,7 +112,7 @@ module.exports = function(io){
                     cooks = proc_data[1];
 
                     //서버타임
-                    time = new Date();
+                    time = Date.now();
                     proc_fb = [];
                     proc_fb.push(foods);
                     proc_fb.push(cooks);
@@ -131,11 +132,8 @@ module.exports = function(io){
         var proc_data = snapshot.val();     
         
         if(proc_data != null){
-            var new_time = new Date(); // 현재시각
-            var duration = (new_time-time)/60 // 분단위
-            if(duration <0.5) duration =0;
-            console.log("due", duration);
-            
+            var new_time = Date.now(); // 현재시각
+            var duration = Math.floor((new_time-time)/1000) // 분단위
             serverTime = duration;
             time = new_time; //전역변수 time 갱신
 
@@ -180,20 +178,42 @@ module.exports = function(io){
 //processing의 변화가 있을 때
 // 오더가 추가되고 실행 -1
 // 완료한 요리 삭제했을 때 실행 -2
-    // proc_ref.on("value",function(snapshot){ 
-    //     var proc_data = snapshot.val();
-    //     if(proc_data != null){ 
-    //         var new_time = new Date(); // 현재시각
-    //         time = new_time; //전역변수 time 갱신
+    proc_ref.on("value",function(snapshot){
+        view_proc = []
+        var proc_data = snapshot.val();
+        if(proc_data != null){
+            proc_data[1].forEach(cook => {
+                cook[3].forEach(food => {
+                    if(food == "None"){
+                        cook[3] = [];
+                    }
+                });
+            });
+            view_proc.push(proc_data[1]) // cook list
 
-    //     } 
+            if(proc_data[3][0] =="None"){
+                proc_data[3] = [];
+            }
+            view_proc.push(proc_data[3]) // ordered list
+            console.log("view",view_proc);
+            
+
+        }
+        else{
+            var temp = new Array();
+            // cooks.forEach(cook => {
+            //     temp.push(cook[1]);
+            // });
+            view_proc.push([]);
+            view_proc.push([]);
+        }
+        io.emit('update_proc',view_proc);
         
-    // });
+    });
 
 
-    router.get('/', function(req, res, next){
-        // console.log("라우팅", proc[1][0][3][0]);        
-        res.render("processing",{proc_list:proc}); 
+    router.get('/', function(req, res, next){     
+        res.render("processing",{proc_list:view_proc}); 
     });
 
     return router;

@@ -22,11 +22,9 @@ ref.on("value", function(snapshot) {
         totalInfo = snapshot2.val();
         // console.log(totalInfo);       
 
-        //테이블을 자동 업데이트 하는 기능 추가
     });
     
 });
-
 
 router.get('/', function(req, res, next){
     // res.render("main",{list : JSON.stringify(totalInfo)});

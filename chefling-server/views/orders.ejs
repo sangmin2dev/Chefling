@@ -33,7 +33,7 @@
 
           <script>           
             var socket = io();
-            
+            console.log("오더: 소켓수신");            
             socket.on('update_orders',function (data) {
              $("#orderLogs").empty();              
              

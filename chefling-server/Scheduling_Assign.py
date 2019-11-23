@@ -22,6 +22,7 @@ def assign_ordered(s_ordered, menu,information):
     maiSorted = []
     desSorted = []
     presorted = []
+    oneOrder = []
 
     temp = []
 
@@ -49,6 +50,12 @@ def assign_ordered(s_ordered, menu,information):
     presorted.append(maiSorted)
     presorted.append(desSorted)
 
+    if appSorted == []:
+        isapp = False
+
+    if appSorted != []:
+        isapp = True
+
     #event
     #factor = cate name time course id
     for i in range(0,3):
@@ -61,7 +68,11 @@ def assign_ordered(s_ordered, menu,information):
                 temp.priority = priority
                 temp.foodID = uni_food[4]
                 temp.waitable = sortedOrder[0][2] - uni_food[2]
-                s_ordered.insert(0,temp)
+                if (isapp == True) and (uni_food[3] == "mai"):
+                    temp.andthen = 1
+                else :
+                    temp.andthen = 0
+                oneOrder.insert(0,temp)
                 priority += 1
             #normal
 
@@ -71,13 +82,20 @@ def assign_ordered(s_ordered, menu,information):
                 temp.priority = priority
                 temp.foodID = uni_food[4]
                 temp.waitable = sortedOrder[0][2] - uni_food[2]
-                s_ordered.append(temp)
+                if (isapp == True) and (uni_food[3] == "mai"):
+                    temp.andthen = 1
+                else :
+                    temp.andthen = 0
+
+                oneOrder.append(temp)
                 priority += 1
+
+        s_ordered.append(oneOrder)
 
     return s_ordered
 
 
-def assigning(food, s_ordered, s_cook, standard) :
+def assigning(food, s_ordered, s_cook) :
     temp = []
     for uni_archi in s_cook :
         if uni_archi.position == food.cate :
@@ -91,13 +109,30 @@ def assigning(food, s_ordered, s_cook, standard) :
             uni_archi.charge.append(temp)
             break
 
-    for element in s_ordered:
-        if food.orderID == element.orderID:
-            element.priority -= 1
+    for oneOrder in s_ordered:
+        for element in oneOrder:
+            if food.orderID == element.orderID:
+                element.priority -= 1
 
-    s_ordered.remove(food)
+    for oneOrder in s_ordered:
+        if food in oneOrder :
+            temp = copy(oneOrder)
+            temp.remove(food)
+            s_ordered.insert(oneOrder.index(food),temp)
+            oneOrder.remove(food)
+            break
 
-    return s_ordered, s_cook, standard
+    return s_ordered, s_cook
+
+
+def finishApp(oneOrder):
+    if oneOrder[0].course == "app":
+        return oneOrder
+    else :
+        for uni_food in oneOrder :
+            uni_food.andthen = 0
+        return oneOrder
+
 
 
 def assign_cook(s_ordered, s_cook, serverClock) :
@@ -106,6 +141,7 @@ def assign_cook(s_ordered, s_cook, serverClock) :
         for element in s_ordered:
             element.realwait += serverClock
 
+#first step
     #Check scheduler can assign s_cook
     isFull = 0
     canAssign = []
@@ -121,13 +157,39 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 
     #assign cook queue
     standard = copy(s_ordered)
-    for element in standard :
-        if element.cate in canAssign :
-            if element.priority == 1 or \
-                    element.waitable <= element.realwait:
-                s_ordered, s_cook, standard = assigning(element,s_ordered,s_cook, standard)
-            else :
-                continue
+    for eachOrder in standard :
+        eachOrder = finishApp(eachOrder)
+        for unifood in eachOrder :
+            if unifood.cate in canAssign :
+                if (unifood.priority == 1 or unifood.waitable <= unifood.realwait)\
+                        and unifood.andthen == 0:
+                    s_ordered, s_cook = assigning(unifood,s_ordered,s_cook)
+                else :
+                    continue
 
+#second step
+    #Check scheduler can assign s_cook
+    sec_isFull = 0
+    sec_canAssign = []
+    for cook in s_cook :
+        if len(cook.charge) == cook.ability :
+            sec_isFull +=1
+        else :
+            sec_canAssign.append(cook.position)
+
+    if sec_isFull == len(s_cook) :
+        return s_ordered, s_cook
+
+
+    #assign cook queue
+    sec_standard = copy(s_ordered)
+    for eachOrder in standard :
+        eachOrder = finishApp(eachOrder)
+        for unifood in eachOrder :
+            if unifood.cate in canAssign :
+                if  unifood.andthen == 0 :
+                    s_ordered, s_cook = assigning(unifood,s_ordered,s_cook)
+                else :
+                    continue
 
     return s_ordered, s_cook

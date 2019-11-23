@@ -13,7 +13,7 @@ const processingRouter = require('./routes/processing')(io);
 
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
-app.set('port', process.env.port || 8001);
+app.set('port', process.env.port || 80);
 
 // app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 // app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery

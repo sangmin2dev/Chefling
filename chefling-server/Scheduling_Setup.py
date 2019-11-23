@@ -45,7 +45,9 @@ def loadOrdered(information) :
         element.waitable = uniInfo[6]
         element.realwait = uniInfo[7]
         element.emergency = uniInfo[8]
+
         ordered.append(element)
+
     return ordered
 
 
@@ -82,11 +84,12 @@ def output(s_ordered, s_cook) :
     if s_ordered == []:
         op_ordered = ["None"]
     else :
-        for element in s_ordered :
-            temp = [element.orderID,element.foodID, element.cate, element.name,
-                    element.course, element.priority, element.waitable, element.realwait,
-                    element.emergency]
-            op_ordered.append(temp)
+        for oneOrder in s_ordered :
+            for uni_food in oneOrder :
+                temp = [uni_food.orderID,uni_food.foodID, uni_food.cate, uni_food.name,
+                        uni_food.course, uni_food.priority, uni_food.waitable, uni_food.realwait,
+                        uni_food.emergency]
+                op_ordered.append(temp)
 
     for element in s_cook :
         if element.charge == []:
