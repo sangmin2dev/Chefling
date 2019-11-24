@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="feffd397-d5d1-4da8-ac47-714163e484ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Chefling.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Chefling.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduling_Archi.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Archi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scheduling_Assign.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Assign.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scheduling_Scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Scheduler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scheduling_Setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Setup.py" afterDir="false" />
@@ -38,7 +37,7 @@
   <component name="ProjectId" id="1Ty6F5SPdOLOS656ZdQ6wU9X5Zj" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../subChefling" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -60,28 +59,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.Scheduling_Scheduler">
-    <configuration name="Scheduling_Archi" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Chefling" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Scheduling_Archi.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="Scheduling_Assign" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Chefling" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -148,7 +125,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="tttest" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Chefling" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -161,7 +138,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tttest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ttttttt" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Chefling" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ttttttt.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -173,10 +172,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Scheduling_Scheduler" />
-        <item itemvalue="Python.Scheduling_Setup" />
-        <item itemvalue="Python.Scheduling_Archi" />
         <item itemvalue="Python.Scheduling_Assign" />
-        <item itemvalue="Python.test (1)" />
+        <item itemvalue="Python.Scheduling_Setup" />
+        <item itemvalue="Python.ttttttt" />
+        <item itemvalue="Python.tttest" />
       </list>
     </recent_temporary>
   </component>
@@ -192,17 +191,9 @@
       <updated>1570512705063</updated>
       <workItem from="1574419890016" duration="4777000" />
       <workItem from="1574425294556" duration="17187000" />
+      <workItem from="1574501453392" duration="3915000" />
     </task>
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -221,9 +212,12 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Chefling$Scheduling_Scheduler.coverage" NAME="Scheduling_Scheduler Coverage Results" MODIFIED="1574442176552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Chefling$Scheduling_Assign.coverage" NAME="Scheduling_Assign Coverage Results" MODIFIED="1574432822506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Chefling$Scheduling_Setup.coverage" NAME="Scheduling_Setup Coverage Results" MODIFIED="1574436479562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Chefling$Scheduling_Scheduler.coverage" NAME="Scheduling_Scheduler Coverage Results" MODIFIED="1574529718186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Chefling$tttest.coverage" NAME="tttest Coverage Results" MODIFIED="1574449387840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Chefling$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1574447852423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Chefling$Scheduling_Assign.coverage" NAME="Scheduling_Assign Coverage Results" MODIFIED="1574463603495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Chefling$Scheduling_Setup.coverage" NAME="Scheduling_Setup Coverage Results" MODIFIED="1574459234801" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Chefling$Scheduling_Archi.coverage" NAME="Scheduling_Archi Coverage Results" MODIFIED="1574434106585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Chefling$ttttttt.coverage" NAME="ttttttt Coverage Results" MODIFIED="1574451575913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

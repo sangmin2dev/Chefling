@@ -18,7 +18,7 @@ class Food(metaclass = ABCMeta) :
         self.name = name
         self.course = course
 
-        self.priority = 0
+        self.priority = 1
         self.waitable = 0
         self.realwait = 0
         self.andthen = 0

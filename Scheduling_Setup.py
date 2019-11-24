@@ -84,6 +84,7 @@ def output(s_ordered, s_cook) :
     if s_ordered == []:
         op_ordered = ["None"]
     else :
+        print(s_ordered)
         for oneOrder in s_ordered :
             for uni_food in oneOrder :
                 temp = [uni_food.orderID,uni_food.foodID, uni_food.cate, uni_food.name,
