@@ -95,10 +95,10 @@ def orderpart(ID, s_ordered):
         for unifood in eachOrder:
             if unifood.foodID == ID:
                 eachOrder.remove(unifood)
-
-    for i in s_ordered:
-        for j in i :
-            print(j.name)
+    #
+    # for i in s_ordered:
+    #     for j in i :
+    #         print(j.name)
 
     return s_ordered
 
@@ -174,8 +174,8 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     if canAssign == []:
         return s_ordered, s_cook
 
-
-    print("in",s_ordered)
+    #
+    # print("in",s_ordered)
     #assign cook queue
     chain = copy(s_ordered)
     nonchain = deepcopy(s_ordered)
@@ -199,17 +199,17 @@ def assign_cook(s_ordered, s_cook, serverClock) :
             else :
                 continue
 
-
-    for i in s_ordered:
-        for j in i:
-            print("out",j.name)
-            print("out",j.priority)
-            print("out",j.andthen)
-
-    for i in s_cook:
-        print("out",i.cook_id)
-        print("out",i.position)
-        print("out",i.charge)
+    #
+    # for i in s_ordered:
+    #     for j in i:
+    #         print("out",j.name)
+    #         print("out",j.priority)
+    #         print("out",j.andthen)
+    #
+    # for i in s_cook:
+    #     print("out",i.cook_id)
+    #     print("out",i.position)
+    #     print("out",i.charge)
 
 
 # #second step
