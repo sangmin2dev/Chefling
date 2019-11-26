@@ -25,7 +25,6 @@ def loadFoodinit(information) :
 
     #오래걸리는 순으로 정렬된 메뉴 리스트
     return menu
-############
 
 
 
@@ -69,7 +68,7 @@ def loadOrdered(information) :
 
     return ordered
 
-
+#TODO : loadCooks
 def loadCooks(information) :
     prelist = information[1]
     cooklist = []
@@ -85,9 +84,9 @@ def loadCooks(information) :
         element.sema = uniInfo[5]
         cooklist.append(element)
     return cooklist
-#####################
 
-#ordering
+
+#TODO : orderPassing
 def orderPassing(information) :
     order = information[2][-1]
     orderID = order[0]
@@ -120,6 +119,6 @@ def output(s_ordered, s_cook) :
 
     fin_out = [op_ordered, op_cook]
 
-    print(op_ordered)
-    print(op_cook)
-#    print(dumps(fin_out))
+#    print(op_ordered)
+#    print(op_cook)
+    print(dumps(fin_out))

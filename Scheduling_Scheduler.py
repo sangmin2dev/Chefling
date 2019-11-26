@@ -28,17 +28,17 @@ def main() :
     # 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
 
     # Json load
-    #information = loadJson()
+    information = loadJson()
 
-    information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
-
-                     [ [ '박성호', 'bread', 1, ['None'], "None", "None" ], [ '정성운', 'pasta', 1, ["None"], "None", "None"], ['이상민', 'pizza', 2,["None"], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
-
-                     [ ['0', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]]],
-
-                     0,
-
-                     [[1,1_1,"pasta",["갈릭 까르보나라",12],"app",1,1,1,1 ]] ]
+    # information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
+    #
+    #                  [ [ '박성호', 'bread', 1, ['None'], "None", "None" ], [ '정성운', 'pasta', 1, [["1","1_1","pasta",["갈릭 까르보나라",12],"app"]], "None", "None"], ['이상민', 'pizza', 2,[["1","1_2","pizza",["부처스 피자",12],"mai"]], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
+    #
+    #                  [ ['2', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]],['3',[['부처스 피자',"3_0"],['아포카토',"3_1"],["부처스 피자","3_2"]]]],
+    #
+    #                  0,
+    #
+    #                  [["1","1_1","pasta",["갈릭 까르보나라",12],"app","1","1","1","1" ]] ]
 
 
     menu = loadFoodinit(information)

@@ -42,13 +42,17 @@ def assign_ordered(s_ordered, menu,information):
         if element[3] == "des":
             desSorted.append(element)
 
+
     appSorted.sort(key=lambda appSorted: appSorted[2], reverse=True)
     maiSorted.sort(key=lambda maiSorted: maiSorted[2], reverse=True)
     desSorted.sort(key=lambda desSorted: desSorted[2], reverse=True)
 
+
     presorted.append(appSorted)
     presorted.append(maiSorted)
     presorted.append(desSorted)
+    #
+    # print("presorted", presorted)
 
     if appSorted == []:
         isapp = False
@@ -61,7 +65,7 @@ def assign_ordered(s_ordered, menu,information):
     for i in range(0,3):
         sortedOrder = presorted[i]
         if sortedOrder == [] :
-            break
+            continue
         for uni_food in sortedOrder :
             temp = Food(orderID, uni_food[0],[uni_food[1], uni_food[2]],uni_food[3])
             temp.priority = prior
@@ -79,6 +83,7 @@ def assign_ordered(s_ordered, menu,information):
         s_ordered.insert(0,oneOrder)
     else :
         s_ordered.append(oneOrder)
+
 
     return s_ordered
 
@@ -183,12 +188,16 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     nonchain = deepcopy(s_ordered)
 
     flag = 0
+    # print(s_ordered)
+    # for j in s_ordered:
+    #     for i in j:
+    #         print("185",i.name)
 
 #빈 리스트 예외처리
     for f_eachOrder in nonchain :
         for n_unifood in f_eachOrder :
-            if (n_unifood.priority <= 1 or n_unifood.waitable <= n_unifood.realwait) \
-                    and (n_unifood.andthen == 0) and (n_unifood.cate in canAssign) :
+            if (int(n_unifood.priority) <= 1 or int(n_unifood.waitable) <= int(n_unifood.realwait)) \
+                    and (int(n_unifood.andthen) == 0) and (n_unifood.cate in canAssign) :
 
                 s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
                 s_cook = cookpart(n_unifood, s_cook)
@@ -199,6 +208,11 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 
             else :
                 continue
+
+    #
+    # for j in s_ordered:
+    #     for i in j:
+    #         print("187",i.name)
 
 # #second step
     sec_canAssign = assignable(s_cook)
