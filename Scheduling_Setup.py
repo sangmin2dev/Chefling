@@ -106,7 +106,7 @@ def loadCooks(information) :
 #TODO : orderPassing
 def orderPassing(information) :
     order = information[2][-1]
-    orderID = order[0]
+    orderID = int(order[0])
     foods = order[1]
 
     return orderID, foods

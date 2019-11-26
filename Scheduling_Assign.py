@@ -176,8 +176,10 @@ def assignable(s_cook):
 def assign_cook(s_ordered, s_cook, serverClock) :
     # calc wait~ in ordered queue
     if serverClock != 0:
-        for element in s_ordered:
-            element.realwait += serverClock
+        for eachOrder in s_ordered:
+            for element in eachOrder:
+                element.realwait += serverClock
+
 
     canAssign = assignable(s_cook)
     if canAssign == []:

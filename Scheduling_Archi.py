@@ -6,6 +6,10 @@ Struct Scheduler Architecture
 from Scheduling_Setup import *
 from abc import *
 
+#TODO : Time
+# food id 별로 예측시간 주려면 변수 하나  더 둬야한다 : waitable + cookingtime
+# menu 별 예측시간은 클래스 하나를 더 둬야한다 menuclass
+
 
 #TODO  : Food class
 class Food(metaclass = ABCMeta) :
