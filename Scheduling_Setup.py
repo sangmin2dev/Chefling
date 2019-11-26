@@ -17,7 +17,7 @@ def loadJson() :
     return information
 
 
-#initialize
+#TODO : loadFoodinit
 def loadFoodinit(information) :
     #시간이 오래 걸리는 순으로 정렬
     menu = information[0]
@@ -28,7 +28,7 @@ def loadFoodinit(information) :
 
 
 
-#Queue Architecture
+#TODO : loadOrdered
 def loadOrdered(information) :
     prelist = information[4]
     ordered = []
@@ -40,19 +40,20 @@ def loadOrdered(information) :
 
     for uniInfo in prelist :
         #def __init__(self, orderID, cate, name, course):
-        element = Food(uniInfo[0], uniInfo[2], uniInfo[3], uniInfo[4])
+        element = Food(int(uniInfo[0]), uniInfo[2], uniInfo[3], uniInfo[4])
         element.foodID = uniInfo[1]
-        element.priority = uniInfo[5]
-        element.waitable = uniInfo[6]
-        element.realwait = uniInfo[7]
-        element.emergency = uniInfo[8]
+        element.priority = int(uniInfo[5])
+        element.waitable = int(uniInfo[6])
+        element.realwait = int(uniInfo[7])
+        element.emergency = int(uniInfo[8])
 
         temp.append(element)
+
 
     for uni_food in temp :
         if oneOrder == [] :
             oneOrder.append(uni_food)
-            break
+            continue
 
         else :
             if uni_food.orderID == oneOrder[-1].orderID:
@@ -75,13 +76,16 @@ def loadCooks(information) :
 
     for uniInfo in prelist :
         #cook_id, position,
-        element = Cook(uniInfo[0],uniInfo[1], uniInfo[2])
+        element = Cook(uniInfo[0],uniInfo[1], int(uniInfo[2]))
         if uniInfo[3] == ["None"] :
             element.charge = []
         else :
             element.charge = uniInfo[3]
         element.cookClock = uniInfo[4]
-        element.sema = uniInfo[5]
+        if uniInfo[5] == "true":
+            element.sema = True
+        elif uniInfo[5] == "false":
+            element.sema = False
         cooklist.append(element)
     return cooklist
 
@@ -94,7 +98,7 @@ def orderPassing(information) :
 
     return orderID, foods
 
-
+#TODO : output
 def output(s_ordered, s_cook) :
     op_ordered = []
     op_cook =[]
@@ -119,6 +123,6 @@ def output(s_ordered, s_cook) :
 
     fin_out = [op_ordered, op_cook]
 
-#    print(op_ordered)
-#    print(op_cook)
-    print(dumps(fin_out))
+    print(op_ordered)
+    print(op_cook)
+#    print(dumps(fin_out))

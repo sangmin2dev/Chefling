@@ -84,7 +84,6 @@ def assign_ordered(s_ordered, menu,information):
     else :
         s_ordered.append(oneOrder)
 
-
     return s_ordered
 
 
