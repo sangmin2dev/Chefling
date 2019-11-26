@@ -33,6 +33,8 @@ def loadFoodinit(information) :
 def loadOrdered(information) :
     prelist = information[4]
     ordered = []
+    temp = []
+    oneOrder = []
 
     if prelist ==  ["None"] :
         return ordered
@@ -46,7 +48,24 @@ def loadOrdered(information) :
         element.realwait = uniInfo[7]
         element.emergency = uniInfo[8]
 
-        ordered.append(element)
+        temp.append(element)
+
+    for uni_food in temp :
+        if oneOrder == [] :
+            oneOrder.append(uni_food)
+            break
+
+        else :
+            if uni_food.orderID == oneOrder[-1].orderID:
+                oneOrder.append(uni_food)
+
+            else:
+                ordered.append(oneOrder)
+                oneOrder = []
+                oneOrder.append(uni_food)
+
+    if oneOrder != []:
+        ordered.append(oneOrder)
 
     return ordered
 
@@ -101,4 +120,6 @@ def output(s_ordered, s_cook) :
 
     fin_out = [op_ordered, op_cook]
 
-    print(dumps(fin_out))
+    print(op_ordered)
+    print(op_cook)
+#    print(dumps(fin_out))

@@ -38,7 +38,7 @@ def main() :
 
                      0,
 
-                     ["None"] ]
+                     [[1,1_1,"pasta",["갈릭 까르보나라",12],"app",1,1,1,1 ]] ]
 
 
     menu = loadFoodinit(information)
