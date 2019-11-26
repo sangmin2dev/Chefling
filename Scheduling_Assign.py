@@ -71,6 +71,7 @@ def assign_ordered(s_ordered, menu,information):
             temp.priority = prior
             temp.foodID = uni_food[4]
             temp.waitable = sortedOrder[0][2] - uni_food[2]
+            temp.realwait = 0
             if (isapp == True) and (uni_food[3] == "mai"):
                 temp.andthen = 1
             else :

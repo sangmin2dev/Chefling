@@ -73,19 +73,22 @@ def loadOrdered(information) :
 def loadCooks(information) :
     prelist = information[1]
     cooklist = []
-
     for uniInfo in prelist :
         #cook_id, position,
         element = Cook(uniInfo[0],uniInfo[1], int(uniInfo[2]))
+
         if uniInfo[3] == ["None"] :
             element.charge = []
         else :
             element.charge = uniInfo[3]
+
         element.cookClock = uniInfo[4]
+
         if uniInfo[5] == "true":
             element.sema = True
         elif uniInfo[5] == "false":
             element.sema = False
+
         cooklist.append(element)
     return cooklist
 
@@ -123,6 +126,6 @@ def output(s_ordered, s_cook) :
 
     fin_out = [op_ordered, op_cook]
 
-    print(op_ordered)
-    print(op_cook)
-#    print(dumps(fin_out))
+    # print(op_ordered)
+    # print(op_cook)
+    print(dumps(fin_out))
