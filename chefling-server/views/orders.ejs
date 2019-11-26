@@ -42,7 +42,13 @@
              data.forEach(order => {
                textToInsert[i++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">주문ID: '+order.orderId+'<br>테이블: '+order.table+'</th>';
                order.foods.forEach(food =>{
-                 textToInsert[i++] = '<tr><td bgcolor="#81F7BE">'+food.name+'</td><tr>';
+                 if(food.complete == true){
+                  textToInsert[i++] = '<tr><td bgcolor="#81F7BE">'+food.name+'</td><tr>';
+                 }
+                 else{
+                  textToInsert[i++] = '<tr><td>'+food.name+'</td><tr>';
+                 }
+                 
                });
                 textToInsert[i++] = '</table></div>'
              });  
@@ -67,7 +73,12 @@
               <th class="active">주문ID: <%=order.orderId%><br>테이블: <%=order.table%></th>
               <%order.foods.forEach(function(food) {%>
               <tr>
-                <td bgcolor="#81F7BE"><%= food.name%></td>             
+                <%if(food.complete){%>
+                  <td bgcolor="#81F7BE"><%= food.name%></td>
+                  <%} else {%>
+                    <td><%= food.name%></td> 
+                    <%}%>       
+                            
               </tr>  
                                 
           <%})%>
