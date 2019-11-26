@@ -27,6 +27,9 @@ def main() :
     # a[4] - food 단위의 ordered list(오더 아이디 / food_id / cate / [음식이름, 소요시간] / type / 우선순위(null) / 대기가능시간(null) / 대기시간(null) / 이벤트유무(null)) (오더큐)
     # 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
 
+    # output - 대기시간
+    # [갈릭 파스타 ]
+
     # Json load
     information = loadJson()
 

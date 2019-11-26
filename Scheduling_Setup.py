@@ -8,6 +8,16 @@ from sys import *
 from json import *
 from Scheduling_Archi import *
 from abc import *
+# cooked
+# 현재 쿡이 비어있는지 판단
+# 비어있지 않다면 메뉴요리시간 - 현재 조리시간 반환
+
+#ordered
+# 레디 큐 순환하며 음식 서칭
+# 음식별로 counting
+# counting * 음식 조리 시간 / 큐 할당 수
+# 단 다른 메뉴여도 같은 큐에 들어갈 수 있다는 점을 인식
+
 
 count = 0
 
