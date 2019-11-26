@@ -58,6 +58,7 @@ def loadOrdered(information) :
         element.emergency = int(uniInfo[8])
         element.andthen = int(uniInfo[9])
 
+
         temp.append(element)
 
 

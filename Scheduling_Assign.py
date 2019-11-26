@@ -48,11 +48,6 @@ def assign_ordered(s_ordered, menu,information):
     desSorted.sort(key=lambda desSorted: desSorted[2], reverse=True)
 
 
-    presorted.append(appSorted)
-    presorted.append(maiSorted)
-    presorted.append(desSorted)
-    #
-    # print("presorted", presorted)
 
     if appSorted == []:
         isapp = False
@@ -77,7 +72,7 @@ def assign_ordered(s_ordered, menu,information):
             elif isapp == False :
                 temp.andthen = 0
             else :
-                temp.andthen = 0
+                temp.andthen = 1
             prior += 1
 
             oneOrder.append(temp)
@@ -87,15 +82,6 @@ def assign_ordered(s_ordered, menu,information):
     else :
         s_ordered.append(oneOrder)
 
-    # print("ok", s_ordered)
-    #
-    # for i in s_ordered:
-    #     for j in i:
-    #         print("pre",j.orderID)
-    #         print("pre", j.name)
-    #         print("pre", j.andthen)
-    #         print("pre", j.priority)
-    #         print()
 
     return s_ordered
 
@@ -145,8 +131,6 @@ def modPriority(oneOrder) :
 #TODO : finishApp
 def finishApp(oneOrder, uni_food):
     index = ""
-
-    print("11", uni_food.name)
 
     # for i in oneOrder:
     #     print("xx",i.orderID)
