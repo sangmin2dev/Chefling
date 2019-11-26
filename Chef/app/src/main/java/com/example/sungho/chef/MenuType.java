@@ -12,7 +12,16 @@ import java.util.ArrayList;
 
 public class MenuType implements Serializable{
     String typeName;
+    String type;
     ArrayList<Menu> menus;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getTypeName() {
         return typeName;
@@ -26,12 +35,13 @@ public class MenuType implements Serializable{
         return menus;
     }
 
-    public MenuType(String typeName){
+    public MenuType(String typeName,String type){
         this.typeName = typeName;
+        this.type = type;
         menus = new ArrayList<Menu>();
     }
 
-    public void AddMenu(String name, String menuType, int price, int time, String info, String uri){
-        menus.add(new Menu(name, menuType, price, time, info, uri));
+    public void AddMenu(String name, String menuType,String type, int price, int time, String info, String uri){
+        menus.add(new Menu(name, menuType,type, price, time, info, uri));
     }
 }

@@ -11,14 +11,16 @@ import java.io.Serializable;
 public class Menu implements Serializable{
     String name;
     String menuType;
+    String type;
     int price;
     int time;
     String info;
     String uri;
 
-    public Menu(String name, String menuType, int price, int time, String info, String uri){
+    public Menu(String name, String menuType,String type, int price, int time, String info, String uri){
         this.name = name;
         this.menuType = menuType;
+        this.type = type;
         this.price = price;
         this.time = time;
         this.info = info;

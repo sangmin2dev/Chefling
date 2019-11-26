@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton ownerButton;
     ImageButton menuButton;
     ImageButton chefButton;
+    ImageButton cookButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         ownerButton = binding.ownerBtn;
         menuButton = binding.menuBtn;
         chefButton = binding.chefBtn;
+        cookButton = binding.cookBtn;
 
         // 사진 접근 권한
         tedPermission();
@@ -49,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         // 정보 입력 페이지로 이동
         ownerButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View view){
-
-
                 Intent intent = new Intent(getApplicationContext(),MenuCustom1.class);
                 startActivity(intent);
             }
@@ -72,7 +72,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 직원 페이지로 이동
+        // 요리사 페이지로 이동
+        cookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),CookActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -95,6 +102,5 @@ public class MainActivity extends AppCompatActivity {
                 .setDeniedMessage(getResources().getString(R.string.permission_1))
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
-
     }
 }

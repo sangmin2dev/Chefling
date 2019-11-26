@@ -1,8 +1,6 @@
 package com.example.sungho.chef;
 
-import android.app.LauncherActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
@@ -55,6 +53,7 @@ public class MenuActivity extends AppCompatActivity{
 
     TabHost tabHost;
     String category = "";
+    int length = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +113,9 @@ public class MenuActivity extends AppCompatActivity{
                         switch (data.getKey()){
                             case "category":
                                 food.setCategory(data.getValue().toString());
+                                break;
+                            case "type":
+                                food.setType(data.getValue().toString());
                                 break;
                             case "cooking_time":
                                 food.setCooking_time(Integer.parseInt(data.getValue().toString()));
@@ -290,34 +292,27 @@ public class MenuActivity extends AppCompatActivity{
         }
         ListItems.add("총합 : " + sum+"원");
         final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("주문 하기");
-        builder.setView(editText);
-        builder.setItems(items,new DialogInterface.OnClickListener(){
+
+        //order ID 받기
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference menuRef = database.getReference("order");
+        getCurrentId(menuRef);
+
+        // custom dialog
+        OrderDialog dialog = new OrderDialog(this);
+        dialog.callFunction(cartList);
+    }
+
+    public void getCurrentId(DatabaseReference menuRef){
+        menuRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                length = (int)dataSnapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        builder.setPositiveButton("주문하기", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference menuRef = database.getReference("order");
-                DatabaseReference key = menuRef.push();
-                String temp = key.toString().substring(key.toString().length()-20);
-
-                // Food ID생성
-                for(int i = 0; i < cartList.size(); i++){
-                    cartList.get(i).setFoodId(temp+"_"+i);
-                }
-
-                Order order = new Order();
-                order.setFoods(cartList);
-                order.setTable(editText.getText().toString());
-
-                key.setValue(order);
-            }
-        });
-        builder.show();
     }
 }

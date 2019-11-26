@@ -237,6 +237,7 @@ public class CookCustom2 extends AppCompatActivity {
                 Foods f = new Foods();
                 f.setName(type.getMenus().get(j).getName());
                 f.setCategory(type.getTypeName());
+                f.setType(type.getType());
                 f.setCooking_time(type.getMenus().get(j).getTime());
                 f.setPrice(type.getMenus().get(j).getPrice());
                 f.setDescription(type.getMenus().get(j).getInfo());

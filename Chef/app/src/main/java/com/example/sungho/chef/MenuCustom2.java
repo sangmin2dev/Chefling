@@ -9,12 +9,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.sungho.chef.databinding.ActivityMenucustom2Binding;
@@ -33,6 +35,7 @@ public class MenuCustom2 extends AppCompatActivity {
     ImageButton addButton;
 
     EditText editText;
+    Spinner typeSpinner;
 
     Restaurant rest;
 
@@ -40,6 +43,7 @@ public class MenuCustom2 extends AppCompatActivity {
 
     // 입력정보
     ArrayList<String> menuType = new ArrayList<String>();
+    ArrayList<String> type = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,19 @@ public class MenuCustom2 extends AppCompatActivity {
         nextButton = binding.nextbtn;
         addButton = binding.addbtn;
         editText = binding.menuEdit;
+        typeSpinner = binding.typeSpinner;
+
+        // 스피터 값 할당
+        type = new ArrayList<String>();
+        type.add("에피타이저");
+        type.add("메인디시");
+        type.add("디저트");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                type);
+        typeSpinner.setAdapter(adapter);
+        typeSpinner.setSelection(0);
 
         // 추가 버튼
         addButton.setOnClickListener(new Button.OnClickListener(){
@@ -75,7 +92,20 @@ public class MenuCustom2 extends AppCompatActivity {
                 // 메뉴입력
                 else if(editText.getText().length() > 0) {
                     menuType.add(editText.getText().toString());
-                    rest.addMenuType(editText.getText().toString());    // 메뉴타입 추가
+                    String type ="";
+                    switch(typeSpinner.getSelectedItem().toString()){
+                        case "에피타이저":
+                            type = "app";
+                            break;
+                        case "메인디시":
+                            type = "mai";
+                            break;
+                        case "디저트":
+                            type = "des";
+                            break;
+
+                    }
+                    rest.addMenuType(editText.getText().toString(),type);    // 메뉴타입 추가
                     displayMenu(menuType.get(menuType.size() - 1));
                 }
             }

@@ -123,7 +123,8 @@ public class MenuCustom3 extends AppCompatActivity {
                         if(rest.menuTypes.get(i).typeName.equals(typeSpiner.getSelectedItem().toString()))
                             rest.menuTypes.get(i).AddMenu(
                                     nameEdit.getText().toString(),                      // 이름
-                                    typeSpiner.getSelectedItem().toString(),            // 타입
+                                    typeSpiner.getSelectedItem().toString(),            // 메뉴타입(파스타,샐러드)
+                                    rest.menuTypes.get(i).getType(),                    // 타입(에피,메인)
                                     Integer.parseInt(priceEdit.getText().toString()),   // 가격
                                     Integer.parseInt(timeEdit.getText().toString()),    // 소요 시간
                                     infoEdit.getText().toString(),                      // 정보

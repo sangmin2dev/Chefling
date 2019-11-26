@@ -68,7 +68,7 @@
             android:backgroundTint="#ffffff"
             android:layout_margin="30dp"
             app:fabSize="normal"
-            android:scaleType="center"
+            android:scaleType="fitCenter"
             android:clickable="true"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,6 @@ import com.example.sungho.chef.Data.Cooks;
 import com.example.sungho.chef.Data.Foods;
 import com.example.sungho.chef.Data.MenuData;
 import com.example.sungho.chef.Data.Positions;
-import com.example.sungho.chef.databinding.ActivityCookModify2Binding;
 import com.example.sungho.chef.databinding.ActivityMenuModifyBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -4,12 +4,15 @@ public class Foods {
     private String foodId;             //menu , scheduling
     private String name;                //menu , scheduling
     private String category;            //menu , scheduling
+    private String type;                //menu , scheduling
     private String description;         //menu
     private int price;                  //menu
     private int cooking_time;           //scheduling
     private boolean iscooked = false;   //scheduling
     private boolean sold_out;           //menu , scheduling
 
+    public String getType() {return type; }
+    public void setType(String type) { this.type = type; }
     public String getFoodId() { return foodId; }
     public void setFoodId(String foodId) { this.foodId = foodId; }
     public String getName() {

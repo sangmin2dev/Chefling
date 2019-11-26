@@ -45,8 +45,8 @@ public class Restaurant implements Serializable{
     }
 
     // 메뉴타입 추가
-    public void addMenuType(String name){
-        menuTypes.add(new MenuType(name));
+    public void addMenuType(String name,String type){
+        menuTypes.add(new MenuType(name,type));
     }
 
     // 포지션 추가
