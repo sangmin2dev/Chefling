@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="feffd397-d5d1-4da8-ac47-714163e484ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduling_Archi.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Archi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scheduling_Scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Scheduler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduling_Setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Setup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +194,7 @@
       <workItem from="1574751723329" duration="571000" />
       <workItem from="1574758300864" duration="1185000" />
       <workItem from="1574759742365" duration="38000" />
-      <workItem from="1574759788300" duration="2101000" />
+      <workItem from="1574759788300" duration="2243000" />
     </task>
     <servers />
   </component>

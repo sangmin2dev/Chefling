@@ -51,7 +51,7 @@ def main() :
     s_ordered = loadOrdered(information)
     s_cook = loadCooks(information)
 
-    serverClock = information[3]
+    serverClock = int(information[3])
 
     #Scheduling
     s_ordered = assign_ordered(s_ordered,menu, information)
