@@ -56,6 +56,7 @@ def loadOrdered(information) :
         element.waitable = int(uniInfo[6])
         element.realwait = int(uniInfo[7])
         element.emergency = int(uniInfo[8])
+        element.andthen = int(uniInfo[9])
 
         temp.append(element)
 
