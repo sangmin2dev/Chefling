@@ -48,12 +48,15 @@ def assign_ordered(s_ordered, menu,information):
     desSorted.sort(key=lambda desSorted: desSorted[2], reverse=True)
 
 
-
     if appSorted == []:
         isapp = False
 
     if appSorted != []:
         isapp = True
+
+    presorted.append(appSorted)
+    presorted.append(maiSorted)
+    presorted.append(desSorted)
 
     #event
     #factor = cate name time course id
