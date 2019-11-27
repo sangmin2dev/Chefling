@@ -106,9 +106,22 @@ def orderpart(ID, s_ordered):
 def cookpart(food, s_cook) :
     temp = []
     index = food.foodID
+    precook = None
 
-    for uni_archi in s_cook :
-        if uni_archi.position == food.cate :
+    for uni_cook in s_cook:
+        if uni_cook.position == food.cate:
+            if precook == None :
+                precook = uni_cook
+            else :
+                if len(precook.charge) <= len(uni_cook.charge):
+                    continue
+                else :
+                    precook = uni_cook
+
+
+
+    for uni_archi in precook :
+        if uni_archi.cook_id == precook.cook_id :
             temp.append(food.orderID)
             temp.append(food.foodID,)
             temp.append(food.cate)

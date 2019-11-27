@@ -4,7 +4,7 @@
     <list default="true" id="feffd397-d5d1-4da8-ac47-714163e484ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scheduling_Assign.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Assign.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduling_Scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Scheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduling_Setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduling_Setup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +35,7 @@
   <component name="ProjectId" id="1Ty6F5SPdOLOS656ZdQ6wU9X5Zj" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../subChefling" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
@@ -198,7 +198,9 @@
       <workItem from="1574759788300" duration="2600000" />
       <workItem from="1574763247777" duration="868000" />
       <workItem from="1574765484283" duration="3248000" />
-      <workItem from="1574768959000" duration="249000" />
+      <workItem from="1574768959000" duration="879000" />
+      <workItem from="1574772129949" duration="344000" />
+      <workItem from="1574872196763" duration="579000" />
     </task>
     <servers />
   </component>
@@ -217,17 +219,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Scheduling_Scheduler.py</url>
-          <line>37</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Chefling$Scheduling_Scheduler.coverage" NAME="Scheduling_Scheduler Coverage Results" MODIFIED="1574769152419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

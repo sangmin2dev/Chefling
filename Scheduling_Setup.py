@@ -126,7 +126,7 @@ def output(s_ordered, s_cook) :
             for uni_food in oneOrder :
                 temp = [uni_food.orderID,uni_food.foodID, uni_food.cate, uni_food.name,
                         uni_food.course, uni_food.priority, uni_food.waitable, uni_food.realwait,
-                        uni_food.emergency]
+                        uni_food.emergency, uni_food.andthen]
                 op_ordered.append(temp)
 
     for element in s_cook :
