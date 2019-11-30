@@ -187,7 +187,7 @@ def estimating():
 
 
 #TODO : assign_cook
-def assign_cook(s_ordered, s_cook, serverClock, menu) :
+def assign_cook(s_ordered, s_cook, serverClock) :
     # calc wait~ in ordered queue
     if serverClock != 0:
         for eachOrder in s_ordered:
@@ -247,11 +247,14 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
                     continue
 
 
-#현재 요리 상황 고려한 시간 출력
-#메뉴 예상 요리시간
+    return s_ordered, s_cook
+
+
+#TODO : expectTime
+def expectTime(s_ordered,s_cook,menu):
     t_menu = []
     t_food = []
-    #food : time
+    # food : time
     menulist = {}
 
     cookfortime = {}
@@ -265,14 +268,14 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
     sum = 0
     divide = 0
 
-    for uni in menu :
+    for uni in menu:
         menulist[uni[0]] = 0
         t_menu.append([uni[1], uni[2]])
 
-        if cate == 0 :
+        if cate == 0:
             cate = uni[0]
             sum += uni[2]
-            divide +=1
+            divide += 1
 
         elif uni == menu[-1]:
             if cate != uni[0]:
@@ -280,57 +283,56 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
                 sum = 0
                 divide = 0
             sum += uni[2]
-            divide+=1
+            divide += 1
             cookingavg[uni[0]] = sum / divide
 
         elif cate != uni[0]:
-            cookingavg[cate] = sum/divide
+            cookingavg[cate] = sum / divide
             cate = uni[0]
             sum = uni[2]
             divide = 1
 
-        else :
+        else:
             sum += uni[2]
             divide += 1
-
 
     for uni in menu:
         foodwait[uni[0]] = 0
 
-
-    for uni in s_cook :
+    for uni in s_cook:
         if not (uni.position in cookfortime):
             cookfortime[uni.position] = int(uni.cookClock)
-        else :
+        else:
             if cookfortime[uni.position] > int(uni.cookClock):
                 continue
-            else :
+            else:
                 cookfortime[uni.position] = int(uni.cookClock)
 
     for uni in s_cook:
         if not (uni.position in cookforlen):
             cookforlen[uni.position] = 1
             cookforcomp[uni.position] = 0
-        else :
+        else:
             cookforlen[uni.position] += 1
 
-#incook
-    for unicook in s_cook :
+    # incook
+    for unicook in s_cook:
         for unifood in unicook.charge:
             t_food.append([unifood[3], unifood[1], 0])
 
-    for oneOrder in s_ordered :
-        for unifood in oneOrder :
+    for oneOrder in s_ordered:
+        for unifood in oneOrder:
             if cookforcomp[unifood.cate] == cookforlen[unifood.cate]:
                 foodwait[unifood.cate] += 1
                 cookforcomp[unifood.cate] = 0
-                t_food.append([unifood.name,unifood.foodID,foodwait[unifood.cate], unifood.time])
+                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], unifood.time])
 
-            else :
+            else:
                 cookforcomp[unifood.cate] += 1
                 menulist[unifood.cate] += unifood.name[1]
                 foodwait[unifood.cate] += 1
                 unifood.time = menulist[unifood.cate] + cookingavg[unifood.cate]
-                t_food.append([unifood.name, unifood.foodID,foodwait[unifood.cate], unifood.time])
+                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], unifood.time])
 
-    return s_ordered, s_cook, t_menu, t_food
+
+    return t_menu, t_food

@@ -65,9 +65,8 @@ def main() :
 
     #Scheduling
     s_ordered = assign_ordered(s_ordered,menu, information)
-
-    s_ordered, s_cook, t_menu, t_food = assign_cook(s_ordered, s_cook, serverClock, menu)
-
+    s_ordered, s_cook, t_menu, t_food = assign_cook(s_ordered, s_cook, serverClock)
+    t_menu, t_food = expectTime(s_ordered,s_cook, menu)
 
     #output
     output(s_ordered, s_cook, t_menu, t_food)
