@@ -208,6 +208,7 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 #빈 리스트 예외처리
     for f_eachOrder in nonchain :
         for n_unifood in f_eachOrder :
+            f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
             if (int(n_unifood.priority) <= 1 or int(n_unifood.waitable) <= int(n_unifood.realwait)) \
                     and (int(n_unifood.andthen) == 0) and (n_unifood.cate in canAssign) :
 
@@ -234,6 +235,7 @@ def assign_cook(s_ordered, s_cook, serverClock) :
             continue
         for unifood in s_eachOrder :
             if unifood.cate in canAssign :
+                f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
                 if  (unifood.andthen == 0) and (n_unifood.cate in canAssign):
 
                     s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
