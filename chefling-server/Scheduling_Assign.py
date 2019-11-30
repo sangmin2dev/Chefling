@@ -14,6 +14,9 @@ from abc import *
 def assign_ordered(s_ordered, menu, information):
     orderID, bills = orderPassing(information)
 
+    if bills == [] :
+        return s_ordered
+
     sortedOrder = []
     prior = 1
 
@@ -253,9 +256,15 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
     cookfortime = {}
     cookforlen = {}
     cookforcomp = {}
+    foodwait = {}
 
     for uni in menu :
         menulist[uni[1]] = 0
+        t_menu.append([uni[1], uni[2]])
+
+    for uni in menu:
+        foodwait[uni[1]] = 0
+
 
     for uni in s_cook :
         if not (uni.position in cookfortime):
@@ -280,13 +289,15 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
     for oneOrder in s_ordered :
         for unifood in oneOrder :
             if cookforcomp[unifood.cate] == cookforlen[unifood.cate]:
+                foodwait[unifood.cate] += 1
                 cookforcomp[unifood.cate] = 0
-                t_food.append([unifood.name,unifood.foodID,unifood.time])
+                t_food.append([unifood.name,unifood.foodID,foodwait[unifood.cate], unifood.time])
 
             else :
                 cookforcomp[unifood.cate] += 1
                 menulist[unifood.name[0]] += unifood.name[1]
+                foodwait[unifood.cate] += 1
                 unifood.time = menulist[unifood.name[0]] + cookfortime[unifood.cate]
-                t_food.append([unifood.name, unifood.foodID, unifood.time])
+                t_food.append([unifood.name, unifood.foodID,foodwait[unifood.cate], unifood.time])
 
     return s_ordered, s_cook, t_menu, t_food

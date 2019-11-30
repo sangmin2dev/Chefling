@@ -45,7 +45,3 @@ class Cook(metaclass = ABCMeta) :
         self.cookClock = 0
 
         self.sema = False
-
-    def Block(self, event):
-        if event == True :
-            self.sema = 0

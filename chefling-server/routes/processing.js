@@ -20,7 +20,7 @@ module.exports = function(io){
 
     let {PythonShell} =require("python-shell");
     var options //python shell 작동할 때의 옵션
-    var time = Date.now();
+    var time = 0;
     var wholeData;
     var viewData;
     var view_proc = [];
@@ -65,16 +65,20 @@ module.exports = function(io){
 
     // 오더에 변화가 있을때
     order_ref.on("value", function(snapshot){
+        
         var order_flag = 0; 
         // 0 : 첫주문 들어오기전 , 1: 오더개수 변화없고 속성만 변했을 떄, 2: 오더 추가 , 3: 완료된 오더 삭제
         proc = [] // proc 초기화
         // console.log("오더 자식수", snapshot.numChildren());
         var order_num_now = snapshot.numChildren();
+        console.log("ordernum",order_num, "ordernumnow",order_num_now);
+        
         if(order_num == 0){
             // 첫주문 들어오기 전
             order_flag = 0;
             if(order_num <order_num_now){
                 order_flag = 2;
+                order_num = order_num_now;
             }
         }
         else if(order_num == order_num_now){ // 오더개수 변화 없고 속성만 변화
@@ -104,9 +108,9 @@ module.exports = function(io){
                 for(var sub_key in orderObj){
                     var order_food = orderObj[sub_key];
                     var food_each = new Array();
-                    // if(order_food["complete"] == true){
-                    //     complete_num++;
-                    // }
+                    if(order_food["complete"] == true){
+                        complete_num++;
+                    }
                     food_each.push(order_food["name"]);
                     food_each.push(order_food["foodId"]);
                     food_list.push(food_each);
@@ -115,10 +119,10 @@ module.exports = function(io){
                 orders.push(temp);
                 // 완료된 order 삭제: 모든 food가 완료 되었따면 파베에서 삭제하고 orders 배열에도 넣지 않는다.
                 // 파이어베이스에서 오더 삭제
-                // if(complete_num < food_list.length){
-                //     orders.push(temp);
-                //     order_ref.child(key).remove();
-                // }                
+                if(complete_num == food_list.length){
+                    orders.push(temp);
+                    order_ref.child(key).remove();
+                }                
             }
             // console.log("order_flag", order_flag, "order_length", orders.length);
             
@@ -128,9 +132,9 @@ module.exports = function(io){
             else if(order_flag == 3 &&orders.length ==0){ // 오더 삭제해서 오더개수 0일때,
                 console.log("마지막 남은 오더가 삭제되고 오더가 비었네용~");                
             }
-            else if(order_flag == 2 && orders.length == 1){ // 첫 오더일 경우
-                console.log("첫 주문 들어와따");             
-                time = Date.now();             
+            else if(order_flag == 2 && orders.length == 1){ // 첫 오더일 경우                            
+                // time = Date.now();
+                console.log("첫 주문 들어와따",time); 
                 ordered_list.push("None");
                 var time_per_menu = [];
                 var time_per_food = [];
@@ -151,20 +155,41 @@ module.exports = function(io){
                     console.log("완료된 오더 삭제됨");            
                 }
                 else if(order_flag == 1){ // 오더 개수는 그대로고 속성값만 변한 경우
-                    console.log("오더의 속성값이 변함");              
-                }
-                else if(order_flag == 2){ // 오더가 추가되거나 파이어베이스에 변화분 저장
                     proc_ref.once("value",function(proc_snap){
-                        console.log("이후 오더에요");
+                        // time = Date.now();
+                        console.log("완료된 요리가 삭제되고 processing을 읽음",time);
                         var proc_data = proc_snap.val();                
                         ordered_list = proc_data[3];
                         cooks = proc_data[1];
                         //서버타임
-                        time = Date.now();
+                        
+                        proc_fb = [];
+                        proc_data[2].push(["None"])
+                        proc_fb.push(proc_data[0]);
+                        proc_fb.push(proc_data[1]);
+                        proc_fb.push(proc_data[2]); // 파이썬이 최신의 order를 보기 때문에 order를 none으로      
+                        proc_fb.push(proc_data[3]); 
+                        proc_fb.push(proc_data[4]);
+                        proc_fb.push(proc_data[5]);
+                        // console.log("none확인",proc_fb);
+                        
+                        // console.log("음식삭제 적용되나욘?", proc_fb[1][0][3]);                        
+                        proc_ref_fb.set(proc_fb);        
+                    });                                 
+                }
+                else if(order_flag == 2){ // 오더가 추가되거나 파이어베이스에 변화분 저장
+                    proc_ref.once("value",function(proc_snap){
+                        // time = Date.now();
+                        console.log("이후 오더에요",time);
+                        var proc_data = proc_snap.val();                
+                        ordered_list = proc_data[3];
+                        cooks = proc_data[1];
+                        //서버타임
+                        
                         proc_fb = [];
                         proc_fb.push(foods);
                         proc_fb.push(cooks);
-                        proc_fb.push(orders);                    
+                        proc_fb.push(orders);              
                         proc_fb.push(ordered_list); 
                         proc_fb.push(proc_data[4]);
                         proc_fb.push(proc_data[5]);
@@ -181,11 +206,21 @@ module.exports = function(io){
         var proc_data = snapshot.val();     
         
         if(proc_data != null){            
-            var new_time = Date.now(); // 현재시각
-            var duration = Math.floor((new_time-time)/1000) // 분단위
-            serverTime = duration;
-            time = new_time; //전역변수 time 갱신
-            serverTime = 0;
+             // 현재시각
+            // var duration = ((new_time-time)/1000) // 분단위
+            if(time ==0 ){
+                serverTime = 0;
+                time = Date.now();
+            }
+            else{
+                var new_time = Date.now();
+                var duration = Math.round((new_time - time)/6000);
+                serverTime = duration;
+                time = new_time; //전역변수 time 갱신
+            }
+           
+            console.log("타임확인", serverTime);
+            
 
             var proc_python = new Array();
             proc_python.push(proc_data[0]); //food
@@ -196,8 +231,11 @@ module.exports = function(io){
             proc_python.push(proc_data[4]);
             proc_python.push(proc_data[5]);
 
-            console.log("serverTime", serverTime);
-            console.log("스케쥴링 전",proc_python);
+            
+            // console.log("스케쥴링 전",proc_python);
+            // console.log("orderedList 확인", proc_data[3]);            
+            // console.log("요리사리스트확인",proc_data[1][0][3]);
+            
             options = {
                         mode: 'text',
                         pythonOptions: ['-u'],
@@ -216,7 +254,7 @@ module.exports = function(io){
                         }
                         else proc_data[3] = result_json[0];
                         // proc_data[3] = result_json[0];//ordered list
-                        proc_data[1] = result_json[1];//cooking list
+                        proc_data[1] = result_json[1];//cooking list 
                         proc_data[4] = result_json[2];//time per menu
                         proc_data[5] = result_json[3];//time per food
                         // proc_data[4] = ["None"];//time per menu
