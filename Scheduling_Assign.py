@@ -161,13 +161,16 @@ def assignable(s_cook):
     canAssign = []
 
     for cook in s_cook :
-        if cook.charge == ["None"] :
-            canAssign.append(cook.position)
+        if cook.sema == True :
+            isFull += 1
         else :
-            if len(cook.charge) == cook.ability :
-                isFull +=1
-            else :
+            if cook.charge == ["None"] :
                 canAssign.append(cook.position)
+            else :
+                if len(cook.charge) == cook.ability :
+                    isFull +=1
+                else :
+                    canAssign.append(cook.position)
 
     if isFull == len(s_cook) :
         canAssign = []

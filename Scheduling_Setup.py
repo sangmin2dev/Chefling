@@ -121,10 +121,11 @@ def loadCooks(information, menu) :
 
         else : element.cookClock = uniInfo[4]
 
-        if uniInfo[5] == "true":
-            element.sema = True
-        elif uniInfo[5] == "false":
-            element.sema = False
+        element.sema = uniInfo[5]
+        # if uniInfo[5] == "true":
+        #     element.sema = True
+        # elif uniInfo[5] == "false":
+        #     element.sema = False
 
         cooklist.append(element)
     return cooklist
@@ -167,6 +168,6 @@ def output(s_ordered, s_cook, t_menu, t_food) :
 
     fin_out = [op_ordered, op_cook, t_menu, t_food]
 
-    print(op_ordered)
-    print(op_cook)
-#    print(dumps(fin_out))
+    # print(op_ordered)
+    # print(op_cook)
+    print(dumps(fin_out))
