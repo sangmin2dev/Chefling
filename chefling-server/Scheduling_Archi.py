@@ -28,6 +28,8 @@ class Food(metaclass = ABCMeta) :
 
         self.foodID = 0
 
+        self.time = 0
+
         self.cook = ""
 
 

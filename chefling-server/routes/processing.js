@@ -15,8 +15,7 @@ module.exports = function(io){
     var order_ref = db.ref("order");
     var menu_ref = db.ref("menu")
     var proc_ref = db.ref("processing");
-    var proc_ref_fb = db.ref("processing_fb")
-    var servertime_ref = db.ref("servertime");
+    var proc_ref_fb = db.ref("processing_fb")    
     var served_ref = db.ref("served");
 
     let {PythonShell} =require("python-shell");
@@ -33,7 +32,7 @@ module.exports = function(io){
     var serverTime;
     var served_list = new Array();
     var order_num = 0;
-    
+
     //메뉴데이터 로드
     menu_ref.once("value", function(snapshot){
         menu_data = snapshot.val();
@@ -133,32 +132,42 @@ module.exports = function(io){
                 console.log("첫 주문 들어와따");             
                 time = Date.now();             
                 ordered_list.push("None");
+                var time_per_menu = [];
+                var time_per_food = [];
+                time_per_menu.push("None");
+                time_per_food.push("None");
                 proc = [];
                 proc.push(foods);
                 proc.push(cooks);
                 proc.push(orders);
                 proc.push(ordered_list)
-                
+                proc.push(time_per_menu);
+                proc.push(time_per_food);
+                //첫주문 적용 --> 처음으로 파베에 processing_fb와 processing 생김
                 proc_ref_fb.set(proc); //파이어베이스
             }
             else{ // 첫 오더 아닐경우 and 오더 한개일때 속성값이 변하는 경우
                 if (order_flag == 3){
-                    console.log("완료된 오더 삭제됨");                    
+                    console.log("완료된 오더 삭제됨");            
+                }
+                else if(order_flag == 1){ // 오더 개수는 그대로고 속성값만 변한 경우
+                    console.log("오더의 속성값이 변함");              
                 }
                 else if(order_flag == 2){ // 오더가 추가되거나 파이어베이스에 변화분 저장
                     proc_ref.once("value",function(proc_snap){
                         console.log("이후 오더에요");
-                        var proc_data = proc_snap.val();
+                        var proc_data = proc_snap.val();                
                         ordered_list = proc_data[3];
                         cooks = proc_data[1];
-    
                         //서버타임
                         time = Date.now();
                         proc_fb = [];
                         proc_fb.push(foods);
                         proc_fb.push(cooks);
                         proc_fb.push(orders);                    
-                        proc_fb.push(ordered_list);    
+                        proc_fb.push(ordered_list); 
+                        proc_fb.push(proc_data[4]);
+                        proc_fb.push(proc_data[5]);
                         // console.log("파베넣기전", proc_fb);                        
                         proc_ref_fb.set(proc_fb);                    
                     });
@@ -171,11 +180,11 @@ module.exports = function(io){
     proc_ref_fb.on("value",function(snapshot){ 
         var proc_data = snapshot.val();     
         
-        if(proc_data != null){
-            // var new_time = Date.now(); // 현재시각
-            // var duration = Math.floor((new_time-time)/1000) // 분단위
-            // serverTime = duration;
-            // time = new_time; //전역변수 time 갱신
+        if(proc_data != null){            
+            var new_time = Date.now(); // 현재시각
+            var duration = Math.floor((new_time-time)/1000) // 분단위
+            serverTime = duration;
+            time = new_time; //전역변수 time 갱신
             serverTime = 0;
 
             var proc_python = new Array();
@@ -184,6 +193,8 @@ module.exports = function(io){
             proc_python.push(proc_data[2]); //order
             proc_python.push(serverTime); //servertime
             proc_python.push(proc_data[3]); //ordered_list
+            proc_python.push(proc_data[4]);
+            proc_python.push(proc_data[5]);
 
             console.log("serverTime", serverTime);
             console.log("스케쥴링 전",proc_python);
@@ -199,17 +210,23 @@ module.exports = function(io){
                         if(err) throw err;
                         // console.log("바로결과", result);
                                     
-                        var result_json = JSON.parse(result[0]);                        
-                        console.log("결과_oredered list\n",result_json[0]);
-                        console.log("결과_cook list\n",result_json[1]);                      
-                        //ordered list
+                        var result_json = JSON.parse(result[0]);
                         if(result_json[0].length == 0){
-                            proc_data['None'];
+                            proc_data[3] = ["None"];
                         }
                         else proc_data[3] = result_json[0];
-                
-                        //cooking list
-                        proc_data[1] = result_json[1];
+                        // proc_data[3] = result_json[0];//ordered list
+                        proc_data[1] = result_json[1];//cooking list
+                        proc_data[4] = result_json[2];//time per menu
+                        proc_data[5] = result_json[3];//time per food
+                        // proc_data[4] = ["None"];//time per menu
+                        // proc_data[5] = ["None"];//time per food
+      
+                        console.log("파이썬결과_oredered lisdt\n",result_json[0]);
+                        console.log("파이썬결과_cook list\n",result_json[1]);
+                        console.log("파이썬결과_time menu\n",result_json[2]);
+                        console.log("파이썬결과_time food\n",result_json[3]);                      
+                        
                         //update processing view
                         // io.emit('update_processing',orders);
                         // console.log("파이썬 실행 후",proc);
@@ -227,7 +244,10 @@ module.exports = function(io){
     proc_ref.on("value",function(snapshot){
         view_proc = []
         var proc_data = snapshot.val();
+        
+        
         if(proc_data != null){
+            console.log("processing", proc_data[3]);
             proc_data[1].forEach(cook => {
                 cook[3].forEach(food => {
                     if(food == "None"){
@@ -244,9 +264,11 @@ module.exports = function(io){
             var served_data = null;
             
             //완료된 요리 파이어베이스에서 읽어오는 곳
-            // served_ref.once("value", function(served_snap){
-            //     served_list = [];
-            //     served_data = served_snap.val();                
+            // served_ref.once("value", function(served_snap){                
+            //     served_data = served_snap.val();
+            //     if(served_data == null){
+            //         served_data = [];
+            //     }           
             // });
             // view_proc.push(served_data);
 
@@ -265,7 +287,7 @@ module.exports = function(io){
         io.emit('update_proc',view_proc);
         
     });
-
+   
 
     router.get('/', function(req, res, next){     
         res.render("processing",{proc_list:view_proc}); 

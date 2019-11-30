@@ -57,6 +57,7 @@
                 <table class="table table-condensed table-hover">
                     <tr class="active">                        
                         <td>요리이름</td>
+                        <td>포지션</td>
                         <td>타입</td>
                         <td>가격</td>
                         <td>소요시간</td>                        
@@ -66,6 +67,7 @@
                     <%list.foods.forEach(function (val) {%>
                         <tr>
                           <td><%= val.name%></td>
+                          <td><%=val.category%></td>
                           <%if(val.type == "app"){%>
                             <td>에피타이저</td>
                           <%} else if(val.type == "mai"){%>

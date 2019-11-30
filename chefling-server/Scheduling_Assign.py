@@ -11,7 +11,7 @@ from abc import *
 #return [['stake', 10], ['pasta', 7], ['dessert', 5]]
 #return ['1000', ['pasta', 'stake', 'dessert']]
 
-def assign_ordered(s_ordered, menu,information):
+def assign_ordered(s_ordered, menu, information):
     orderID, bills = orderPassing(information)
 
     sortedOrder = []
@@ -26,12 +26,12 @@ def assign_ordered(s_ordered, menu,information):
 
     temp = []
 
+
     for uni_bill in bills :
         for uni_menu in menu :
             if uni_menu[1] == uni_bill[0]:
                 temp = [uni_menu[0],uni_menu[1],uni_menu[2],uni_menu[3],uni_bill[1]]
                 refinedBills.append(temp)
-
 
     #메뉴 Menu
     for element in refinedBills :
@@ -95,29 +95,31 @@ def orderpart(ID, s_ordered):
         for unifood in eachOrder:
             if unifood.foodID == ID:
                 eachOrder.remove(unifood)
-    #
-    # for i in s_ordered:
-    #     for j in i :
-    #         print(j.name)
 
     return s_ordered, 0
 
 #TODO : cookpart
 def cookpart(food, s_cook) :
-    temp = []
+    temp = [food.orderID, food.foodID, food.cate, food.name, food.course]
     index = food.foodID
+    precook = None
 
-    for uni_archi in s_cook :
-        if uni_archi.position == food.cate :
-            temp.append(food.orderID)
-            temp.append(food.foodID,)
-            temp.append(food.cate)
-            temp.append(food.name)
-            temp.append(food.course)
-            if uni_archi.charge == ["None"]:
-                uni_archi.charge = []
-            uni_archi.charge.append(temp)
-            break
+    for uni_cook in s_cook:
+        if uni_cook.position == food.cate:
+            if precook == None :
+                precook = uni_cook
+            else :
+                if len(precook.charge) <= len(uni_cook.charge):
+                    continue
+                else :
+                    precook = uni_cook
+        else :
+            continue
+
+        precook.cookClock = food.name[1]
+        if precook.charge == ["None"]:
+            precook.charge = []
+        precook.charge.append(temp)
 
     return s_cook
 
@@ -134,13 +136,6 @@ def modPriority(oneOrder) :
 #TODO : finishApp
 def finishApp(oneOrder, uni_food):
     index = ""
-
-    # for i in oneOrder:
-    #     print("xx",i.orderID)
-    #     print("xx", i.name)
-    #     print("xx", i.andthen)
-    #     print("xx", i.priority)
-    #     print()
 
     for element in oneOrder :
         if element.priority == 0:
@@ -166,22 +161,30 @@ def assignable(s_cook):
     canAssign = []
 
     for cook in s_cook :
-        if cook.charge == ["None"] :
-            canAssign.append(cook.position)
+        if cook.sema == True :
+            isFull += 1
         else :
-            if len(cook.charge) == cook.ability :
-                isFull +=1
-            else :
+            if cook.charge == ["None"] :
                 canAssign.append(cook.position)
+            else :
+                if len(cook.charge) == cook.ability :
+                    isFull +=1
+                else :
+                    canAssign.append(cook.position)
 
     if isFull == len(s_cook) :
         canAssign = []
 
     return canAssign
 
+#FIXME
+#TODO : estimating
+def estimating():
+    pass
+
 
 #TODO : assign_cook
-def assign_cook(s_ordered, s_cook, serverClock) :
+def assign_cook(s_ordered, s_cook, serverClock, menu) :
     # calc wait~ in ordered queue
     if serverClock != 0:
         for eachOrder in s_ordered:
@@ -193,11 +196,10 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     if canAssign == []:
         return s_ordered, s_cook
 
-    #
+
     #assign cook queue
     nonchain = deepcopy(s_ordered)
 
-    # flag = 0
 
 
 #빈 리스트 예외처리
@@ -211,27 +213,11 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                 f_eachOrder = copy(modPriority(f_eachOrder))
                 f_eachOrder = copy(finishApp(f_eachOrder,n_unifood))
 
-                # for i in f_eachOrder:
-                #         print("185", i.name)
-                #         print("185", i.orderID)
-                #         print("185", i.andthen)
-                # print()
 
                 canAssign = assignable(s_cook)
 
             else :
                 continue
-
-    # for i in s_ordered:
-    #     for j in i:
-    #         print("100", j.name)
-    #         print("100", j.orderID)
-    #         print("100", j.andthen)
-
-    #
-    # for j in s_ordered:
-    #     for i in j:
-    #         print("187",i.name)
 
 # #second step
     sec_canAssign = assignable(s_cook)
@@ -258,4 +244,49 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                     continue
 
 
-    return s_ordered, s_cook
+#현재 요리 상황 고려한 시간 출력
+#메뉴 예상 요리시간
+    t_menu = []
+    t_food = []
+    #food : time
+    menulist = {}
+    cookfortime = {}
+    cookforlen = {}
+    cookforcomp = {}
+
+    for uni in menu :
+        menulist[uni[1]] = 0
+
+    for uni in s_cook :
+        if not (uni.position in cookfortime):
+            cookfortime[uni.position] = int(uni.cookClock)
+        else :
+            if cookfortime[uni.position] > int(uni.cookClock):
+                continue
+            else :
+                cookfortime[uni.position] = int(uni.cookClock)
+
+    for uni in s_cook:
+        if not (uni.position in cookforlen):
+            cookforlen[uni.position] = 1
+            cookforcomp[uni.position] = 0
+        else :
+            cookforlen[uni.position] += 1
+
+    for unicook in s_cook :
+        for unifood in unicook.charge:
+            t_food.append([unifood[3], unifood[1], 0])
+
+    for oneOrder in s_ordered :
+        for unifood in oneOrder :
+            if cookforcomp[unifood.cate] == cookforlen[unifood.cate]:
+                cookforcomp[unifood.cate] = 0
+                t_food.append([unifood.name,unifood.foodID,unifood.time])
+
+            else :
+                cookforcomp[unifood.cate] += 1
+                menulist[unifood.name[0]] += unifood.name[1]
+                unifood.time = menulist[unifood.name[0]] + cookfortime[unifood.cate]
+                t_food.append([unifood.name, unifood.foodID, unifood.time])
+
+    return s_ordered, s_cook, t_menu, t_food

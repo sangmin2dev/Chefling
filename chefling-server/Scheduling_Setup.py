@@ -37,10 +37,10 @@ def loadFoodinit(information) :
     return menu
 
 
-
 #TODO : loadOrdered
 def loadOrdered(information) :
     prelist = information[4]
+#    timeInfo = information[6]
     ordered = []
     temp = []
     oneOrder = []
@@ -61,6 +61,17 @@ def loadOrdered(information) :
 
         temp.append(element)
 
+    # #시간 추가
+    # for foodInfo in temp :
+    #     for uniTime in timeInfo :
+    #         if foodInfo.foodID == uniTime[1] :
+    #             if uniTime[2] == "잠시후" :
+    #                 continue
+    #             else :
+    #                 estime = uniTime[2] - serverClock
+    #                 foodInfo.time = estime
+    #         else :
+    #             continue
 
     for uni_food in temp :
         if oneOrder == [] :
@@ -82,9 +93,20 @@ def loadOrdered(information) :
     return ordered
 
 #TODO : loadCooks
-def loadCooks(information) :
+def loadCooks(information, menu) :
     prelist = information[1]
     cooklist = []
+
+    setclock = {}
+    for uni in menu:
+        if not (uni[0] in setclock):
+            setclock[uni[0]] = uni[2]
+        else :
+            if setclock[uni[0]] > uni[2]:
+                continue
+            else :
+                setclock[uni[0]] = uni[2]
+
     for uniInfo in prelist :
         #cook_id, position,
         element = Cook(uniInfo[0],uniInfo[1], int(uniInfo[2]))
@@ -94,16 +116,19 @@ def loadCooks(information) :
         else :
             element.charge = uniInfo[3]
 
-        element.cookClock = uniInfo[4]
+        if uniInfo[4] == "None" :
+            element.cookClock = setclock[element.position]
 
-        if uniInfo[5] == "true":
-            element.sema = True
-        elif uniInfo[5] == "false":
-            element.sema = False
+        else : element.cookClock = uniInfo[4]
+
+        element.sema = uniInfo[5]
+        # if uniInfo[5] == "true":
+        #     element.sema = True
+        # elif uniInfo[5] == "false":
+        #     element.sema = False
 
         cooklist.append(element)
     return cooklist
-
 
 #TODO : orderPassing
 def orderPassing(information) :
@@ -114,11 +139,11 @@ def orderPassing(information) :
     return orderID, foods
 
 #TODO : output
-def output(s_ordered, s_cook) :
+def output(s_ordered, s_cook, t_menu, t_food) :
     op_ordered = []
     op_cook =[]
 
-    if s_ordered == []:
+    if s_ordered == [[]]:
         op_ordered = ["None"]
     else :
         # print(s_ordered)
@@ -136,7 +161,12 @@ def output(s_ordered, s_cook) :
                 element.charge,element.cookClock, element.sema]
         op_cook.append(temp)
 
-    fin_out = [op_ordered, op_cook]
+    if t_menu == []:
+        t_menu = ["None"]
+    if t_food == []:
+        t_food = ["None"]
+
+    fin_out = [op_ordered, op_cook, t_menu, t_food]
 
     # print(op_ordered)
     # print(op_cook)
