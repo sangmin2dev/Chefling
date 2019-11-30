@@ -256,8 +256,9 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 def expectTime(s_ordered,s_cook,menu):
     t_menu = []
     t_food = []
+
     # food : time
-    menulist = {}
+    acclist = {}
 
     cookfortime = {}
     cookforlen = {}
@@ -271,7 +272,7 @@ def expectTime(s_ordered,s_cook,menu):
     divide = 0
 
     for uni in menu:
-        menulist[uni[0]] = 0
+        acclist[uni[0]] = 0
         t_menu.append([uni[1], uni[2]])
 
         if cate == 0:
@@ -331,10 +332,21 @@ def expectTime(s_ordered,s_cook,menu):
 
             else:
                 cookforcomp[unifood.cate] += 1
-                menulist[unifood.cate] += unifood.name[1]
+                acclist[unifood.cate] += unifood.name[1]
                 foodwait[unifood.cate] += 1
-                unifood.time = menulist[unifood.cate] + cookingavg[unifood.cate]
+                unifood.time = acclist[unifood.cate] + cookingavg[unifood.cate]
                 t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], unifood.time])
 
+
+    tempmenu = []
+    for i in range(len(t_food) - 1, -1, -1):
+        if len(t_menu) == len(menu):
+            break
+        elif t_food[i][0][0] in tempmenu :
+            continue
+        else :
+            time = t_food[3] + t_food[0][1]
+            t_menu.append([t_food.name[0], time])
+            tempmenu.append(t_food.name[0])
 
     return t_menu, t_food
