@@ -34,7 +34,7 @@
             var socket = io();
             
             socket.on('update_proc', function(data) {
-              console.log("프록: 소켓수신");
+              // console.log("프록: 소켓수신");
               
               $("#food_queue").empty();
               $("#cook_queue").empty();
@@ -65,11 +65,11 @@
               });
 
               //served_list
-              // servedInsert[servedIndex++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">요리</th>';
-              // data[2].forEach(food=>{
-              //   servedInsert[servedIndex++] = '<tr><td>'+food.name+'<br>'+food.cookname+'<br>'+food.foodId+'</td><tr>';          
-              // });
-              // servedInsert[servedIndex++] = '</table></div>';
+              servedInsert[servedIndex++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">요리</th>';
+              data[2].forEach(food=>{
+                servedInsert[servedIndex++] = '<tr><td>'+food.foodName+'<br>'+food.cookName+'<br>'+food.foodId+'<br>'+food.cookedTime+'</td><tr>';          
+              });
+              servedInsert[servedIndex++] = '</table></div>';
 
               // 동적 html 적용
               $("#food_queue").append(orderedInsert.join(''));
@@ -125,21 +125,19 @@
           </div>
 
           <div class = "row">
-            <div id = "served_queue">
-              <h3>완료된 요리</h3>
-              <!-- 
+            <h3>완료된 요리</h3> 
+            <div id = "served_queue">                       
                 <div class="col-md-3">
                   <table class="table table-condensed table-hover">
                     <th class="active">요리</th>
-                    <%//proc_list[2].forEach(food => {%>
+                    <%proc_list[2].forEach(function(food) {%>
                       <tr>
-                        <td> <%=//food.name%><br><%=//food.cookname%><br><%=//food.foodId%></td>
+                        <td> <%=food.foodName%><br><%=food.cookName%><br><%=food.foodId%><br><%=food.cookedTime%></td>
                         </tr>
-                      <%//});%>
+                      <%});%>
                     </table>
                   </div>
-                -->
-                
+               
               
 
             </div>

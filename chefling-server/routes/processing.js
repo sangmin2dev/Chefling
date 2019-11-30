@@ -32,7 +32,6 @@ module.exports = function(io){
     var serverTime;
     var served_list = new Array();
     var order_num = 0;
-    //git test
     //메뉴데이터 로드
     menu_ref.once("value", function(snapshot){
         menu_data = snapshot.val();
@@ -71,7 +70,7 @@ module.exports = function(io){
         proc = [] // proc 초기화
         // console.log("오더 자식수", snapshot.numChildren());
         var order_num_now = snapshot.numChildren();
-        console.log("ordernum",order_num, "ordernumnow",order_num_now);
+        // console.log("ordernum",order_num, "ordernumnow",order_num_now);
         
         if(order_num == 0){
             // 첫주문 들어오기 전
@@ -253,21 +252,16 @@ module.exports = function(io){
                             proc_data[3] = ["None"];
                         }
                         else proc_data[3] = result_json[0];
-                        // proc_data[3] = result_json[0];//ordered list
+                        
                         proc_data[1] = result_json[1];//cooking list 
                         proc_data[4] = result_json[2];//time per menu
                         proc_data[5] = result_json[3];//time per food
-                        // proc_data[4] = ["None"];//time per menu
-                        // proc_data[5] = ["None"];//time per food
-      
+                    
                         console.log("파이썬결과_oredered lisdt\n",result_json[0]);
                         console.log("파이썬결과_cook list\n",result_json[1]);
                         console.log("파이썬결과_time menu\n",result_json[2]);
                         console.log("파이썬결과_time food\n",result_json[3]);                      
                         
-                        //update processing view
-                        // io.emit('update_processing',orders);
-                        // console.log("파이썬 실행 후",proc);
                         proc_ref.set(proc_data); //파베 적용
                     });
 
@@ -299,18 +293,27 @@ module.exports = function(io){
                 proc_data[3] = [];
             }
             view_proc.push(proc_data[3]) // ordered list
-            var served_data = null;
+            
             
             //완료된 요리 파이어베이스에서 읽어오는 곳
-            // served_ref.once("value", function(served_snap){                
-            //     served_data = served_snap.val();
-            //     if(served_data == null){
-            //         served_data = [];
-            //     }           
-            // });
-            // view_proc.push(served_data);
-
-            console.log("view",view_proc);
+            served_ref.once("value", function(served_snap){
+                var served_data = served_snap.val();
+                var served = [];   
+                if(served_data != null){                           
+                    served = [];
+                    for(var key in served_data){
+                        var servedObj = served_data[key];
+                        served.push(servedObj);
+                    }
+                }
+                
+                view_proc.push(served); 
+                
+                io.emit('update_proc',view_proc);
+                console.log("view",view_proc);
+            });
+           
+            
             
 
         }
@@ -321,8 +324,10 @@ module.exports = function(io){
             // });
             view_proc.push([]);
             view_proc.push([]);
+            view_proc.push([]);
         }
-        io.emit('update_proc',view_proc);
+         //update processing view
+        
         
     });
    
