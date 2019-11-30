@@ -58,9 +58,9 @@ def loadOrdered(information) :
         element.emergency = int(uniInfo[8])
         element.andthen = int(uniInfo[9])
 
+
         temp.append(element)
 
-    # #FIXME
     # #시간 추가
     # for foodInfo in temp :
     #     for uniTime in timeInfo :
@@ -93,9 +93,20 @@ def loadOrdered(information) :
     return ordered
 
 #TODO : loadCooks
-def loadCooks(information) :
+def loadCooks(information, menu) :
     prelist = information[1]
     cooklist = []
+
+    setclock = {}
+    for uni in menu:
+        if not (uni[0] in setclock):
+            setclock[uni[0]] = uni[2]
+        else :
+            if setclock[uni[0]] > uni[2]:
+                continue
+            else :
+                setclock[uni[0]] = uni[2]
+
     for uniInfo in prelist :
         #cook_id, position,
         element = Cook(uniInfo[0],uniInfo[1], int(uniInfo[2]))
@@ -105,7 +116,10 @@ def loadCooks(information) :
         else :
             element.charge = uniInfo[3]
 
-        element.cookClock = uniInfo[4]
+        if uniInfo[4] == "None" :
+            element.cookClock = setclock[element.position]
+
+        else : element.cookClock = uniInfo[4]
 
         if uniInfo[5] == "true":
             element.sema = True
@@ -124,11 +138,11 @@ def orderPassing(information) :
     return orderID, foods
 
 #TODO : output
-def output(s_ordered, s_cook) :
+def output(s_ordered, s_cook, t_menu, t_food) :
     op_ordered = []
     op_cook =[]
 
-    if s_ordered == []:
+    if s_ordered == [[]]:
         op_ordered = ["None"]
     else :
         # print(s_ordered)
@@ -146,8 +160,13 @@ def output(s_ordered, s_cook) :
                 element.charge,element.cookClock, element.sema]
         op_cook.append(temp)
 
-    fin_out = [op_ordered, op_cook]
+    if t_menu == []:
+        t_menu = ["None"]
+    if t_food == []:
+        t_food = ["None"]
 
-    # print(op_ordered)
-    # print(op_cook)
-    print(dumps(fin_out))
+    fin_out = [op_ordered, op_cook, t_menu, t_food]
+
+    print(op_ordered)
+    print(op_cook)
+#    print(dumps(fin_out))

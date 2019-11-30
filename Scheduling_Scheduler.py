@@ -39,29 +39,38 @@ def main() :
 
     information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
 
-                     [ [ '박성호', 'bread', 1, [["1","1_1","bread",["갈릭 브레드",12],"app"]], "None", "None" ], [ '정성운', 'pasta', 1, [["1","1_1","pasta",["갈릭 까르보나라",12],"app"]], "None", "None"], ['이상민', 'pizza', 2,[["1","1_2","pizza",["부처스 피자",12],"mai"]], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
+                     [ [ '박성호', 'bread', 1, ["None"], "None", "None" ], [ '정성운', 'pasta', 2, [["1","1_1","pasta",["갈릭 까르보나라",12],"app"]], "None", "None"], ['이상민', 'pizza', 2,[["1","1_2","pizza",["부처스 피자",12],"mai"]], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
 
-                     [ ['2', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]],['3', [['갈릭 브레드',"0_0"], ['부처스 피자',"0_2"]]]],
+                     [['1', [['갈릭 브레드',"0_0"]]], ['2', [['갈릭 까르보나라',"1_1"]]]],
 
                      2,
 
-                     [["1","1_1","bread",["갈릭 브레드",12],"app","1","1","0","1", 0 ],["1","1_2","pasta",["갈릭 까르보나라",12],"mai","2","1","0","1", 1 ]] ]
+                     ["None"] ,
 
+                    ["None"],
+
+                    ["None"]]
+
+#['2', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]],
+
+#["1","1_1","bread",["갈릭 브레드",12],"app","1","1","0","1", 0 ],["1","1_2","pasta",["갈릭 까르보나라",12],"mai","2","1","0","1", 1 ]
 
     menu = loadFoodinit(information)
 
     #Queue setting
     s_ordered = loadOrdered(information)
-    s_cook = loadCooks(information)
+    s_cook = loadCooks(information, menu)
 
     serverClock = int(information[3])
 
     #Scheduling
     s_ordered = assign_ordered(s_ordered,menu, information)
+
     s_ordered, s_cook, t_menu, t_food = assign_cook(s_ordered, s_cook, serverClock, menu)
 
+
     #output
-    output(s_ordered, s_cook)
+    output(s_ordered, s_cook, t_menu, t_food)
 
 
 

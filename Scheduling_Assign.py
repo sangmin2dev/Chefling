@@ -11,7 +11,7 @@ from abc import *
 #return [['stake', 10], ['pasta', 7], ['dessert', 5]]
 #return ['1000', ['pasta', 'stake', 'dessert']]
 
-def assign_ordered(s_ordered, menu,information):
+def assign_ordered(s_ordered, menu, information):
     orderID, bills = orderPassing(information)
 
     sortedOrder = []
@@ -26,12 +26,12 @@ def assign_ordered(s_ordered, menu,information):
 
     temp = []
 
+
     for uni_bill in bills :
         for uni_menu in menu :
             if uni_menu[1] == uni_bill[0]:
                 temp = [uni_menu[0],uni_menu[1],uni_menu[2],uni_menu[3],uni_bill[1]]
                 refinedBills.append(temp)
-
 
     #메뉴 Menu
     for element in refinedBills :
@@ -100,7 +100,7 @@ def orderpart(ID, s_ordered):
 
 #TODO : cookpart
 def cookpart(food, s_cook) :
-    temp = []
+    temp = [food.orderID, food.foodID, food.cate, food.name, food.course]
     index = food.foodID
     precook = None
 
@@ -113,19 +113,13 @@ def cookpart(food, s_cook) :
                     continue
                 else :
                     precook = uni_cook
+        else :
+            continue
 
-
-    for uni_archi in precook :
-        if uni_archi.cook_id == precook.cook_id :
-            temp.append(food.orderID)
-            temp.append(food.foodID,)
-            temp.append(food.cate)
-            temp.append(food.name)
-            temp.append(food.course)
-            if uni_archi.charge == ["None"]:
-                uni_archi.charge = []
-            uni_archi.charge.append(temp)
-            break
+        precook.cookClock = food.name[1]
+        if precook.charge == ["None"]:
+            precook.charge = []
+        precook.charge.append(temp)
 
     return s_cook
 
@@ -253,21 +247,43 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
     t_food = []
     #food : time
     menulist = {}
-    firfood = []
+    cookfortime = {}
+    cookforlen = {}
+    cookforcomp = {}
+
     for uni in menu :
         menulist[uni[1]] = 0
+
+    for uni in s_cook :
+        if not (uni.position in cookfortime):
+            cookfortime[uni.position] = int(uni.cookClock)
+        else :
+            if cookfortime[uni.position] > int(uni.cookClock):
+                continue
+            else :
+                cookfortime[uni.position] = int(uni.cookClock)
+
+    for uni in s_cook:
+        if not (uni.position in cookforlen):
+            cookforlen[uni.position] = 1
+            cookforcomp[uni.position] = 0
+        else :
+            cookforlen[uni.position] += 1
+
+    for unicook in s_cook :
+        for unifood in unicook.charge:
+            t_food.append([unifood[3], unifood[1], 0])
+
     for oneOrder in s_ordered :
         for unifood in oneOrder :
-            if menulist[unifood] == 0:
-                menulist = unifood.name[1]
-                unifood.time = "잠시후"
+            if cookforcomp[unifood.cate] == cookforlen[unifood.cate]:
+                cookforcomp[unifood.cate] = 0
                 t_food.append([unifood.name,unifood.foodID,unifood.time])
+
             else :
-                menulist[unifood] += unifood.name[1]
-                unifood.time = menulist[unifood]
-                t_food.append([unifood.name,unifood.foodID,unifood.time])
-
-
-
+                cookforcomp[unifood.cate] += 1
+                menulist[unifood.name[0]] += unifood.name[1]
+                unifood.time = menulist[unifood.name[0]] + cookfortime[unifood.cate]
+                t_food.append([unifood.name, unifood.foodID, unifood.time])
 
     return s_ordered, s_cook, t_menu, t_food
