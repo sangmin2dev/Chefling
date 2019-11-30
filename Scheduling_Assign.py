@@ -253,17 +253,49 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
     t_food = []
     #food : time
     menulist = {}
+
     cookfortime = {}
     cookforlen = {}
     cookforcomp = {}
+    cookingavg = {}
+
     foodwait = {}
 
+    cate = 0
+    sum = 0
+    divide = 0
+
     for uni in menu :
-        menulist[uni[1]] = 0
+        menulist[uni[0]] = 0
         t_menu.append([uni[1], uni[2]])
 
+        if cate == 0 :
+            cate = uni[0]
+            sum += uni[2]
+            divide +=1
+
+        elif uni == menu[-1]:
+            if cate != uni[0]:
+                cookingavg[cate] = sum / divide
+                sum = 0
+                divide = 0
+            sum += uni[2]
+            divide+=1
+            cookingavg[uni[0]] = sum / divide
+
+        elif cate != uni[0]:
+            cookingavg[cate] = sum/divide
+            cate = uni[0]
+            sum = uni[2]
+            divide = 1
+
+        else :
+            sum += uni[2]
+            divide += 1
+
+
     for uni in menu:
-        foodwait[uni[1]] = 0
+        foodwait[uni[0]] = 0
 
 
     for uni in s_cook :
@@ -282,6 +314,7 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
         else :
             cookforlen[uni.position] += 1
 
+#incook
     for unicook in s_cook :
         for unifood in unicook.charge:
             t_food.append([unifood[3], unifood[1], 0])
@@ -295,9 +328,9 @@ def assign_cook(s_ordered, s_cook, serverClock, menu) :
 
             else :
                 cookforcomp[unifood.cate] += 1
-                menulist[unifood.name[0]] += unifood.name[1]
+                menulist[unifood.cate] += unifood.name[1]
                 foodwait[unifood.cate] += 1
-                unifood.time = menulist[unifood.name[0]] + cookfortime[unifood.cate]
+                unifood.time = menulist[unifood.cate] + cookingavg[unifood.cate]
                 t_food.append([unifood.name, unifood.foodID,foodwait[unifood.cate], unifood.time])
 
     return s_ordered, s_cook, t_menu, t_food
