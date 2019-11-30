@@ -133,8 +133,12 @@ def loadCooks(information, menu) :
 #TODO : orderPassing
 def orderPassing(information) :
     order = information[2][-1]
-    orderID = int(order[0])
-    foods = order[1]
+    if order == ["None"] :
+        orderID = 0
+        foods = []
+    else :
+        orderID = int(order[0])
+        foods = order[1]
 
     return orderID, foods
 
