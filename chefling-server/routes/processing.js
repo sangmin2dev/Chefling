@@ -32,7 +32,7 @@ module.exports = function(io){
     var serverTime;
     var served_list = new Array();
     var order_num = 0;
-
+    //git test
     //메뉴데이터 로드
     menu_ref.once("value", function(snapshot){
         menu_data = snapshot.val();
