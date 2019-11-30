@@ -14,6 +14,9 @@ from abc import *
 def assign_ordered(s_ordered, menu, information):
     orderID, bills = orderPassing(information)
 
+    if bills == [] :
+        return s_ordered
+
     sortedOrder = []
     prior = 1
 
