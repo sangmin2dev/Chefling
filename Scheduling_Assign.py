@@ -95,10 +95,6 @@ def orderpart(ID, s_ordered):
         for unifood in eachOrder:
             if unifood.foodID == ID:
                 eachOrder.remove(unifood)
-    #
-    # for i in s_ordered:
-    #     for j in i :
-    #         print(j.name)
 
     return s_ordered, 0
 
@@ -117,7 +113,6 @@ def cookpart(food, s_cook) :
                     continue
                 else :
                     precook = uni_cook
-
 
 
     for uni_archi in precook :
@@ -147,13 +142,6 @@ def modPriority(oneOrder) :
 #TODO : finishApp
 def finishApp(oneOrder, uni_food):
     index = ""
-
-    # for i in oneOrder:
-    #     print("xx",i.orderID)
-    #     print("xx", i.name)
-    #     print("xx", i.andthen)
-    #     print("xx", i.priority)
-    #     print()
 
     for element in oneOrder :
         if element.priority == 0:
@@ -192,9 +180,14 @@ def assignable(s_cook):
 
     return canAssign
 
+#FIXME
+#TODO : estimating
+def estimating():
+    pass
+
 
 #TODO : assign_cook
-def assign_cook(s_ordered, s_cook, serverClock) :
+def assign_cook(s_ordered, s_cook, serverClock, menu) :
     # calc wait~ in ordered queue
     if serverClock != 0:
         for eachOrder in s_ordered:
@@ -206,11 +199,10 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     if canAssign == []:
         return s_ordered, s_cook
 
-    #
+
     #assign cook queue
     nonchain = deepcopy(s_ordered)
 
-    # flag = 0
 
 
 #빈 리스트 예외처리
@@ -224,27 +216,11 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                 f_eachOrder = copy(modPriority(f_eachOrder))
                 f_eachOrder = copy(finishApp(f_eachOrder,n_unifood))
 
-                # for i in f_eachOrder:
-                #         print("185", i.name)
-                #         print("185", i.orderID)
-                #         print("185", i.andthen)
-                # print()
 
                 canAssign = assignable(s_cook)
 
             else :
                 continue
-
-    # for i in s_ordered:
-    #     for j in i:
-    #         print("100", j.name)
-    #         print("100", j.orderID)
-    #         print("100", j.andthen)
-
-    #
-    # for j in s_ordered:
-    #     for i in j:
-    #         print("187",i.name)
 
 # #second step
     sec_canAssign = assignable(s_cook)
@@ -271,4 +247,27 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                     continue
 
 
-    return s_ordered, s_cook
+#현재 요리 상황 고려한 시간 출력
+#메뉴 예상 요리시간
+    t_menu = []
+    t_food = []
+    #food : time
+    menulist = {}
+    firfood = []
+    for uni in menu :
+        menulist[uni[1]] = 0
+    for oneOrder in s_ordered :
+        for unifood in oneOrder :
+            if menulist[unifood] == 0:
+                menulist = unifood.name[1]
+                unifood.time = "잠시후"
+                t_food.append([unifood.name,unifood.foodID,unifood.time])
+            else :
+                menulist[unifood] += unifood.name[1]
+                unifood.time = menulist[unifood]
+                t_food.append([unifood.name,unifood.foodID,unifood.time])
+
+
+
+
+    return s_ordered, s_cook, t_menu, t_food

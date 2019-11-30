@@ -28,22 +28,24 @@ def main() :
     # a[3] - servertime
     # a[4] - food 단위의 ordered list(오더 아이디 / food_id / cate / [음식이름, 소요시간] / type / 우선순위(null) / 대기가능시간(null) / 대기시간(null) / 이벤트유무(null) / andthen) (오더큐)
     # 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
+    # a[5] - time per menu  [...](메뉴이름 / 시간)
+    # a[6] - time per food [...] (음식이름 / 음식아이디 / 시간)
 
     # output - 대기시간
     # [갈릭 파스타 ]
 
     # Json load
-    information = loadJson()
+#    information = loadJson()
 
-    # information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
-    #
-    #                  [ [ '박성호', 'bread', 1, [["1","1_1","bread",["갈릭 브레드",12],"app"]], "None", "None" ], [ '정성운', 'pasta', 1, [["1","1_1","pasta",["갈릭 까르보나라",12],"app"]], "None", "None"], ['이상민', 'pizza', 2,[["1","1_2","pizza",["부처스 피자",12],"mai"]], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
-    #
-    #                  [ ['2', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]],['3', [['갈릭 브레드',"0_0"], ['부처스 피자',"0_2"]]]],
-    #
-    #                  2,
-    #
-    #                  [["1","1_1","bread",["갈릭 브레드",12],"app","1","1","0","1", 0 ],["1","1_2","pasta",["갈릭 까르보나라",12],"mai","2","1","0","1", 1 ]] ]
+    information = [ [ [ 'bread', '갈릭 브레드', 6, "app" ], [ 'pasta','갈릭 까르보나라', 12, "mai"], ['pizza','부처스 피자', 14, "mai"], ['dessert','아포카토', 5 ,'des'] ],
+
+                     [ [ '박성호', 'bread', 1, [["1","1_1","bread",["갈릭 브레드",12],"app"]], "None", "None" ], [ '정성운', 'pasta', 1, [["1","1_1","pasta",["갈릭 까르보나라",12],"app"]], "None", "None"], ['이상민', 'pizza', 2,[["1","1_2","pizza",["부처스 피자",12],"mai"]], "None","None"], ['백종원', 'dessert', 1, ["None"],"None","None"] ],
+
+                     [ ['2', [['갈릭 브레드',"0_0"], ['갈릭 까르보나라', "0_1"],['부처스 피자',"0_2"]]],['3', [['갈릭 브레드',"0_0"], ['부처스 피자',"0_2"]]]],
+
+                     2,
+
+                     [["1","1_1","bread",["갈릭 브레드",12],"app","1","1","0","1", 0 ],["1","1_2","pasta",["갈릭 까르보나라",12],"mai","2","1","0","1", 1 ]] ]
 
 
     menu = loadFoodinit(information)
@@ -56,7 +58,7 @@ def main() :
 
     #Scheduling
     s_ordered = assign_ordered(s_ordered,menu, information)
-    s_ordered, s_cook = assign_cook(s_ordered, s_cook, serverClock)
+    s_ordered, s_cook, t_menu, t_food = assign_cook(s_ordered, s_cook, serverClock, menu)
 
     #output
     output(s_ordered, s_cook)

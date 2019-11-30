@@ -37,10 +37,10 @@ def loadFoodinit(information) :
     return menu
 
 
-
 #TODO : loadOrdered
 def loadOrdered(information) :
     prelist = information[4]
+#    timeInfo = information[6]
     ordered = []
     temp = []
     oneOrder = []
@@ -58,9 +58,20 @@ def loadOrdered(information) :
         element.emergency = int(uniInfo[8])
         element.andthen = int(uniInfo[9])
 
-
         temp.append(element)
 
+    # #FIXME
+    # #시간 추가
+    # for foodInfo in temp :
+    #     for uniTime in timeInfo :
+    #         if foodInfo.foodID == uniTime[1] :
+    #             if uniTime[2] == "잠시후" :
+    #                 continue
+    #             else :
+    #                 estime = uniTime[2] - serverClock
+    #                 foodInfo.time = estime
+    #         else :
+    #             continue
 
     for uni_food in temp :
         if oneOrder == [] :
@@ -103,7 +114,6 @@ def loadCooks(information) :
 
         cooklist.append(element)
     return cooklist
-
 
 #TODO : orderPassing
 def orderPassing(information) :
