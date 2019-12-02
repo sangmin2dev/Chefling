@@ -118,7 +118,6 @@ def loadCooks(information, menu) :
 
         if uniInfo[4] == "None" :
             element.cookClock = setclock[element.position]
-
         else : element.cookClock = uniInfo[4]
 
         element.sema = uniInfo[5]
@@ -129,6 +128,7 @@ def loadCooks(information, menu) :
 
         cooklist.append(element)
     return cooklist
+
 
 #TODO : orderPassing
 def orderPassing(information) :
