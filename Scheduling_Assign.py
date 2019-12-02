@@ -223,11 +223,11 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     #assign cook queue
     sec_nonchain = copy(s_ordered)
 
-    # for s_eachOrder in sec_nonchain :
-    #     if s_eachOrder == []:
-    #         continue
-    #     for unifood in s_eachOrder :
-    #         f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
+    for s_eachOrder in sec_nonchain :
+        if s_eachOrder == []:
+            continue
+        for unifood in s_eachOrder :
+            f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
 
     for s_eachOrder in sec_nonchain :
         if s_eachOrder == [] :
