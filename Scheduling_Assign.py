@@ -108,7 +108,7 @@ def cookpart(food, s_cook) :
     precook = None
 
     for uni_cook in s_cook:
-        if (uni_cook.position) == food.cate and (uni_cook.sema == False):
+        if (uni_cook.position == food.cate) and (uni_cook.sema == False):
             if precook == None :
                 precook = uni_cook
             else :
@@ -166,6 +166,7 @@ def assignable(s_cook):
             isFull += 1
         else :
             if cook.charge == ["None"] :
+                cook.charge = []
                 canAssign.append(cook.position)
             else :
                 if len(cook.charge) == cook.ability :
