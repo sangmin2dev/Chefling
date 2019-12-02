@@ -128,7 +128,7 @@ def cookpart(food, s_cook) :
 #TODO : modPriority
 def modPriority(oneOrder) :
     for element in oneOrder:
-        if element.priority >= 2 :
+        if element.priority >= 1 :
             element.priority -= 1
 
     return oneOrder
