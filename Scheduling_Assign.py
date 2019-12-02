@@ -222,18 +222,25 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 
     #assign cook queue
     sec_nonchain = copy(s_ordered)
+
+    # for s_eachOrder in sec_nonchain :
+    #     if s_eachOrder == []:
+    #         continue
+    #     for unifood in s_eachOrder :
+    #         f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
+
     for s_eachOrder in sec_nonchain :
         if s_eachOrder == [] :
             continue
-        for unifood in s_eachOrder :
-            if unifood.cate in canAssign :
+        for n_unifood in s_eachOrder :
+            if n_unifood.cate in sec_canAssign :
                 f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
-                if  (unifood.andthen == 0) and (n_unifood.cate in sec_canAssign):
+                if  (n_unifood.andthen == 0) and (n_unifood.cate in sec_canAssign):
 
                     s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
                     s_cook = cookpart(n_unifood, s_cook)
-                    f_eachOrder = copy(modPriority(f_eachOrder))
-                    f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
+                    s_eachOrder = copy(modPriority(s_eachOrder))
+                    s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
 
                     sec_canAssign = assignable(s_cook)
 
