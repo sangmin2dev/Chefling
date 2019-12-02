@@ -318,7 +318,7 @@ def expectTime(s_ordered,s_cook,menu):
             if cookforcomp[unifood.cate] == cookforlen[unifood.cate]:
                 foodwait[unifood.cate] += 1
                 cookforcomp[unifood.cate] = 0
-                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], grouptime])
+                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate]-1, grouptime])
 
             else:
                 cookforcomp[unifood.cate] += 1
@@ -326,7 +326,7 @@ def expectTime(s_ordered,s_cook,menu):
                 foodwait[unifood.cate] += 1
                 unifood.time = acclist[unifood.cate] + cookingavg[unifood.cate]
                 grouptime = unifood.time
-                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], unifood.time])
+                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate]-1, unifood.time])
 
 
     tempmenu = []
