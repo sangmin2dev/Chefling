@@ -108,7 +108,7 @@ def cookpart(food, s_cook) :
     precook = None
 
     for uni_cook in s_cook:
-        if uni_cook.position == food.cate:
+        if (uni_cook.position) == food.cate and (uni_cook.sema == False):
             if precook == None :
                 precook = uni_cook
             else :
