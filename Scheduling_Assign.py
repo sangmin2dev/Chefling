@@ -119,9 +119,8 @@ def cookpart(food, s_cook) :
         else :
             continue
 
-        precook.cookClock = food.name[1]
-
-        precook.charge.append(temp)
+    precook.cookClock = food.name[1]
+    precook.charge.append(temp)
 
     return s_cook
 
