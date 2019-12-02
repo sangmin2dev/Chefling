@@ -120,8 +120,7 @@ def cookpart(food, s_cook) :
             continue
 
         precook.cookClock = food.name[1]
-        if precook.charge == ["None"]:
-            precook.charge = []
+
         precook.charge.append(temp)
 
     return s_cook
@@ -180,11 +179,6 @@ def assignable(s_cook):
 
     return canAssign
 
-#FIXME
-#TODO : estimating
-def estimating():
-    pass
-
 
 #TODO : assign_cook
 def assign_cook(s_ordered, s_cook, serverClock) :
@@ -203,8 +197,6 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     #assign cook queue
     nonchain = deepcopy(s_ordered)
 
-
-
 #빈 리스트 예외처리
     for f_eachOrder in nonchain :
         for n_unifood in f_eachOrder :
@@ -217,11 +209,12 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                 f_eachOrder = copy(modPriority(f_eachOrder))
                 f_eachOrder = copy(finishApp(f_eachOrder,n_unifood))
 
-
                 canAssign = assignable(s_cook)
 
             else :
                 continue
+
+
 
 # #second step
     sec_canAssign = assignable(s_cook)
@@ -236,14 +229,14 @@ def assign_cook(s_ordered, s_cook, serverClock) :
         for unifood in s_eachOrder :
             if unifood.cate in canAssign :
                 f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
-                if  (unifood.andthen == 0) and (n_unifood.cate in canAssign):
+                if  (unifood.andthen == 0) and (n_unifood.cate in sec_canAssign):
 
                     s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
                     s_cook = cookpart(n_unifood, s_cook)
                     f_eachOrder = copy(modPriority(f_eachOrder))
                     f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
 
-                    canAssign = assignable(s_cook)
+                    sec_canAssign = assignable(s_cook)
 
                 else :
                     continue
