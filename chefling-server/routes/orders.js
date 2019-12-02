@@ -20,22 +20,8 @@ ref.on("value", function(snapshot) {
         var orderObj = order_data[key];        
         orders.push(orderObj);
 
-        // var orderObj = order_data[key]["foods"];
-        // var temp = new Array();
-        // temp.push(order_data[key]["orderId"]); //오더id
-        // temp.push(order_data[key]["table"]) // 테이블 넘버
-        // var food_list = new Array();
-        // temp.push(orderObj);
-        // orders.push(temp);
       }
 
-
-      // var len = Object.keys(snapshot.val()).length; // 파이어베이스 주문 배열 길이  
-      // var temp = Object.values(snapshot.val()) // temp는 스트링 배열의 배열
-      
-      // for(var i =0 ; i<len; i++){    
-      //   orders.push(temp[i]["foods"]) //order 배열에 주문 정보 담기   
-      // }
     }   
   
   io.emit('update_orders',orders);

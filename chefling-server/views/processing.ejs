@@ -103,10 +103,14 @@
                 <div class = "col-md-3">
                   <table class="table table-condensed table-hover">
                     <th class="active">요리</th>
-                    <%proc_list[1].forEach(function (food) {%>
-                    <tr>
-                      <td><%= food[3][0]%> (<%=food[1]%>)</td>                
-                    </tr> 
+                    <%proc_list[1].forEach(function (food) {
+                      proc_list[3].forEach((time)=>{
+                        if(time[1]==food[1]){%>
+                        <tr>
+                          <td><b><%= food[3][0]%></b> (<%=food[1]%>) <br><font color = "red"><%=time[3]/10%></font>분후 조리예정<br>조리시작까지 <font color = "blue"><%=time[2]%></font>개 남음</td>                
+                        </tr>
+                        <%}%> 
+                      <%});%>                    
                     <%})%>
                   </table>
                 </div>

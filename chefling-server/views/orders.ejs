@@ -48,10 +48,10 @@
                textToInsert[i++] = '<div class = "col-md-3"><table class = "table table-condensed table-hover"> <th class="active">주문ID: '+order.orderId+'<br>테이블: '+order.table+'</th>';
                order.foods.forEach(food =>{
                  if(food.complete == true){
-                  textToInsert[i++] = '<tr><td bgcolor="#81F7BE">'+food.name+'</td><tr>';
+                  textToInsert[i++] = '<tr><td bgcolor="#81F7BE">'+food.name+' ('+food.foodId+')'+'</td><tr>';
                  }
                  else{
-                  textToInsert[i++] = '<tr><td>'+food.name+'</td><tr>';
+                  textToInsert[i++] = '<tr><td>'+food.name+' ('+food.foodId+')'+'</td><tr>';
                  }
                  
                });
@@ -79,9 +79,9 @@
               <%order.foods.forEach(function(food) {%>
               <tr>
                 <%if(food.complete){%>
-                  <td bgcolor="#81F7BE"><%= food.name%></td>
+                  <td bgcolor="#81F7BE"><%= food.name%> (<%=food.foodId%>)</td>
                   <%} else {%>
-                    <td><%= food.name%></td> 
+                    <td><%= food.name%> (<%=food.foodId%>)</td> 
                     <%}%>       
                             
               </tr>  
