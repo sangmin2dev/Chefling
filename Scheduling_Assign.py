@@ -80,7 +80,6 @@ def assign_ordered(s_ordered, menu, information):
             else :
                 temp.andthen = 1
             prior += 1
-
             oneOrder.append(temp)
 
     if int(orderID) > 1000 :
@@ -152,8 +151,7 @@ def finishApp(oneOrder, uni_food):
     else :
         for uni in oneOrder :
             uni.andthen = 0
-
-    return oneOrder
+        return oneOrder
 
 #TODO : assignable
 def assignable(s_cook):
@@ -193,7 +191,6 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     if canAssign == []:
         return s_ordered, s_cook
 
-
     #assign cook queue
     nonchain = deepcopy(s_ordered)
 
@@ -201,6 +198,8 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     for f_eachOrder in nonchain :
         for n_unifood in f_eachOrder :
             f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
+            canAssign = assignable(s_cook)
+
             if (int(n_unifood.priority) <= 1 or int(n_unifood.waitable) <= int(n_unifood.realwait)) \
                     and (int(n_unifood.andthen) == 0) and (n_unifood.cate in canAssign) :
 
@@ -209,11 +208,8 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                 f_eachOrder = copy(modPriority(f_eachOrder))
                 f_eachOrder = copy(finishApp(f_eachOrder,n_unifood))
 
-                canAssign = assignable(s_cook)
-
             else :
                 continue
-
 
 
 # #second step
@@ -221,33 +217,30 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     if sec_canAssign == []:
         return s_ordered, s_cook
 
-    #assign cook queue
+#assign cook queue
     sec_nonchain = copy(s_ordered)
 
-    for s_eachOrder in sec_nonchain :
-        if s_eachOrder == []:
-            continue
-        for unifood in s_eachOrder :
-            s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
+    # for s_eachOrder in sec_nonchain :
+    #     if s_eachOrder == []:
+    #         continue
+    #     for unifood in s_eachOrder :
+    #         s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
 
     for s_eachOrder in sec_nonchain :
         if s_eachOrder == [] :
             continue
         for n_unifood in s_eachOrder :
-            if n_unifood.cate in sec_canAssign :
+            s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
+            sec_canAssign = assignable(s_cook)
+            if  (n_unifood.andthen == 0) and (n_unifood.cate in sec_canAssign):
+
+                s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
+                s_cook = cookpart(n_unifood, s_cook)
+                s_eachOrder = copy(modPriority(s_eachOrder))
                 s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
-                if  (n_unifood.andthen == 0) and (n_unifood.cate in sec_canAssign):
 
-                    s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
-                    s_cook = cookpart(n_unifood, s_cook)
-                    s_eachOrder = copy(modPriority(s_eachOrder))
-                    s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
-
-                    sec_canAssign = assignable(s_cook)
-
-                else :
-                    continue
-
+            else :
+                continue
 
     return s_ordered, s_cook
 
@@ -325,10 +318,10 @@ def expectTime(s_ordered,s_cook,menu):
                 cookforcomp[unifood.cate] += 1
                 acclist[unifood.cate] += unifood.name[1]
                 foodwait[unifood.cate] += 1
-                unifood.time = acclist[unifood.cate] + cookingavg[unifood.cate]
+                unifood.time = acclist[unifood.cate]
                 grouptime = unifood.time
                 t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate]-1, unifood.time])
-
+                unifood.time += cookingavg[unifood.cate]
 
     tempmenu = []
     for i in range(len(t_food) - 1, 0, -1):
