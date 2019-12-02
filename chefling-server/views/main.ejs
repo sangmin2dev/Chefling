@@ -36,9 +36,10 @@
           <!-- Jumbotron -->
           <script src="/socket.io/socket.io.js"></script>
 
-          <!-- <script> var socket = io()
-          socket.emit("test","test");
-          </script> -->
+          <script> 
+          var socket = io();
+          
+          </script>
           <!-- Example row of columns -->
           <div class="row">
             <h1>레스토랑 현황</h1>
@@ -76,7 +77,7 @@
                             <td>디저트</td>
                           <%}%>                                                  
                           <td><%= val.price%>원</td>
-                          <td><%= val.cooking_time%>분</td>
+                          <td><%= val.cooking_time/10%>분</td>
                         </tr>                      
                     <%})%>
                 </table>
@@ -96,14 +97,18 @@
                         <td>브레이크타임</td>
                         <td>어빌리티</td>
                     </tr>
-                    <%list.cooks.forEach(function (val) {%>
-                        <tr>
+                    <%list.cooks.forEach(function (val) {
+                      if(val.breaktime){%>                      
+                        <tr bgcolor = "#F5A9A9">
+                        <%}else{%>
+                          <tr>
+                          <%}%>
                           <td><%= val.name%></td>
-                          <td><%= val.position%></td>
+                          <td ><%= val.position%></td>
                           <%if(val.breaktime){%>
-                          <td>있음</td>
+                          <td>쉬는 중</td>
                           <%}else{%>
-                          <td>없음</td>
+                          <td>근무 중</td>
                           <%}%>
                           <td><%= val.ability%></td>
                         </tr>                      

@@ -80,7 +80,6 @@ def assign_ordered(s_ordered, menu, information):
             else :
                 temp.andthen = 1
             prior += 1
-
             oneOrder.append(temp)
 
     if int(orderID) > 1000 :
@@ -108,7 +107,7 @@ def cookpart(food, s_cook) :
     precook = None
 
     for uni_cook in s_cook:
-        if uni_cook.position == food.cate:
+        if (uni_cook.position == food.cate) and (uni_cook.sema == False):
             if precook == None :
                 precook = uni_cook
             else :
@@ -119,10 +118,8 @@ def cookpart(food, s_cook) :
         else :
             continue
 
-        precook.cookClock = food.name[1]
-        if precook.charge == ["None"]:
-            precook.charge = []
-        precook.charge.append(temp)
+    precook.cookClock = food.name[1]
+    precook.charge.append(temp)
 
     return s_cook
 
@@ -130,7 +127,7 @@ def cookpart(food, s_cook) :
 #TODO : modPriority
 def modPriority(oneOrder) :
     for element in oneOrder:
-        if element.priority >= 2 :
+        if element.priority >= 1 :
             element.priority -= 1
 
     return oneOrder
@@ -154,8 +151,7 @@ def finishApp(oneOrder, uni_food):
     else :
         for uni in oneOrder :
             uni.andthen = 0
-
-    return oneOrder
+        return oneOrder
 
 #TODO : assignable
 def assignable(s_cook):
@@ -168,6 +164,7 @@ def assignable(s_cook):
             isFull += 1
         else :
             if cook.charge == ["None"] :
+                cook.charge = []
                 canAssign.append(cook.position)
             else :
                 if len(cook.charge) == cook.ability :
@@ -179,11 +176,6 @@ def assignable(s_cook):
         canAssign = []
 
     return canAssign
-
-#FIXME
-#TODO : estimating
-def estimating():
-    pass
 
 
 #TODO : assign_cook
@@ -199,16 +191,15 @@ def assign_cook(s_ordered, s_cook, serverClock) :
     if canAssign == []:
         return s_ordered, s_cook
 
-
     #assign cook queue
     nonchain = deepcopy(s_ordered)
-
-
 
 #빈 리스트 예외처리
     for f_eachOrder in nonchain :
         for n_unifood in f_eachOrder :
             f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
+            canAssign = assignable(s_cook)
+
             if (int(n_unifood.priority) <= 1 or int(n_unifood.waitable) <= int(n_unifood.realwait)) \
                     and (int(n_unifood.andthen) == 0) and (n_unifood.cate in canAssign) :
 
@@ -217,37 +208,39 @@ def assign_cook(s_ordered, s_cook, serverClock) :
                 f_eachOrder = copy(modPriority(f_eachOrder))
                 f_eachOrder = copy(finishApp(f_eachOrder,n_unifood))
 
-
-                canAssign = assignable(s_cook)
-
             else :
                 continue
+
 
 # #second step
     sec_canAssign = assignable(s_cook)
     if sec_canAssign == []:
         return s_ordered, s_cook
 
-    #assign cook queue
+#assign cook queue
     sec_nonchain = copy(s_ordered)
+
+    # for s_eachOrder in sec_nonchain :
+    #     if s_eachOrder == []:
+    #         continue
+    #     for unifood in s_eachOrder :
+    #         s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
+
     for s_eachOrder in sec_nonchain :
         if s_eachOrder == [] :
             continue
-        for unifood in s_eachOrder :
-            if unifood.cate in canAssign :
-                f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
-                if  (unifood.andthen == 0) and (n_unifood.cate in canAssign):
+        for n_unifood in s_eachOrder :
+            s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
+            sec_canAssign = assignable(s_cook)
+            if  (n_unifood.andthen == 0) and (n_unifood.cate in sec_canAssign):
 
-                    s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
-                    s_cook = cookpart(n_unifood, s_cook)
-                    f_eachOrder = copy(modPriority(f_eachOrder))
-                    f_eachOrder = copy(finishApp(f_eachOrder, n_unifood))
+                s_ordered, n_unifood.priority = orderpart(n_unifood.foodID, s_ordered)
+                s_cook = cookpart(n_unifood, s_cook)
+                s_eachOrder = copy(modPriority(s_eachOrder))
+                s_eachOrder = copy(finishApp(s_eachOrder, n_unifood))
 
-                    canAssign = assignable(s_cook)
-
-                else :
-                    continue
-
+            else :
+                continue
 
     return s_ordered, s_cook
 
@@ -256,8 +249,9 @@ def assign_cook(s_ordered, s_cook, serverClock) :
 def expectTime(s_ordered,s_cook,menu):
     t_menu = []
     t_food = []
+
     # food : time
-    menulist = {}
+    acclist = {}
 
     cookfortime = {}
     cookforlen = {}
@@ -270,9 +264,9 @@ def expectTime(s_ordered,s_cook,menu):
     sum = 0
     divide = 0
 
+
     for uni in menu:
-        menulist[uni[0]] = 0
-        t_menu.append([uni[1], uni[2]])
+        acclist[uni[0]] = 0
 
         if cate == 0:
             cate = uni[0]
@@ -302,15 +296,6 @@ def expectTime(s_ordered,s_cook,menu):
         foodwait[uni[0]] = 0
 
     for uni in s_cook:
-        if not (uni.position in cookfortime):
-            cookfortime[uni.position] = int(uni.cookClock)
-        else:
-            if cookfortime[uni.position] > int(uni.cookClock):
-                continue
-            else:
-                cookfortime[uni.position] = int(uni.cookClock)
-
-    for uni in s_cook:
         if not (uni.position in cookforlen):
             cookforlen[uni.position] = 1
             cookforcomp[uni.position] = 0
@@ -327,14 +312,27 @@ def expectTime(s_ordered,s_cook,menu):
             if cookforcomp[unifood.cate] == cookforlen[unifood.cate]:
                 foodwait[unifood.cate] += 1
                 cookforcomp[unifood.cate] = 0
-                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], unifood.time])
+                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate]-1, grouptime])
 
             else:
                 cookforcomp[unifood.cate] += 1
-                menulist[unifood.cate] += unifood.name[1]
+                acclist[unifood.cate] += unifood.name[1]
                 foodwait[unifood.cate] += 1
-                unifood.time = menulist[unifood.cate] + cookingavg[unifood.cate]
-                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate], unifood.time])
+                unifood.time = acclist[unifood.cate]
+                grouptime = unifood.time
+                t_food.append([unifood.name, unifood.foodID, foodwait[unifood.cate]-1, unifood.time])
+                unifood.time += cookingavg[unifood.cate]
 
+    tempmenu = []
+    for i in range(len(t_food) - 1, 0, -1):
+        if len(t_menu) == len(menu):
+            break
+        elif t_food[i][0][0] in tempmenu :
+            continue
+        else :
+            time = t_food[i][2] + t_food[i][0][1]
+            foodNum = t_food[i][2] + 1
+            t_menu.append([t_food[i][0],foodNum, time])
+            tempmenu.append(t_food[i][0][0])
 
     return t_menu, t_food

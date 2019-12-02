@@ -5,5 +5,8 @@
 // a[3] - servertime
 // a[4] - food 단위의 ordered list(오더 아이디 / food_id / cate / [음식이름, 소요시간] / type / 우선순위(null) / 대기가능시간(null) / 대기시간(null) / 이벤트유무(null) / andthen) (오더큐)
 // 초기화 이후 파이썬 한번 거치고 난 결과값과 현재 order 리스트 와의 관계
-// a[5] - time per menu  [...](메뉴이름 / 시간)
-// a[6] - time per food [...] (음식이름 / 음식아이디 / 시간)
+// a[5] - time per menu  [...](메뉴이름/ 음식개수 / 시간)
+// a[6] - time per food [...] (음식이름 / 음식아이디 / 음식개수 / 시간)
+
+// processing[4] - time per menu  [...](메뉴이름 / 시간) 메뉴판에 나오는거
+// processing[5] - time per food [...] (음식이름 / 음식아이디 / 시간) 내가 주문한 음식이 얼마 뒤에 나오는지

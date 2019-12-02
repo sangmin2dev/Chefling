@@ -34,7 +34,7 @@ module.exports = function(io){
     var order_num = 0;
     //메뉴데이터 로드
     menu_ref.once("value", function(snapshot){
-        menu_data = snapshot.val();
+        var menu_data = snapshot.val();
         console.log("메뉴 데이터 초기화");
         
         for(var key in menu_data["foods"]){ // 메뉴 데이터
@@ -55,11 +55,44 @@ module.exports = function(io){
             temp.push(cookObj["ability"]);
             temp.push(["None"]); //현재 요리하고있는 음식리스트
             temp.push("None"); //쿸시간
-            temp.push("None"); //블락유무
+            temp.push(cookObj["breaktime"]); //블락유무
             cooks.push(temp);
         }
 
 
+    });
+    // 큐블락 할때
+    db.ref('menu/cooks').on("child_changed",(snapshot)=>{        
+        var menu_data = snapshot.val();
+        var change_cook_name = menu_data.name;
+        var change_cook_breaktime = menu_data.breaktime;
+        console.log("bool",change_cook_breaktime);
+        
+        proc_ref.once("value",function(proc_snap){            
+            var proc_data = proc_snap.val();
+            if(proc_data != null){
+                proc_data[1].forEach(cook=>{
+                    if(cook[0] == change_cook_name){
+                        console.log("큐블락 요리사 이름 찾음");
+                        cook[5] = change_cook_breaktime;
+                    }
+                });
+                proc_data[2].push(['None']);              
+                
+                proc_fb = [];
+                proc_fb.push(proc_data[0]);
+                proc_fb.push(proc_data[1]); //cook list
+                proc_fb.push(proc_data[2]); //order list
+                proc_fb.push(proc_data[3]);//ordered_list                
+                proc_fb.push(proc_data[4]);
+                proc_fb.push(proc_data[5]);                            
+                proc_ref_fb.set(proc_fb);
+            }          
+                                
+        });
+        
+
+                
     });
 
     // 오더에 변화가 있을때
@@ -201,7 +234,7 @@ module.exports = function(io){
 
     });
     //오더가 추가되거나, 다 만든 음식을 삭제할 때 실행됨,
-    proc_ref_fb.on("value",function(snapshot){ 
+    proc_ref_fb.on("value",function(snapshot){
         var proc_data = snapshot.val();     
         
         if(proc_data != null){            
@@ -232,7 +265,7 @@ module.exports = function(io){
 
             
             // console.log("스케쥴링 전",proc_python);
-            // console.log("orderedList 확인", proc_data[3]);            
+            console.log("orderedList 확인", proc_data[3]);            
             // console.log("요리사리스트확인",proc_data[1][0][3]);
             
             options = {
@@ -257,10 +290,10 @@ module.exports = function(io){
                         proc_data[4] = result_json[2];//time per menu
                         proc_data[5] = result_json[3];//time per food
                     
-                        console.log("파이썬결과_oredered lisdt\n",result_json[0]);
-                        console.log("파이썬결과_cook list\n",result_json[1]);
-                        console.log("파이썬결과_time menu\n",result_json[2]);
-                        console.log("파이썬결과_time food\n",result_json[3]);                      
+                        // console.log("파이썬결과_oredered lisdt\n",result_json[0]);
+                        // console.log("파이썬결과_cook list\n",result_json[1]);
+                        // console.log("파이썬결과_time menu\n",result_json[2]);
+                        // console.log("파이썬결과_time food\n",result_json[3]);                      
                         
                         proc_ref.set(proc_data); //파베 적용
                     });
@@ -275,8 +308,7 @@ module.exports = function(io){
 // 완료한 요리 삭제했을 때 실행 -2
     proc_ref.on("value",function(snapshot){
         view_proc = []
-        var proc_data = snapshot.val();
-        
+        var proc_data = snapshot.val();        
         
         if(proc_data != null){
             console.log("processing", proc_data[3]);
@@ -307,10 +339,11 @@ module.exports = function(io){
                     }
                 }
                 
-                view_proc.push(served); 
+                view_proc.push(served);
+                view_proc.push(proc_data[5]); //요리별 시간
                 
                 io.emit('update_proc',view_proc);
-                console.log("view",view_proc);
+                // console.log("view",view_proc);
             });
            
             
