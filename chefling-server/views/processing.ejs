@@ -50,7 +50,7 @@
               data[1].forEach(food => {
                 data[3].forEach(time =>{
                   if(time[1] == food[1]){
-                    orderedInsert[orderIndex++] = '<tr><td><b>'+food[3][0]+'</b> ('+food[1]+')'+'<br><font color = "red">'+ time[3]/10+'</font>분후 조리예정'+'<br>'+'조리시작까지 <font color = "blue">'+time[2]+'</font>개 남음'+'</td><tr>';
+                    orderedInsert[orderIndex++] = '<tr><td><b>'+food[3][0]+'</b> ('+food[1]+')'+'<br><font color = "blue">'+ time[3]/10+'</font>분후 조리예정'+'<br>'+'조리시작까지 <font color = "red">'+time[2]+'</font>개 남음'+'</td><tr>';
                   }
                 });                
               });
@@ -107,7 +107,7 @@
                       proc_list[3].forEach((time)=>{
                         if(time[1]==food[1]){%>
                         <tr>
-                          <td><b><%= food[3][0]%></b> (<%=food[1]%>) <br><font color = "red"><%=time[3]/10%></font>분후 조리예정<br>조리시작까지 <font color = "blue"><%=time[2]%></font>개 남음</td>                
+                          <td><b><%= food[3][0]%></b> (<%=food[1]%>) <br><font color = "blue"><%=time[3]/10%></font>분후 조리예정<br>조리시작까지 <font color = "red"><%=time[2]%></font>개 남음</td>                
                         </tr>
                         <%}%> 
                       <%});%>                    
