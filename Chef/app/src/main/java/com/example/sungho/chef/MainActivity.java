@@ -3,22 +3,15 @@ package com.example.sungho.chef;
 import android.Manifest;
 import android.content.Intent;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.sungho.chef.databinding.ActivityMainBinding;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -76,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         cookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CookActivity.class);
+                Intent intent = new Intent(getApplicationContext(),CookSelect.class);
                 startActivity(intent);
             }
         });

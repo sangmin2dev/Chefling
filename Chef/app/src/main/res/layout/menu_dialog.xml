@@ -13,62 +13,41 @@
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="16dp"
-        android:text="주문하기"
+        android:text="주문목록"
         android:textStyle="bold"
         android:background="@color/colorAccent"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"/>
-
-    <EditText
-        android:id="@+id/table"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:textSize="16dp"
-        android:hint="테이블 번호"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
-
-
     <LinearLayout
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
+        android:id="@+id/menulayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
-
-    <RadioGroup
-        android:padding="10dp"
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
-            android:text="디저트 설정"
+            android:text="에피타이저, 메인"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <RadioButton
-            android:id="@+id/together"
-            android:checked="true"
-            android:text="디저트를 바로 주세요."
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/dessertlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/dessertText"
+            android:text=""
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <RadioButton
-            android:id="@+id/separate"
-            android:text="식사를 다하고 디저트를 주세요 (식후 디저트콜 필요!)"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RadioGroup>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -76,29 +55,21 @@
         android:background="#000000"/>
 
     <LinearLayout
-        android:padding="20dp"
-        android:background="#EBEBEB"
+        android:id="@+id/descall"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_gravity="center"
-            android:text="합계 : "
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/dessertCall"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/total"
-            android:layout_gravity="center"
-            android:text="0"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            android:background="@drawable/dessertcall"/>
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -108,14 +79,13 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
-
         <Button
             android:id="@+id/okButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="주문하기"
+            android:text="확인"
             android:textColor="#000000"
             android:textSize="16dp"
             android:background="#ffffff"/>
@@ -136,10 +106,8 @@
             android:textSize="16dp"
             android:background="#ffffff"/>
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"/>
-
 </LinearLayout>

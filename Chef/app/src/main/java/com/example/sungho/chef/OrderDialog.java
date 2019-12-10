@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -41,14 +42,25 @@ public class OrderDialog{
     TextView total;
     Button okButton;
     Button cancleButton;
+    RadioGroup radioGroup;
+    RadioButton together;
+    RadioButton separate;
 
     ArrayList<Foods> cartList;
     ArrayList<Cart> added;
+    ArrayList<Foods> notDessertList;
     int id;
+    boolean isDessertOrdered = false;
+
+    public OrderDialog(){
+        added = new ArrayList<Cart>();
+        notDessertList = new ArrayList<Foods>();
+    }
 
     public OrderDialog(Context context){
         this.context = context;
         added = new ArrayList<Cart>();
+        notDessertList = new ArrayList<Foods>();
     }
 
     protected void callFunction(ArrayList<Foods> cartList2) {
@@ -76,8 +88,16 @@ public class OrderDialog{
         total = dlg.findViewById(R.id.total);
         okButton = dlg.findViewById(R.id.okButton);
         cancleButton = dlg.findViewById(R.id.cancelButton);
+        radioGroup = dlg.findViewById(R.id.radioGroup);
+        together = dlg.findViewById(R.id.together);
+        separate = dlg.findViewById(R.id.separate);
         table.setText("A10");
         cartToAdded();
+
+        // 만약 디저트가 없으면 디저트관련 라디오버튼은 필요없으니 비활성화
+        if(!checkDessert()){
+            radioGroup.removeAllViews();
+        }
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,12 +109,24 @@ public class OrderDialog{
                     final DatabaseReference menuRef = database.getReference("order");
 
                     addedToCart();
+                    ((MenuActivity)context).setCartList(cartList);
 
                     final Order order = new Order();
-                    order.setFoods(cartList);
                     order.setTable(table.getText().toString());
+                    // 디저트콜 여부
+                    if(radioGroup.getCheckedRadioButtonId() == R.id.together){  // 함께 주세요
+                        isDessertOrdered = true;
+                        order.setFoods(cartList);
+                    }else{                                                      // 따로 주세요
+                        isDessertOrdered = false;
+                        for(int i = 0; i < cartList.size(); i++){
+                            if(!cartList.get(i).getType().equals("des")) {
+                                notDessertList.add(cartList.get(i));
+                            }
+                        }
+                        order.setFoods(notDessertList);
+                    }
 
-                    FirebaseDatabase database2 = FirebaseDatabase.getInstance();
                     final DatabaseReference menuRef2 = database.getReference("orderID");
 
                     // orderID 불러오기
@@ -103,7 +135,6 @@ public class OrderDialog{
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             setId(Integer.parseInt(dataSnapshot.getValue().toString()));
                             order.setOrderId(id+"");
-
                             // orderID 하나 증가
                             menuRef2.setValue((id+1));
 
@@ -112,6 +143,8 @@ public class OrderDialog{
                                 order.getFoods().get(i).setFoodId(order.getOrderId()+"_"+i);
                             }
                             menuRef.push().setValue(order);
+
+                            ((MenuActivity)context).setDessertOrdered(isDessertOrdered);
 
                             dlg.dismiss();
                             Toast.makeText(context,"주문이 되었습니다. 잠시만 기다려주세요.",Toast.LENGTH_LONG).show();
@@ -123,13 +156,20 @@ public class OrderDialog{
                 }
             }
         });
-
         cancleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dlg.dismiss();
             }
         });
+    }
+
+    public boolean checkDessert(){
+        for(int i = 0; i < cartList.size(); i++){
+            if(cartList.get(i).getType().equals("des"))
+                return true;
+        }
+        return false;
     }
 
     private void setId(int n){
@@ -156,7 +196,7 @@ public class OrderDialog{
                 Cart cart = new Cart(1,cartList.get(i));
                 added.add(cart);
             }
-            // 이미 존재하는 메뉴라면 +1
+            // 이미 존재하는 메뉴라면 + 1
             else{
                 for(int j = 0; j < added.size(); j++){
                     if(added.get(j).getFood().getName().equals(cartList.get(i).getName())){
@@ -282,40 +322,11 @@ public class OrderDialog{
             }
         });
 
-        // 2019-11-26 박성호
-        // 디터트 콜을 위한 체크박스 생성 필요 요망
-
         menuLayout.addView(nameText);
         menuLayout.addView(minus);
         menuLayout.addView(countText);
         menuLayout.addView(plus);
         menuLayout.addView(priceText);
         list.addView(menuLayout);
-    }
-}
-
-class Cart{
-    int count;
-    Foods food;
-
-    public Cart(int count, Foods food){
-        this.count = count;
-        this.food = food;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public Foods getFood() {
-        return food;
-    }
-
-    public void setFood(Foods food) {
-        this.food = food;
     }
 }

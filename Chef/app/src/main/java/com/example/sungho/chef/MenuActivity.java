@@ -1,5 +1,6 @@
 package com.example.sungho.chef;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sungho.chef.Data.Foods;
-import com.example.sungho.chef.Data.Order;
+import com.example.sungho.chef.Data.MenuData;
 import com.example.sungho.chef.databinding.ActivityMenuBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,17 +47,27 @@ public class MenuActivity extends AppCompatActivity{
     ActivityMenuBinding binding;
     TextView restName;
     ImageView menuImg;
+
+    boolean isFabOpen = false;
+    Animation fab_open, fab_close;
+    FloatingActionButton mainButton;
     FloatingActionButton orderButton;
+    FloatingActionButton timeButton;
 
     ArrayList<Foods> foodList = new ArrayList<Foods>();
     ArrayList<String> menuTypes = new ArrayList<String>();
     ArrayList<Foods> cartList = new ArrayList<Foods>();
+
     String name;
 
     TabHost tabHost;
     String category = "";
     int length = 0;
 
+    boolean isOrdered = false;
+    boolean isDesOrdered = false;
+
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +76,17 @@ public class MenuActivity extends AppCompatActivity{
         binding.setActivity(this);
         restName = binding.restName;
         tabHost = binding.tabHost;
+
+        mainButton = binding.main;
         orderButton = binding.order;
+        timeButton = binding.time;
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference menuRef = database.getReference("menu");
-        menuRef.addValueEventListener(new ValueEventListener() {
+        menuRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // 데이터 받아오기
@@ -90,12 +109,59 @@ public class MenuActivity extends AppCompatActivity{
                 Toast.makeText(MenuActivity.this, "메뉴정보 불러오기를 실패하였습니다. 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // 버튼 열기
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFab();
+            }
+        });
+
+        // 주문하기 버튼
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCart();
+                if(cartList.size() != 0){
+                    toggleFab();
+                    showCart();
+                }else{
+                    Toast.makeText(MenuActivity.this,"장바구니가 비어있습니다. 메뉴 사진을 눌러서 주문을 먼저 해주세요.",Toast.LENGTH_LONG).show();;
+                }
             }
         });
+
+        // 주문목록 보기 버튼(대기시간, 디저트 콜)
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isOrdered){
+                    toggleFab();
+                    showTime();
+                }else{
+                    Toast.makeText(MenuActivity.this,"아직 주문이 되지 않았습니다. 장바구니 버튼을 눌러서 먼저 주문을 해주세요.",Toast.LENGTH_LONG).show();;
+                }
+
+            }
+        });
+    }
+
+    private void toggleFab() {
+        if (isFabOpen) {
+            mainButton.setImageResource(R.drawable.plus);
+            orderButton.startAnimation(fab_close);
+            timeButton.startAnimation(fab_close);
+            orderButton.setClickable(false);
+            timeButton.setClickable(false);
+            isFabOpen = false;
+        } else {
+            mainButton.setImageResource(R.drawable.minus);
+            orderButton.startAnimation(fab_open);
+            timeButton.startAnimation(fab_open);
+            orderButton.setClickable(true);
+            timeButton.setClickable(true);
+            isFabOpen = true;
+        }
     }
 
     // FireBase >> Android
@@ -128,6 +194,9 @@ public class MenuActivity extends AppCompatActivity{
                                 break;
                             case "price":
                                 food.setPrice(Integer.parseInt(data.getValue().toString()));
+                                break;
+                            case "complete":
+                                food.setComplete(false);
                                 break;
                             case "sold_out":
                                 food.setSold_out(false);
@@ -193,14 +262,20 @@ public class MenuActivity extends AppCompatActivity{
                     menuImg.setLayoutParams(layoutParams);
                     menuImg.setAdjustViewBounds(true);
                     menuImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    final int finalJ = j;
                     menuImg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            addCart(menuName.getText().toString());
+                            if (!foodList.get(finalJ).isSold_out())
+                                addCart(menuName.getText().toString());
+                            else
+                                Toast.makeText(MenuActivity.this, "본 메뉴는 매진되었습니다.", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-                    downloadImage(menuImg,foodList.get(j).getName());
+                    if (!foodList.get(finalJ).isSold_out())
+                        downloadImage(menuImg,foodList.get(j).getName());
+                    else
+                        menuImg.setImageResource(R.drawable.soldout);
 
                     //메뉴 가격
                     TextView menuPrice = new TextView(MenuActivity.this);
@@ -280,18 +355,22 @@ public class MenuActivity extends AppCompatActivity{
         builder.show();
     }
 
+    // 주문을 완료했을때 실행
+    public void setCartList(ArrayList<Foods> cartList){
+        this.cartList = cartList;
+        isOrdered = true;
+    }
+
+    // 디저트를 주문했을때 실행
+    public void setDessertOrdered(boolean isDessertOrdered){
+        this.isDesOrdered = isDessertOrdered;
+        Log.d("뭐냐?",this.isDesOrdered + "dd");
+    }
+
     // 카트에 담긴 메뉴목록 보여주기
     public void showCart(){
-        List<String> ListItems = new ArrayList<>();
         final EditText editText = new EditText(this);
         editText.setText("A10");
-        int sum = 0;
-        for(int i = 0; i < cartList.size(); i++){
-            ListItems.add("- "+cartList.get(i).getName() + "    "+cartList.get(i).getPrice() + "원");
-            sum += cartList.get(i).getPrice();
-        }
-        ListItems.add("총합 : " + sum+"원");
-        final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
 
         //order ID 받기
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -301,6 +380,13 @@ public class MenuActivity extends AppCompatActivity{
         // custom dialog
         OrderDialog dialog = new OrderDialog(this);
         dialog.callFunction(cartList);
+    }
+
+    // 주문한 목록 보여주기(시간, 디저트콜)
+    public void showTime(){
+        MenuDialog dialog = new MenuDialog(this);
+        dialog.callFunction(cartList,isDesOrdered);
+        Log.d("확인", cartList.size()+"개");
     }
 
     public void getCurrentId(DatabaseReference menuRef){

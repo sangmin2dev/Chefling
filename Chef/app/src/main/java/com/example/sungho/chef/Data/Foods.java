@@ -8,9 +8,11 @@ public class Foods {
     private String description;         //menu
     private int price;                  //menu
     private int cooking_time;           //scheduling
-    private boolean iscooked = false;   //scheduling
+    private boolean complete = false;   //scheduling
     private boolean sold_out;           //menu , scheduling
 
+    public boolean isComplete() { return complete; }
+    public void setComplete(boolean complete) { this.complete = complete; }
     public String getType() {return type; }
     public void setType(String type) { this.type = type; }
     public String getFoodId() { return foodId; }

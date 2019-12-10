@@ -30,7 +30,7 @@ public class ModifyActivity extends AppCompatActivity {
         restBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CookModify1.class);
+                Intent intent = new Intent(getApplicationContext(),RestModify.class);
                 startActivity(intent);
             }
         });

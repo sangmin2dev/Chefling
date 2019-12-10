@@ -15,6 +15,7 @@
         tools:context="com.example.sungho.chef.CookActivity">
 
         <LinearLayout
+            android:layout_marginVertical="20dp"
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,13 +44,17 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginVertical="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -66,6 +71,7 @@
                     android:textSize="25dp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -92,6 +98,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/position"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -106,24 +113,33 @@
                 android:layout_marginVertical="15dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:layout_weight="0"
-                    android:text="근무중"
+                    android:text="Queue Block"
                     android:textAlignment="center"
                     android:textSize="25dp"
                     android:textStyle="bold" />
                 <Switch
-                    android:id="@+id/switch2"
+                    android:id="@+id/blockSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="120dp"/>
+                    android:layout_marginLeft="60dp"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"/>
+            <LinearLayout
+                android:id="@+id/foodlist"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical">
 
+
+            </LinearLayout>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,16 +8,12 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sungho.chef.Data.Cooks;
 import com.example.sungho.chef.Data.Foods;
@@ -29,8 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class CookModify2 extends AppCompatActivity {
     ActivityCookModify2Binding binding;
@@ -124,19 +118,6 @@ public class CookModify2 extends AppCompatActivity {
 
             }
         });
-
-//        menuRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                parsing(dataSnapshot);
-//                progressDialog.dismiss();
-//                setActivity();
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Toast.makeText(CookModify2.this, "정보 불러오기를 실패하였습니다. 다시 실행해주세요.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     // FireBase >> Android

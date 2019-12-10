@@ -242,6 +242,7 @@ public class CookCustom2 extends AppCompatActivity {
                 f.setPrice(type.getMenus().get(j).getPrice());
                 f.setDescription(type.getMenus().get(j).getInfo());
                 f.setSold_out(false);
+                f.setComplete(false);
                 foods.add(f);
 
                 // ImageUpload to FireBase Storage

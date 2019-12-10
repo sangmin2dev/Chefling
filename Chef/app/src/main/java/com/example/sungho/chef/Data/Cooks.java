@@ -1,6 +1,8 @@
 package com.example.sungho.chef.Data;
 
-public class Cooks {
+import java.io.Serializable;
+
+public class Cooks implements Serializable {
     private String name;
     private String position;
     private int ability;

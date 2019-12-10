@@ -284,9 +284,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
+                android:src="@drawable/picture"
                 android:clickable="true"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
                 android:layout_marginLeft="30dp"
                 android:background="#acacac" />
         </LinearLayout>
